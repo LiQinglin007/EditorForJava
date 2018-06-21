@@ -1,0 +1,643 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="editormi@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.4">
+    <root id="1"/>
+    <schema id="2" parent="1" name="editormi">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="information_schema"/>
+    <schema id="4" parent="1" name="mysql"/>
+    <schema id="5" parent="1" name="nbadb"/>
+    <schema id="6" parent="1" name="online_retailers_test"/>
+    <schema id="7" parent="1" name="performance_schema"/>
+    <schema id="8" parent="1" name="smarthouse"/>
+    <schema id="9" parent="1" name="test"/>
+    <schema id="10" parent="1" name="testjavaservlet"/>
+    <table id="11" parent="2" name="banner"/>
+    <table id="12" parent="2" name="collection"/>
+    <table id="13" parent="2" name="evaluate"/>
+    <table id="14" parent="2" name="feedback"/>
+    <table id="15" parent="2" name="notice"/>
+    <table id="16" parent="2" name="order"/>
+    <table id="17" parent="2" name="resultfile"/>
+    <table id="18" parent="2" name="servlet"/>
+    <table id="19" parent="2" name="statistics"/>
+    <table id="20" parent="2" name="studio"/>
+    <table id="21" parent="2" name="subject"/>
+    <table id="22" parent="2" name="user"/>
+    <table id="23" parent="2" name="userfile"/>
+    <column id="24" parent="11" name="banner_id">
+      <Position>1</Position>
+      <Comment>图片id</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="25" parent="11" name="banner_url">
+      <Position>2</Position>
+      <Comment>图片地址</Comment>
+      <DataType>varchar(200)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="26" parent="11" name="banner_weight">
+      <Position>3</Position>
+      <Comment>权重  数字越大越在前边显示</Comment>
+      <DataType>smallint(2) unsigned zerofill|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="27" parent="11" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>banner_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="28" parent="12" name="collection_id">
+      <Position>1</Position>
+      <Comment>收藏Id</Comment>
+      <DataType>smallint(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="29" parent="12" name="user_id">
+      <Position>2</Position>
+      <Comment>用户id</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="30" parent="12" name="collection_type">
+      <Position>3</Position>
+      <Comment>收藏类型（0:工作室、1:服务）</Comment>
+      <DataType>smallint(1)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="31" parent="12" name="collection_content_id">
+      <Position>4</Position>
+      <Comment>收藏内容的id</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <key id="32" parent="12" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>collection_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="33" parent="13" name="evaluate_id">
+      <Position>1</Position>
+      <Comment>评价ID</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="34" parent="13" name="order_id">
+      <Position>2</Position>
+      <Comment>工作室ID</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="35" parent="13" name="evaluate_conetnt">
+      <Position>3</Position>
+      <Comment>评价内容</Comment>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <column id="36" parent="13" name="evaluate_time">
+      <Position>4</Position>
+      <Comment>评论时间</Comment>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="37" parent="13" name="evaluate_score">
+      <Position>5</Position>
+      <Comment>评分</Comment>
+      <DataType>tinyint(1)|0</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+    </column>
+    <key id="38" parent="13" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>evaluate_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="39" parent="14" name="feedback_id">
+      <Position>1</Position>
+      <Comment>反馈ID</Comment>
+      <DataType>smallint(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="40" parent="14" name="feedback_type">
+      <Position>2</Position>
+      <Comment>反馈类型(0:意见 ; 1：bug)</Comment>
+      <DataType>smallint(1)|0</DataType>
+    </column>
+    <column id="41" parent="14" name="feedback_content">
+      <Position>3</Position>
+      <Comment>反馈内容</Comment>
+      <DataType>varchar(500)|0</DataType>
+    </column>
+    <column id="42" parent="14" name="feedback_userId">
+      <Position>4</Position>
+      <Comment>反馈用户</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="43" parent="14" name="feedback_time">
+      <Position>5</Position>
+      <Comment>反馈时间</Comment>
+      <DataType>datetime|0</DataType>
+    </column>
+    <key id="44" parent="14" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>feedback_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="45" parent="15" name="notice_id">
+      <Position>1</Position>
+      <Comment>公告ID</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="46" parent="15" name="notice_title">
+      <Position>2</Position>
+      <Comment>公告标题</Comment>
+      <DataType>varchar(30)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="47" parent="15" name="notice_content">
+      <Position>3</Position>
+      <Comment>公告内容</Comment>
+      <DataType>varchar(500)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="48" parent="15" name="notice_time">
+      <Position>4</Position>
+      <Comment>公告时间</Comment>
+      <DataType>datetime|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="49" parent="15" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>notice_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="50" parent="16" name="order_id">
+      <Position>1</Position>
+      <Comment>订单id</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="51" parent="16" name="order_type">
+      <Position>2</Position>
+      <Comment>订单类型(1:查重、2:降重、3:速审)</Comment>
+      <DataType>smallint(11)|0</DataType>
+    </column>
+    <column id="52" parent="16" name="order_state">
+      <Position>3</Position>
+      <Comment>订单状态</Comment>
+      <DataType>smallint(11)|0</DataType>
+    </column>
+    <column id="53" parent="16" name="studio_id">
+      <Position>4</Position>
+      <Comment>工作室id</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="54" parent="16" name="servlet_id">
+      <Position>5</Position>
+      <Comment>服务id</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="55" parent="16" name="result_file_id">
+      <Position>6</Position>
+      <Comment>检查结束的文件id</Comment>
+      <DataType>int(11) unsigned|0</DataType>
+    </column>
+    <column id="56" parent="16" name="user_file_Id">
+      <Position>7</Position>
+      <Comment>文件id</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="57" parent="16" name="user_id">
+      <Position>8</Position>
+      <Comment>用户id</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="58" parent="16" name="order_price">
+      <Position>9</Position>
+      <Comment>订单价格</Comment>
+      <DataType>float|0</DataType>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+    </column>
+    <column id="59" parent="16" name="order_result">
+      <Position>10</Position>
+      <Comment>检查结果</Comment>
+      <DataType>varchar(200)|0</DataType>
+    </column>
+    <column id="60" parent="16" name="order_sum_time">
+      <Position>11</Position>
+      <Comment>本次检查用的时间</Comment>
+      <DataType>varchar(10)|0</DataType>
+    </column>
+    <column id="61" parent="16" name="create_time">
+      <Position>12</Position>
+      <Comment>下单时间</Comment>
+      <DataType>datetime|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="62" parent="16" name="receipt_time">
+      <Position>13</Position>
+      <Comment>查稿时间</Comment>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="63" parent="16" name="confirm_time">
+      <Position>14</Position>
+      <Comment>确认时间(用户已经收到了)</Comment>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="64" parent="16" name="evaluate_time">
+      <Position>15</Position>
+      <Comment>评价时间</Comment>
+      <DataType>datetime|0</DataType>
+    </column>
+    <key id="65" parent="16" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>order_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="66" parent="17" name="file_id">
+      <Position>1</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="67" parent="17" name="file_name">
+      <Position>2</Position>
+      <Comment>文件名称</Comment>
+      <DataType>varchar(30)|0</DataType>
+    </column>
+    <column id="68" parent="17" name="subject_id">
+      <Position>3</Position>
+      <Comment>学科方向</Comment>
+      <DataType>int(10)|0</DataType>
+    </column>
+    <column id="69" parent="17" name="author">
+      <Position>4</Position>
+      <Comment>作者</Comment>
+      <DataType>varchar(10)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="70" parent="17" name="author_title">
+      <Position>5</Position>
+      <Comment>作者职称</Comment>
+      <DataType>varchar(10)|0</DataType>
+    </column>
+    <column id="71" parent="17" name="author_degree">
+      <Position>6</Position>
+      <Comment>作者学历</Comment>
+      <DataType>varchar(10)|0</DataType>
+    </column>
+    <column id="72" parent="17" name="downloadurl">
+      <Position>7</Position>
+      <Comment>下载地址</Comment>
+      <DataType>varchar(200)|0</DataType>
+    </column>
+    <column id="73" parent="17" name="see_time">
+      <Position>8</Position>
+      <Comment>见刊时间</Comment>
+      <DataType>datetime|0</DataType>
+    </column>
+    <key id="74" parent="17" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>file_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="75" parent="18" name="servlet_id">
+      <Position>1</Position>
+      <Comment>商品id</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="76" parent="18" name="studio_id">
+      <Position>2</Position>
+      <Comment>工作室ID</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="77" parent="18" name="servlet_name">
+      <Position>3</Position>
+      <Comment>商品名称</Comment>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="78" parent="18" name="servlet_pic">
+      <Position>4</Position>
+      <Comment>商品图片</Comment>
+      <DataType>varchar(30)|0</DataType>
+    </column>
+    <column id="79" parent="18" name="servlet_pics">
+      <Position>5</Position>
+      <Comment>商品详情图片</Comment>
+      <DataType>varchar(300)|0</DataType>
+    </column>
+    <column id="80" parent="18" name="servlet_original_price">
+      <Position>6</Position>
+      <Comment>商品原价</Comment>
+      <DataType>float|0</DataType>
+    </column>
+    <column id="81" parent="18" name="servlet_present_price">
+      <Position>7</Position>
+      <Comment>商品现价</Comment>
+      <DataType>float|0</DataType>
+    </column>
+    <column id="82" parent="18" name="servlet_type">
+      <Position>8</Position>
+      <Comment>服务类型(1:查重、2:降重、3:速审)</Comment>
+      <DataType>smallint(1)|0</DataType>
+    </column>
+    <column id="83" parent="18" name="servlet_monthly_sales">
+      <Position>9</Position>
+      <Comment>月销量</Comment>
+      <DataType>int(11)|0</DataType>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+    </column>
+    <column id="84" parent="18" name="servlet_collection_quantity">
+      <Position>10</Position>
+      <Comment>收藏数量</Comment>
+      <DataType>int(11)|0</DataType>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+    </column>
+    <column id="85" parent="18" name="servlet_type_little">
+      <Position>11</Position>
+      <Comment>服务类型(1:期刊职称论文查重、2:学位分段、3:本科学位、4:硕博论文)</Comment>
+      <DataType>smallint(3)|0</DataType>
+    </column>
+    <column id="86" parent="18" name="servlet_hot">
+      <Position>12</Position>
+      <Comment>是否为热门服务</Comment>
+      <DataType>smallint(1)|0</DataType>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+    </column>
+    <column id="87" parent="18" name="servlet_level">
+      <Position>13</Position>
+      <Comment>刊物级别</Comment>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <column id="88" parent="18" name="servlet_subject_id">
+      <Position>14</Position>
+      <Comment>学科范围</Comment>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <key id="89" parent="18" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>servlet_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="90" parent="19" name="statistics_id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="91" parent="19" name="statistics_time">
+      <Position>2</Position>
+      <Comment>上次的统计时间</Comment>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="92" parent="19" name="statistics_type">
+      <Position>3</Position>
+      <Comment>统计类型（0:工作室、1:服务）</Comment>
+      <DataType>smallint(1)|0</DataType>
+    </column>
+    <column id="93" parent="19" name="content_id">
+      <Position>4</Position>
+      <Comment>工作室的id  或者是服务的id</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="94" parent="19" name="content_sum_number">
+      <Position>5</Position>
+      <Comment>工作室/服务销售总数量</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="95" parent="19" name="content_sum_score">
+      <Position>6</Position>
+      <Comment>当前工作室/服务的总分数</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="96" parent="19" name="content_sum_number_month">
+      <Position>7</Position>
+      <Comment>当前工作室/服务的当前月累积销量</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <key id="97" parent="19" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>statistics_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="98" parent="20" name="studio_id">
+      <Position>1</Position>
+      <Comment>工作室ID</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="99" parent="20" name="studio_name">
+      <Position>2</Position>
+      <Comment>商铺名称</Comment>
+      <DataType>varchar(30)|0</DataType>
+    </column>
+    <column id="100" parent="20" name="studio_pic">
+      <Position>3</Position>
+      <Comment>工作室图片</Comment>
+      <DataType>varchar(30)|0</DataType>
+    </column>
+    <column id="101" parent="20" name="studio_money">
+      <Position>4</Position>
+      <Comment>诚信保证金</Comment>
+      <DataType>float|0</DataType>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+    </column>
+    <column id="102" parent="20" name="studio_reputation_value">
+      <Position>5</Position>
+      <Comment>信誉值</Comment>
+      <DataType>float|0</DataType>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+    </column>
+    <column id="103" parent="20" name="studio_phone">
+      <Position>6</Position>
+      <Comment>工作室电话</Comment>
+      <DataType>varchar(11)|0</DataType>
+    </column>
+    <column id="104" parent="20" name="studio_monthly_sales">
+      <Position>7</Position>
+      <Comment>月销量</Comment>
+      <DataType>int(10)|0</DataType>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+    </column>
+    <column id="105" parent="20" name="studio_QQ">
+      <Position>8</Position>
+      <Comment>商铺QQ</Comment>
+      <DataType>varchar(15)|0</DataType>
+    </column>
+    <column id="106" parent="20" name="studio_briefIntroduction">
+      <Position>9</Position>
+      <Comment>商铺简介</Comment>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <column id="107" parent="20" name="studio_collection_nmuber">
+      <Position>10</Position>
+      <Comment>收藏数量</Comment>
+      <DataType>int(11)|0</DataType>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+    </column>
+    <key id="108" parent="20" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>studio_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="109" parent="21" name="subject_id">
+      <Position>1</Position>
+      <DataType>smallint(5)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="110" parent="21" name="subject_number">
+      <Position>2</Position>
+      <Comment>学科编号</Comment>
+      <DataType>varchar(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="111" parent="21" name="subject_name">
+      <Position>3</Position>
+      <Comment>学科名称</Comment>
+      <DataType>varchar(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="112" parent="21" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>subject_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="113" parent="22" name="user_id">
+      <Position>1</Position>
+      <Comment>用户id</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="114" parent="22" name="user_name">
+      <Position>2</Position>
+      <Comment>用户昵称</Comment>
+      <DataType>varchar(15)|0</DataType>
+    </column>
+    <column id="115" parent="22" name="user_password">
+      <Position>3</Position>
+      <Comment>密码</Comment>
+      <DataType>varchar(12)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="116" parent="22" name="user_pic">
+      <Position>4</Position>
+      <Comment>头像</Comment>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <column id="117" parent="22" name="user_balance">
+      <Position>5</Position>
+      <Comment>账户余额</Comment>
+      <DataType>float|0</DataType>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+    </column>
+    <column id="118" parent="22" name="user_phone">
+      <Position>6</Position>
+      <Comment>电话（登陆名称）</Comment>
+      <DataType>varchar(15)|0</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>&apos;15284224244&apos;</DefaultExpression>
+    </column>
+    <column id="119" parent="22" name="user_realName">
+      <Position>7</Position>
+      <Comment>是否实名认证</Comment>
+      <DataType>tinyint(1)|0</DataType>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+    </column>
+    <column id="120" parent="22" name="user_school">
+      <Position>8</Position>
+      <Comment>学校</Comment>
+      <DataType>varchar(20)|0</DataType>
+    </column>
+    <column id="121" parent="22" name="user_job">
+      <Position>9</Position>
+      <Comment>职业</Comment>
+      <DataType>varchar(10)|0</DataType>
+    </column>
+    <column id="122" parent="22" name="user_education">
+      <Position>10</Position>
+      <Comment>学历</Comment>
+      <DataType>varchar(5)|0</DataType>
+    </column>
+    <column id="123" parent="22" name="user_title">
+      <Position>11</Position>
+      <Comment>职称</Comment>
+      <DataType>varchar(15)|0</DataType>
+    </column>
+    <column id="124" parent="22" name="user_withdrawals_account">
+      <Position>12</Position>
+      <Comment>提现账号(支付宝)</Comment>
+      <DataType>varchar(20)|0</DataType>
+    </column>
+    <column id="125" parent="22" name="user_withdrawals_name">
+      <Position>13</Position>
+      <Comment>提现名(支付宝)</Comment>
+      <DataType>varchar(20)|0</DataType>
+    </column>
+    <column id="126" parent="22" name="userIdPic1">
+      <Position>14</Position>
+      <Comment>身份证正面照片</Comment>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <column id="127" parent="22" name="userIdPic2">
+      <Position>15</Position>
+      <Comment>身份证反面照片</Comment>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <column id="128" parent="22" name="userIdPic3">
+      <Position>16</Position>
+      <Comment>手持身份证照片</Comment>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <index id="129" parent="22" name="userPhone">
+      <ColNames>user_phone</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="130" parent="22" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>user_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="131" parent="22" name="userPhone">
+      <ColNames>user_phone</ColNames>
+      <UnderlyingIndexName>userPhone</UnderlyingIndexName>
+    </key>
+    <column id="132" parent="23" name="file_id">
+      <Position>1</Position>
+      <Comment>文件id</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="133" parent="23" name="user_id">
+      <Position>2</Position>
+      <Comment>用户id</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="134" parent="23" name="file_name">
+      <Position>3</Position>
+      <Comment>文件名称</Comment>
+      <DataType>varchar(30)|0</DataType>
+    </column>
+    <column id="135" parent="23" name="file_url">
+      <Position>4</Position>
+      <Comment>文件地址</Comment>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <key id="136" parent="23" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>file_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+  </database-model>
+</dataSource>

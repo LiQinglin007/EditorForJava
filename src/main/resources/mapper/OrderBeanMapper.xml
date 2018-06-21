@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaomi.editor.dao.OrderBeanMapper">
+  <resultMap id="BaseResultMap" type="com.xiaomi.editor.bean.OrderBean">
+    <constructor>
+      <idArg column="order_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="order_type" javaType="java.lang.Short" jdbcType="SMALLINT" />
+      <arg column="order_state" javaType="java.lang.Short" jdbcType="SMALLINT" />
+      <arg column="studio_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="servlet_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="result_file_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="user_file_Id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="order_price" javaType="java.lang.Float" jdbcType="REAL" />
+      <arg column="order_result" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="order_sum_time" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="receipt_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="confirm_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="evaluate_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+
+</mapper>

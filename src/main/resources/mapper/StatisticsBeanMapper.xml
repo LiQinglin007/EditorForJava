@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaomi.editor.dao.StatisticsBeanMapper">
+  <resultMap id="BaseResultMap" type="com.xiaomi.editor.bean.StatisticsBean">
+    <constructor>
+      <idArg column="statistics_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="statistics_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="statistics_type" javaType="java.lang.Short" jdbcType="SMALLINT" />
+      <arg column="content_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="content_sum_number" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="content_sum_score" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="content_sum_number_month" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+
+</mapper>

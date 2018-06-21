@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaomi.editor.dao.ServletBeanMapper">
+  <resultMap id="BaseResultMap" type="com.xiaomi.editor.bean.ServletBean">
+    <constructor>
+      <idArg column="servlet_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="studio_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="servlet_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="servlet_pic" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="servlet_pics" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="servlet_original_price" javaType="java.lang.Float" jdbcType="REAL" />
+      <arg column="servlet_present_price" javaType="java.lang.Float" jdbcType="REAL" />
+      <arg column="servlet_type" javaType="java.lang.Short" jdbcType="SMALLINT" />
+      <arg column="servlet_monthly_sales" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="servlet_collection_quantity" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="servlet_hot" javaType="java.lang.Short" jdbcType="SMALLINT" />
+    </constructor>
+  </resultMap>
+
+</mapper>
