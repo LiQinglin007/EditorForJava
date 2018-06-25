@@ -4,7 +4,6 @@ import com.xiaomi.editor.bean.UserBean;
 import com.xiaomi.editor.service.IUserBeanService;
 import com.xiaomi.editor.system.ResponseJSON;
 import com.xiaomi.editor.utils.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,13 +20,14 @@ import java.util.List;
  * UpdateDescription：<br>
  */
 
-
 @Controller
 @RequestMapping("api/user")
+
 public class UserController {
 
     @Resource
     private IUserBeanService mUserBeanService;
+
 
     @ResponseBody
     @RequestMapping("/register")

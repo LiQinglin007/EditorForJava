@@ -9,6 +9,4 @@
       <arg column="file_url" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
-
-
 </mapper>

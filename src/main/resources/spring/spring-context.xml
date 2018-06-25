@@ -30,54 +30,37 @@
     <!-- 1.1 关联jdbc.properties -->
     <context:property-placeholder location="classpath:jdbc.properties"/>
 
-    <!--&lt;!&ndash; 配置数据源 &ndash;&gt;-->
-    <!--<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"-->
-          <!--destroy-method="close">-->
-        <!--<property name="driverClass" value="${dataSource.driverClass}"></property>-->
-        <!--<property name="jdbcUrl" value="${dataSource.jdbcUrl}"></property>-->
-        <!--<property name="user" value="${dataSource.user}"></property>-->
-        <!--<property name="password" value="${dataSource.password}"></property>-->
-        <!--&lt;!&ndash;初始化连接池中的连接数，取值应在minPoolSize与maxPoolSize之间，默认为3&ndash;&gt;-->
-        <!--<property name="initialPoolSize" value="${dataSource.initialPoolSize}"></property>-->
-        <!--&lt;!&ndash;最大连接池数量  连接池中保留的最大连接数。默认值: 15&ndash;&gt;-->
-        <!--<property name="maxPoolSize" value="${dataSource.maxPoolSize}"></property>-->
-        <!--&lt;!&ndash;连接池中保留的最小连接数，默认为：3&ndash;&gt;-->
-        <!--<property name="minPoolSize" value="${dataSource.minPoolSize}"></property>-->
-        <!--&lt;!&ndash;最大空闲时间，1000秒内未使用则连接被丢弃。若为0则永不丢弃。默认值: 0 &ndash;&gt;-->
-        <!--<property name="maxIdleTime" value="${dataSource.maxIdleTime}"></property>-->
-    <!--</bean>-->
-
     <!-- spring配置duid数据库连接池的数据源 -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <!-- 基本属性 url、user、password127.0.0.1 -->
-        <property name="driverClassName" value="${dataSource.driverClass}" />
-        <property name="url" value="${dataSource.jdbcUrl}" />
-        <property name="username" value="${dataSource.user}" />
-        <property name="password" value="${dataSource.password}" />
+        <property name="driverClassName" value="${dataSource.driverClass}"/>
+        <property name="url" value="${dataSource.jdbcUrl}"/>
+        <property name="username" value="${dataSource.user}"/>
+        <property name="password" value="${dataSource.password}"/>
 
         <!-- 配置初始化大小、最小、最大 -->
-        <property name="initialSize" value="${dataSource.initialPoolSize}" />
-        <property name="minIdle" value="${dataSource.minPoolSize}" />
-        <property name="maxActive" value="${dataSource.maxPoolSize}" />
+        <property name="initialSize" value="${dataSource.initialPoolSize}"/>
+        <property name="minIdle" value="${dataSource.minPoolSize}"/>
+        <property name="maxActive" value="${dataSource.maxPoolSize}"/>
         <!-- 配置获取连接等待超时的时间 -->
-        <property name="maxWait" value="${dataSource.maxWait}" />
+        <property name="maxWait" value="${dataSource.maxWait}"/>
         <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
-        <property name="timeBetweenEvictionRunsMillis" value="${dataSource.timeBetweenEvictionRunsMillis}" />
+        <property name="timeBetweenEvictionRunsMillis" value="${dataSource.timeBetweenEvictionRunsMillis}"/>
         <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
-        <property name="minEvictableIdleTimeMillis" value="${dataSource.minEvictableIdleTimeMillis}" />
+        <property name="minEvictableIdleTimeMillis" value="${dataSource.minEvictableIdleTimeMillis}"/>
 
         <!-- 验证连接有效与否的SQL，不同的数据配置不同 -->
-        <property name="validationQuery" value="SELECT 'x' from dual " />
-        <property name="testWhileIdle" value="true" />
-        <property name="testOnBorrow" value="false" />
-        <property name="testOnReturn" value="false" />
+        <property name="validationQuery" value="SELECT 'x' from dual "/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
 
         <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
-        <property name="poolPreparedStatements" value="true" />
-        <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+        <property name="poolPreparedStatements" value="true"/>
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20"/>
 
         <!-- 配置监控统计拦截的filters -->
-        <property name="filters" value="stat" />
+        <property name="filters" value="stat"/>
     </bean>
 
     <!-- mybatis和spring完美整合，不需要mybatis的配置映射文件 -->
@@ -118,7 +101,6 @@
     </tx:advice>
 
 
-
     <!-- 定义静态页面访问 -->
     <mvc:resources mapping="/static/**" location="/static/"/>
 
@@ -133,13 +115,12 @@
 
     <!--启用定时任务-->
     <!--<task:scheduled-tasks>-->
-        <!--&lt;!&ndash;ref:类注解的值  method:方法名-->
-        <!--cron:表达式  详解：https://www.cnblogs.com/javahr/p/8318728.html-->
-        <!--&ndash;&gt;-->
-        <!--&lt;!&ndash;每天的10:00—11:00 每5s执行一次&ndash;&gt;-->
-        <!--<task:scheduled ref="TestTask" method="sysTime" cron="0/5 * 10 * * *"/>-->
+    <!--&lt;!&ndash;ref:类注解的值  method:方法名-->
+    <!--cron:表达式  详解：https://www.cnblogs.com/javahr/p/8318728.html-->
+    <!--&ndash;&gt;-->
+    <!--&lt;!&ndash;每天的10:00—11:00 每5s执行一次&ndash;&gt;-->
+    <!--<task:scheduled ref="TestTask" method="sysTime" cron="0/5 * 10 * * *"/>-->
     <!--</task:scheduled-tasks>-->
-
 
 
 </beans>

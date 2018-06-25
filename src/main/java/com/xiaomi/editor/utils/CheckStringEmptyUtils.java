@@ -1,5 +1,6 @@
 package com.xiaomi.editor.utils;
 
+import javax.swing.plaf.TextUI;
 import java.util.Map;
 
 /**
@@ -18,7 +19,7 @@ public class CheckStringEmptyUtils {
      * @return
      */
     public static boolean IsEmpty(String str) {
-        return str == null || str.equals("") ? true : false;
+        return str == null || str.length()==0 ? true : false;
     }
 
     /**

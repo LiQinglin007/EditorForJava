@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaomi.editor.dao.CommodityBeanMapper">
+    <resultMap id="BaseResultMap" type="com.xiaomi.editor.bean.CommodityBean">
+        <constructor>
+            <idArg column="commodity_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="studio_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="commodity_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="commodity_pic" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="commodity_pics" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="commodity_original_price" javaType="java.lang.Float" jdbcType="REAL"/>
+            <arg column="commodity_present_price" javaType="java.lang.Float" jdbcType="REAL"/>
+            <arg column="commodity_type" javaType="java.lang.Short" jdbcType="SMALLINT"/>
+            <arg column="commodity_monthly_sales" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="commodity_collection_quantity" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="commodity_hot" javaType="java.lang.Short" jdbcType="SMALLINT"/>
+            <arg column="commodity_del" javaType="java.lang.Short" jdbcType="SMALLINT"/>
+        </constructor>
+    </resultMap>
+
+    <!--设置服务是否为热门服务-->
+    <update id="updateHotState" parameterType="Map">
+        UPDATE commodity SET commodity_hot=#{HotCommodity} WHERE commodity_id=#{CommodityId}
+    </update>
+
+    <!--通过id查询 并且没有被删除的-->
+    <select id="queryById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select * FROM commodity WHERE commodity_id=#{_parameter} AND commodity_del =0;
+    </select>
+
+
+</mapper>

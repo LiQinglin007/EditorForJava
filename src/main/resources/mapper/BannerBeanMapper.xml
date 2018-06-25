@@ -1,13 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xiaomi.editor.dao.BannerBeanMapper">
-  <resultMap id="BaseResultMap" type="com.xiaomi.editor.bean.BannerBean">
-    <constructor>
-      <idArg column="banner_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="banner_url" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="banner_weight" javaType="java.lang.Short" jdbcType="SMALLINT" />
-      <arg column="banner_web_url" javaType="java.lang.String" jdbcType="VARCHAR" />
-    </constructor>
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.xiaomi.editor.bean.BannerBean">
+        <constructor>
+            <idArg column="banner_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="banner_url" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="banner_weight" javaType="java.lang.Short" jdbcType="SMALLINT"/>
+            <arg column="banner_web_url" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="banner_del" javaType="java.lang.Short" jdbcType="VARCHAR"/>
+        </constructor>
+    </resultMap>
+
+
+    <!--添加banner-->
+    <insert id="addBanner" parameterType="com.xiaomi.editor.bean.BannerBean">
+    INSERT INTO banner(banner_url, banner_web_url,banner_weight,banner_del) VALUE (#{bannerUrl},#{bannerWebUrl},#{bannerWeight},#{bannerDel})
+  </insert>
+
+    <!--删除banner-->
+    <update id="updateDelState" parameterType="java.lang.Integer">
+    UPDATE banner SET banner_del=1 WHERE banner_id=#{_parameter}
+  </update>
+
+    <!--修改banner数据-->
+    <update id="updateBanner" parameterType="com.xiaomi.editor.bean.BannerBean">
+        UPDATE banner SET banner_url=#{bannerUrl},banner_web_url=#{bannerWebUrl},banner_weight=#{bannerWeight}
+        WHERE banner_id=#{bannerId}
+    </update>
+
+    <!--查询banner-->
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM banner where banner_del=1 order BY banner_weight DESC
+    </select>
+
 
 </mapper>

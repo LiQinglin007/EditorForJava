@@ -1,18 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xiaomi.editor.dao.StudioBeanMapper">
-  <resultMap id="BaseResultMap" type="com.xiaomi.editor.bean.StudioBean">
-    <constructor>
-      <idArg column="studio_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="studio_name" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="studio_pic" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="studio_money" javaType="java.lang.Float" jdbcType="REAL" />
-      <arg column="studio_phone" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="studio_monthly_sales" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="studio_QQ" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="studio_briefIntroduction" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="studio_collection_nmuber" javaType="java.lang.Integer" jdbcType="INTEGER" />
-    </constructor>
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.xiaomi.editor.bean.StudioBean">
+        <constructor>
+            <idArg column="studio_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="studio_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="studio_pic" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="studio_money" javaType="java.lang.Float" jdbcType="REAL"/>
+            <arg column="studio_phone" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="studio_monthly_sales" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="studio_QQ" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="studio_briefIntroduction" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="studio_collection_nmuber" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="studio_del" javaType="java.lang.Short" jdbcType="INTEGER"/>
+            <arg column="system_userid" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        </constructor>
+    </resultMap>
+
+    <insert id="addStudio" parameterType="com.xiaomi.editor.bean.StudioBean">
+    INSERT INTO studio(studio_name, studio_pic, studio_money, studio_phone, studio_monthly_sales, studio_QQ, studio_briefIntroduction, studio_collection_nmuber, studio_del, system_userid)
+    VALUE (#{studioName},#{studioPic},#{studioMoney},#{studioPhone},#{studioMonthlySales},#{studioQq},#{studioBriefintroduction},#{studioCollectionNmuber},#{studioDel},#{systemUserid})
+  </insert>
+
+    <update id="updateDelState" parameterType="java.lang.Integer">
+    UPDATE studio SET studio_del =1 WHERE studio_id=#{_parameter}
+  </update>
+
+    <select id="queryById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT * FROM studio WHERE studio_id=#{_parameter} AND studio_del=0;
+    </select>
 
 </mapper>

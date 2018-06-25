@@ -1,8 +1,15 @@
-package com.xiaomi.editor.dao;
+package com.xiaomi.editor.service;
 
 import com.xiaomi.editor.bean.StudioBean;
 
-public interface StudioBeanMapper {
+/**
+ * Description: <br>
+ * User: dell - XiaomiLi<br>
+ * Date: 2018-06-25<br>
+ * Time: 8:48<br>
+ * UpdateDescription：<br>
+ */
+public interface IStudioService {
     /**
      * 增加工作室
      *

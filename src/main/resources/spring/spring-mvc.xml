@@ -49,7 +49,7 @@
             </bean>
             <!--配合fastjson支持 -->
             <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
-            <!--<bean class="com.xiaomi.system.FastJsonHttpMessageConverterEx">-->
+                <!--<bean class="com.xiaomi.system.FastJsonHttpMessageConverterEx">-->
                 <property name="defaultCharset" value="UTF-8"/>
                 <property name="supportedMediaTypes">
                     <list>
@@ -88,7 +88,7 @@
                 <!--消除循环引用-->
                 <value>DisableCircularReferenceDetect</value>
                 <!--格式化输出-->
-                <value>PrettyFormat</value>
+                <!--<value>PrettyFormat</value>-->
             </list>
         </property>
 
@@ -108,7 +108,7 @@
             <mvc:exclude-mapping path="/v2/**"></mvc:exclude-mapping>
             <mvc:exclude-mapping path="/webjars/**"></mvc:exclude-mapping>
             <!--自定义的拦截器  日志拦截器-->
-            <bean class="com.xiaomi.editor.interceptor.TestInterceptor">
+            <bean class="com.xiaomi.editor.interceptor.SystemInterceptor">
                 <property name="charset" value="utf-8"></property>
                 <property name="allowUrls">
                     <list><!--如果请求中包含以下路径，则不进行拦截-->

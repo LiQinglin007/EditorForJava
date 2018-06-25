@@ -26,15 +26,39 @@ public class NoticeBean {
      */
     private Date noticeTime;
 
-    public NoticeBean(Integer noticeId, String noticeTitle, String noticeContent, Date noticeTime) {
+    /**
+     * 是否删除   0：不被删除  1：被删除了
+     */
+    private Short noticeDel;
+
+
+    public NoticeBean(Integer noticeId, String noticeTitle, String noticeContent, Date noticeTime, Short noticeDel) {
         this.noticeId = noticeId;
         this.noticeTitle = noticeTitle;
         this.noticeContent = noticeContent;
         this.noticeTime = noticeTime;
+        this.noticeDel = noticeDel;
+    }
+
+
+    public NoticeBean(String noticeTitle, String noticeContent, Date noticeTime) {
+        this.noticeId = null;
+        this.noticeTitle = noticeTitle;
+        this.noticeContent = noticeContent;
+        this.noticeTime = noticeTime;
+        this.noticeDel = 0;
     }
 
     public NoticeBean() {
         super();
+    }
+
+    public Short getNoticeDel() {
+        return noticeDel;
+    }
+
+    public void setNoticeDel(Short noticeDel) {
+        this.noticeDel = noticeDel;
     }
 
     public Integer getNoticeId() {

@@ -1,5 +1,8 @@
 package com.xiaomi.editor.interceptor;
 
+import com.alibaba.fastjson.JSONObject;
+import com.xiaomi.editor.system.ResponseJSON;
+import com.xiaomi.editor.utils.HttpCode;
 import org.apache.log4j.Logger;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -10,9 +13,9 @@ import java.io.IOException;
 import java.util.Enumeration;
 
 /**
- * 拦截器
+ * 记录参数拦截器
  */
-public class TestInterceptor implements HandlerInterceptor {
+public class SystemInterceptor implements HandlerInterceptor {
 
     private String[] allowUrls;// 不过滤地址
     private String charset; // 字符集
@@ -25,7 +28,7 @@ public class TestInterceptor implements HandlerInterceptor {
         this.charset = charset;
     }
 
-    Logger logger = Logger.getLogger(TestInterceptor.class);
+    Logger logger = Logger.getLogger(SystemInterceptor.class);
 
 
     /**
@@ -46,6 +49,7 @@ public class TestInterceptor implements HandlerInterceptor {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");
         String url = request.getServletPath();
+        request.getHeader("Authorization");
         // 过滤静态文件
         if (url.indexOf("/static/") > -1) {
             return true;
@@ -62,6 +66,7 @@ public class TestInterceptor implements HandlerInterceptor {
             s = s + name + ":" + value + ",";
         }
         logger.warn("接口：" + url + "入参：" + s);
+
 //        // 过滤登录
 //        if (url != null && checkUrls(url)) {
 //            return true;

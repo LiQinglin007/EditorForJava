@@ -24,15 +24,45 @@ public class BannerBean {
      */
     private String bannerWebUrl;
 
+    /**
+     * 是否删除   0：不被删除  1：被删除了
+     */
+    private Short bannerDel;
+
+    public BannerBean(Integer bannerId, String bannerUrl, Short bannerWeight, String bannerWebUrl, Short bannerDel) {
+        this.bannerId = bannerId;
+        this.bannerUrl = bannerUrl;
+        this.bannerWeight = bannerWeight;
+        this.bannerWebUrl = bannerWebUrl;
+        this.bannerDel = bannerDel;
+    }
+
+    public BannerBean() {
+        super();
+    }
+
+    public BannerBean(String bannerUrl, Short bannerWeight, String bannerWebUrl) {
+        this.bannerId = null;
+        this.bannerUrl = bannerUrl;
+        this.bannerWeight = bannerWeight;
+        this.bannerWebUrl = bannerWebUrl;
+        this.bannerDel = 0;
+    }
+
     public BannerBean(Integer bannerId, String bannerUrl, Short bannerWeight, String bannerWebUrl) {
         this.bannerId = bannerId;
         this.bannerUrl = bannerUrl;
         this.bannerWeight = bannerWeight;
         this.bannerWebUrl = bannerWebUrl;
+        this.bannerDel = 0;
     }
 
-    public BannerBean() {
-        super();
+    public Short getBannerDel() {
+        return bannerDel;
+    }
+
+    public void setBannerDel(Short bannerDel) {
+        this.bannerDel = bannerDel;
     }
 
     public Integer getBannerId() {

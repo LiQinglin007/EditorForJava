@@ -49,7 +49,18 @@ public class StudioBean {
      */
     private Integer studioCollectionNmuber;
 
-    public StudioBean(Integer studioId, String studioName, String studioPic, Float studioMoney, String studioPhone, Integer studioMonthlySales, String studioQq, String studioBriefintroduction, Integer studioCollectionNmuber) {
+    /**
+     * 是否删除   0：不被删除  1：被删除了
+     */
+    private Short studioDel;
+
+    /**
+     * 系统用户id
+     */
+    private Integer systemUserid;
+
+
+    public StudioBean(Integer studioId, String studioName, String studioPic, Float studioMoney, String studioPhone, Integer studioMonthlySales, String studioQq, String studioBriefintroduction, Integer studioCollectionNmuber, Short studioDel, Integer systemUserid) {
         this.studioId = studioId;
         this.studioName = studioName;
         this.studioPic = studioPic;
@@ -59,10 +70,43 @@ public class StudioBean {
         this.studioQq = studioQq;
         this.studioBriefintroduction = studioBriefintroduction;
         this.studioCollectionNmuber = studioCollectionNmuber;
+        this.studioDel = studioDel;
+        this.systemUserid = systemUserid;
+    }
+
+    public StudioBean(String studioName, String studioPic, Float studioMoney, String studioPhone, String studioQq, String studioBriefintroduction) {
+        this.studioId = null;
+        this.studioName = studioName;
+        this.studioPic = studioPic;
+        this.studioMoney = studioMoney;
+        this.studioPhone = studioPhone;
+        this.studioMonthlySales = 0;
+        this.studioQq = studioQq;
+        this.studioBriefintroduction = studioBriefintroduction;
+        this.studioCollectionNmuber = 0;
+        this.studioDel = 0;
+        this.systemUserid = 0;
     }
 
     public StudioBean() {
         super();
+    }
+
+
+    public Short getStudioDel() {
+        return studioDel;
+    }
+
+    public void setStudioDel(Short studioDel) {
+        this.studioDel = studioDel;
+    }
+
+    public Integer getSystemUserid() {
+        return systemUserid;
+    }
+
+    public void setSystemUserid(Integer systemUserid) {
+        this.systemUserid = systemUserid;
     }
 
     public Integer getStudioId() {

@@ -125,14 +125,6 @@
                enableUpdateByExample="false">
         </table>
 
-
-        <table schema="editormi" tableName="servlet"
-               domainObjectName="ServletBean"
-               enableCountByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               enableUpdateByExample="false">
-        </table>
         <table schema="editormi" tableName="statistics"
                domainObjectName="StatisticsBean"
                enableCountByExample="false"
@@ -166,5 +158,21 @@
                enableUpdateByExample="false">
         </table>
 
+        <table schema="editormi" tableName="commodity"
+               domainObjectName="CommodityBean"
+               enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false">
+        </table>
+
+
+        <table schema="editormi" tableName="system"
+        domainObjectName="SystemBean"
+        enableCountByExample="false"
+        enableDeleteByExample="false"
+        enableSelectByExample="false"
+        enableUpdateByExample="false">
+        </table>
     </context>
 </generatorConfiguration>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaomi.editor.dao.SystemBeanMapper">
+    <resultMap id="BaseResultMap" type="com.xiaomi.editor.bean.SystemBean">
+        <constructor>
+            <idArg column="system_userid" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="system_user_loginname" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="system_user_password" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="system_user_type" javaType="java.lang.Short" jdbcType="SMALLINT"/>
+            <arg column="system_user_del" javaType="java.lang.Short" jdbcType="SMALLINT"/>
+        </constructor>
+    </resultMap>
+
+    <!--添加用户-->
+    <insert id="addSystemUser" parameterType="com.xiaomi.editor.bean.SystemBean">
+    INSERT INTO system(system_user_loginname,system_user_password,system_user_type,system_user_del)
+    VALUE (#{systemUserLoginname},#{systemUserPassword},#{systemUserType},#{systemUserDel})
+  </insert>
+
+    <!--修改用户删除状态-->
+    <update id="updateDelState" parameterType="java.lang.Integer">
+        UPDATE system SET system.system_user_del=1 where system.system_userid= #{_parameter}
+    </update>
+
+    <!--通过id去查询没有删掉(状态)的用户-->
+    <select id="queryById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT * FROM system WHERE system_userid=#{_parameter} AND system_user_del=0
+    </select>
+
+    <!--通过用户名去查询没有删掉(状态)的用户-->
+    <select id="queryByLoginName" parameterType="String" resultMap="BaseResultMap">
+        SELECT * FROM system WHERE system_user_loginname=#{_parameter} AND system_user_del=0
+    </select>
+
+    <!--修改密码-->
+    <update id="updatePassword" parameterType="com.xiaomi.editor.bean.SystemBean">
+        UPDATE system SET system_user_password=#{systemUserPassword} WHERE system_userid=#{systemUserid}
+    </update>
+
+
+</mapper>

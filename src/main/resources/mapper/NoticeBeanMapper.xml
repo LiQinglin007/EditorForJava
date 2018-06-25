@@ -1,13 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xiaomi.editor.dao.NoticeBeanMapper">
-  <resultMap id="BaseResultMap" type="com.xiaomi.editor.bean.NoticeBean">
-    <constructor>
-      <idArg column="notice_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="notice_title" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="notice_content" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="notice_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-    </constructor>
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.xiaomi.editor.bean.NoticeBean">
+        <constructor>
+            <idArg column="notice_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="notice_title" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="notice_content" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="notice_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="notice_del" javaType="java.lang.Short" jdbcType="TIMESTAMP"/>
+        </constructor>
+    </resultMap>
+
+    <!--发布日志-->
+    <insert id="addNotice" parameterType="com.xiaomi.editor.bean.NoticeBean">
+    INSERT INTO notice(notice_title, notice_content, notice_time,notice_del)
+    VALUE (#{noticeTitle},#{noticeContent},#{noticeTime},#{noticeDel})
+  </insert>
+
+    <!--修改日志状态-->
+    <update id="updateDelState" parameterType="java.lang.Integer">
+        UPDATE notice SET notice_del=1 where notice_id=#{_parameter}
+    </update>
+
+    <!--查询日志-->
+    <select id="queryById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT * FROM notice WHERE notice_id=#{_parameter}
+    </select>
+
 
 </mapper>

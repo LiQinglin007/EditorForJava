@@ -1,8 +1,16 @@
-package com.xiaomi.editor.dao;
+package com.xiaomi.editor.service;
 
 import com.xiaomi.editor.bean.NoticeBean;
 
-public interface NoticeBeanMapper {
+/**
+ * Description:公告 <br>
+ * User: dell - XiaomiLi<br>
+ * Date: 2018-06-25<br>
+ * Time: 11:31<br>
+ * UpdateDescription：<br>
+ */
+public interface INoticeBeanService {
+
     /**
      * 添加公告
      *
@@ -28,4 +36,5 @@ public interface NoticeBeanMapper {
      * @return
      */
     NoticeBean queryById(int noticeId);
+
 }

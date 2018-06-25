@@ -1,27 +1,12 @@
 package com.xiaomi.editor.bean;
 
-/**
- * 用户上传的文件
- */
 public class UserfileBean {
-    /**
-     * 文件id
-     */
     private Integer fileId;
 
-    /**
-     * 用户id
-     */
     private Integer userId;
 
-    /**
-     * 文件名称
-     */
     private String fileName;
 
-    /**
-     * 文件地址
-     */
     private String fileUrl;
 
     public UserfileBean(Integer fileId, Integer userId, String fileName, String fileUrl) {
