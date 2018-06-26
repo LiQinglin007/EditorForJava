@@ -24,7 +24,11 @@
 
     <!--修改banner数据-->
     <update id="updateBanner" parameterType="com.xiaomi.editor.bean.BannerBean">
-        UPDATE banner SET banner_url=#{bannerUrl},banner_web_url=#{bannerWebUrl},banner_weight=#{bannerWeight}
+        UPDATE banner SET
+        <if test="bannerUrl!=null and bannerUrl!=''">
+            banner_url=#{bannerUrl},
+        </if>
+        banner_web_url=#{bannerWebUrl},banner_weight=#{bannerWeight}
         WHERE banner_id=#{bannerId}
     </update>
 

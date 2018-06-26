@@ -4,10 +4,7 @@ package com.xiaomi.editor.controller;
 import com.xiaomi.editor.bean.*;
 import com.xiaomi.editor.service.*;
 import com.xiaomi.editor.system.ResponseJSON;
-import com.xiaomi.editor.utils.CheckStringEmptyUtils;
-import com.xiaomi.editor.utils.MD5Util;
-import com.xiaomi.editor.utils.ResponseUtils;
-import com.xiaomi.editor.utils.TokenUtil;
+import com.xiaomi.editor.utils.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -178,21 +175,32 @@ public class AdminController {
     /**
      * 添加轮播图
      *
-     * @param imgUrl
+     * @param session
      * @param webUrl
      * @param weight
+     * @param file
      * @return
      */
     @RequestMapping("/addBanner")
     @ResponseBody
-    public ResponseJSON addBanner(@RequestParam(value = "imgUrl") String imgUrl, @RequestParam(value = "webUrl") String webUrl,
-                                  @RequestParam(value = "weight") int weight) {
+    public ResponseJSON addBanner(HttpSession session, @RequestParam(value = "webUrl") String webUrl,
+                                  @RequestParam(value = "weight") int weight, @RequestParam(value = "file") MultipartFile file) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("添加失败", null);
-        if (CheckStringEmptyUtils.IsEmpty(imgUrl)) {
-            responseJSON.setMsg("图片地址不能为空");
+        if (file == null) {
+            responseJSON.setMsg("图片不能为空");
             return responseJSON;
         }
-        int i = mIBannerService.addBanner(new BannerBean(imgUrl, Short.parseShort(weight + ""), webUrl));
+        String saveFile = "";
+        try {
+            saveFile = FileUtil.saveFile(session, file);
+        } catch (IOException e) {
+            e.printStackTrace();
+            logger.error("addBanner文件保存失败：" + e.toString());
+            responseJSON.setMsg("添加失败");
+            return responseJSON;
+        }
+
+        int i = mIBannerService.addBanner(new BannerBean(saveFile, Short.parseShort(weight + ""), webUrl));
         if (i == 0) {
             return responseJSON;
         }
@@ -227,16 +235,23 @@ public class AdminController {
      */
     @RequestMapping("/updateBanner")
     @ResponseBody
-    public ResponseJSON updateBanner(@RequestParam(value = "bannerId") int bannerId,
-                                     @RequestParam(value = "imgUrl") String imgUrl,
+    public ResponseJSON updateBanner(HttpSession session, @RequestParam(value = "bannerId") int bannerId,
                                      @RequestParam(value = "webUrl") String webUrl,
-                                     @RequestParam(value = "weight") int weight) {
+                                     @RequestParam(value = "weight") int weight,
+                                     @RequestParam(value = "file", required = false) MultipartFile file) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("添加失败", null);
-        if (CheckStringEmptyUtils.IsEmpty(imgUrl)) {
-            responseJSON.setMsg("图片地址不能为空");
-            return responseJSON;
+        String saveFile = "";
+        if (file != null) {
+            try {
+                saveFile = FileUtil.saveFile(session, file);
+            } catch (IOException e) {
+                e.printStackTrace();
+                logger.error("updateBanner文件保存失败：" + e.toString());
+                responseJSON.setMsg("添加失败");
+                return responseJSON;
+            }
         }
-        int i = mIBannerService.updateBanner(new BannerBean(bannerId, imgUrl, Short.parseShort(weight + ""), webUrl));
+        int i = mIBannerService.updateBanner(new BannerBean(bannerId, saveFile, Short.parseShort(weight + ""), webUrl));
         if (i == 0) {
             return responseJSON;
         }
@@ -339,11 +354,9 @@ public class AdminController {
             return responseJSON;
         }
         //保存图片
-        String RootPath = session.getServletContext().getRealPath("/");
         String studioPic = "";
         try {
-            studioPic = "static/" + System.currentTimeMillis() + ".jpg";
-            FileUtils.copyInputStreamToFile(file.getInputStream(), new File(RootPath + studioPic));
+            studioPic = FileUtil.saveFile(session, file);
         } catch (IOException e) {
             e.printStackTrace();
             logger.error("addStudio文件保存失败：" + e.toString());
