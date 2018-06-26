@@ -28,5 +28,31 @@
         select * FROM commodity WHERE commodity_id=#{_parameter} AND commodity_del =0;
     </select>
 
+    <!--工作室添加服务-->
+    <insert id="addCommodity" parameterType="com.xiaomi.editor.bean.CommodityBean">
+      INSERT INTO commodity(studio_id, commodity_name, commodity_pic, commodity_pics, commodity_original_price,
+      commodity_present_price, commodity_type,commodity_monthly_sales,commodity_collection_quantity,
+      commodity_hot,commodity_del)
+      VALUE (#{studioId},#{commodityName},#{commodityPic},#{commodityPics},#{commodityOriginalPrice},
+      #{commodityPresentPrice},#{commodityType},#{commodityMonthlySales},#{commodityCollectionQuantity},
+      #{commodityHot},#{commodityDel})
+    </insert>
+
+    <!--工作室修改商品-->
+    <update id="updateCommodity" parameterType="com.xiaomi.editor.bean.CommodityBean">
+          UPDATE commodity SET
+          commodity_name = #{commodityName},
+          commodity_pic = #{commodityPic},
+          commodity_pics = #{commodityPics},
+          commodity_original_price = #{commodityOriginalPrice},
+          commodity_present_price = #{commodityPresentPrice},
+          commodity_type = #{commodityType}
+          where commodity_id=#{commodityId}
+    </update>
+
+    <!--下架商品-->
+    <update id="updateCommodityDel" parameterType="java.lang.Integer">
+        UPDATE commodity SET commodity_del = 1 where commodity_id=#{_parameter}
+    </update>
 
 </mapper>

@@ -35,4 +35,19 @@ public class CommodityService implements ICommodityService {
     public CommodityBean queryById(int CommodityId) {
         return commodityBeanMapper.queryById(CommodityId);
     }
+
+    @Override
+    public int addCommodity(CommodityBean commodityBean) {
+        return commodityBeanMapper.addCommodity(commodityBean);
+    }
+
+    @Override
+    public int updateCommodity(CommodityBean commodityBean) {
+        return commodityBeanMapper.updateCommodity(commodityBean);
+    }
+
+    @Override
+    public int updateCommodityDel(int CommodityId) {
+        return commodityBeanMapper.updateCommodityDel(CommodityId);
+    }
 }

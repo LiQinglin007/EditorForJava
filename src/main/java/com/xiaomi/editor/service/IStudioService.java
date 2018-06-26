@@ -35,4 +35,23 @@ public interface IStudioService {
      * @return
      */
     StudioBean queryById(int mStudioBeanId);
+
+
+    /**
+     * 工作室修改自己工作室的数据
+     *
+     * @param mStudioBean
+     * @return
+     */
+    int updateStudio(StudioBean mStudioBean);
+
+
+    /**
+     * 通过商品的id来查询这个商品是所属店铺的信息
+     *
+     * @param commodityId
+     * @return
+     */
+    StudioBean querySystenUserIdByCommodityId(int commodityId);
+
 }

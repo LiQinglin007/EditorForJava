@@ -30,4 +30,25 @@ public class FileUtil {
         FileUtils.copyInputStreamToFile(file.getInputStream(), new File(RootPath + savePath));
         return savePath;
     }
+
+
+    /**
+     * 保存文件
+     *
+     * @param session
+     * @param files
+     * @return
+     * @throws IOException
+     */
+    public static String saveFile(HttpSession session, MultipartFile[] files) throws IOException {
+        String RootPath = session.getServletContext().getRealPath("/");
+        String realPath = "";
+        for (MultipartFile file : files) {
+            String savePath = "static/" + System.currentTimeMillis() + ".jpg";
+            FileUtils.copyInputStreamToFile(file.getInputStream(), new File(RootPath + savePath));
+            realPath += savePath + ",";
+        }
+        realPath = realPath.length() > 0 ? realPath.substring(0, realPath.length() - 1) : realPath;
+        return realPath;
+    }
 }

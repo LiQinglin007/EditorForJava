@@ -5,7 +5,6 @@ import com.xiaomi.editor.bean.*;
 import com.xiaomi.editor.service.*;
 import com.xiaomi.editor.system.ResponseJSON;
 import com.xiaomi.editor.utils.*;
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
@@ -336,7 +334,7 @@ public class AdminController {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("添加失败", null);
         //检查参数
         String checkStringList = CheckStringEmptyUtils.CheckStringList(new CheckStringEmptyUtils.CheckStringBean(studioName, "工作室名称不能为空"),
-                new CheckStringEmptyUtils.CheckStringBean(studioPhone, "工作室联系电话不能为空"),
+                    new CheckStringEmptyUtils.CheckStringBean(studioPhone, "工作室联系电话不能为空"),
                 new CheckStringEmptyUtils.CheckStringBean(studioQQ, "工作QQ不能为空"),
                 new CheckStringEmptyUtils.CheckStringBean(studioBriefintroduction, "工作室简介不能为空"));
         if (!checkStringList.equals(CheckStringEmptyUtils.ListSuccess)) {

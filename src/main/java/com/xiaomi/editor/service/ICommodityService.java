@@ -18,7 +18,7 @@ public interface ICommodityService {
      *
      * @return
      */
-    int updateHotState(Map<String,Object> CommodityMap);
+    int updateHotState(Map<String, Object> CommodityMap);
 
     /**
      * 查询没有被删除的商品
@@ -27,5 +27,29 @@ public interface ICommodityService {
      * @return
      */
     CommodityBean queryById(int CommodityId);
+
+    /**
+     * 添加商品
+     *
+     * @param commodityBean
+     * @return
+     */
+    int addCommodity(CommodityBean commodityBean);
+
+    /**
+     * 工作室修改自家的商品
+     *
+     * @param commodityBean
+     * @return
+     */
+    int updateCommodity(CommodityBean commodityBean);
+
+    /**
+     * 下架商品
+     *
+     * @param CommodityId
+     * @return
+     */
+    int updateCommodityDel(int CommodityId);
 
 }

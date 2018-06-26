@@ -88,6 +88,16 @@ public class StudioBean {
         this.systemUserid = 0;
     }
 
+
+    public StudioBean(Integer studioId, String studioName, String studioPic, String studioPhone, String studioQq, String studioBriefintroduction) {
+        this.studioId = studioId;
+        this.studioName = studioName;
+        this.studioPic = studioPic;
+        this.studioPhone = studioPhone;
+        this.studioQq = studioQq;
+        this.studioBriefintroduction = studioBriefintroduction;
+    }
+
     public StudioBean() {
         super();
     }

@@ -68,6 +68,24 @@ public class CommodityBean {
         this.commodityDel = commodityDel;
     }
 
+
+    public CommodityBean(Integer studioId, String commodityName, String commodityPic, String commodityPics,  Float commodityPresentPrice, Short commodityType) {
+        this.studioId = studioId;
+        this.commodityName = commodityName;
+        this.commodityPic = commodityPic;
+        this.commodityPics = commodityPics;
+        this.commodityOriginalPrice = commodityPresentPrice;
+        this.commodityPresentPrice = commodityPresentPrice;
+        this.commodityType = commodityType;
+        this.commodityMonthlySales = 0;
+        this.commodityCollectionQuantity = 0;
+        this.commodityHot = 0;
+        this.commodityDel = 0;
+    }
+
+
+
+
     public CommodityBean() {
         super();
     }

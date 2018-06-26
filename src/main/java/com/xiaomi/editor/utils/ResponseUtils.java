@@ -11,6 +11,7 @@ public class ResponseUtils {
 
     /**
      * 获取返回成功的bean
+     *
      * @param msg
      * @param bean
      * @return
@@ -25,8 +26,26 @@ public class ResponseUtils {
         return mResponseJSON;
     }
 
+
+    /**
+     * 获取返回成功的bean
+     *
+     * @param msg
+     * @return
+     */
+    public static ResponseJSON getSuccessResponseBean(String msg) {
+        if (mResponseJSON == null) {
+            mResponseJSON = new ResponseJSON();
+        }
+        mResponseJSON.setCode(HttpCode.SuccessCode);
+        mResponseJSON.setMsg(msg);
+        mResponseJSON.setData(null);
+        return mResponseJSON;
+    }
+
     /**
      * 获取返回失败的bean
+     *
      * @param msg
      * @param bean
      * @return
@@ -38,6 +57,22 @@ public class ResponseUtils {
         mResponseJSON.setCode(HttpCode.FiledCode);
         mResponseJSON.setMsg(msg);
         mResponseJSON.setData(bean);
+        return mResponseJSON;
+    }
+
+    /**
+     * 获取返回失败的bean
+     *
+     * @param msg
+     * @return
+     */
+    public static ResponseJSON getFiledResponseBean(String msg) {
+        if (mResponseJSON == null) {
+            mResponseJSON = new ResponseJSON();
+        }
+        mResponseJSON.setCode(HttpCode.FiledCode);
+        mResponseJSON.setMsg(msg);
+        mResponseJSON.setData(null);
         return mResponseJSON;
     }
 

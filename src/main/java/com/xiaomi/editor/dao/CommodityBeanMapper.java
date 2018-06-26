@@ -20,5 +20,27 @@ public interface CommodityBeanMapper {
      */
     CommodityBean queryById(int CommodityId);
 
+    /**
+     * 添加商品
+     *
+     * @param commodityBean
+     * @return
+     */
+    int addCommodity(CommodityBean commodityBean);
 
+    /**
+     * 工作室修改自家的商品
+     *
+     * @param commodityBean
+     * @return
+     */
+    int updateCommodity(CommodityBean commodityBean);
+
+    /**
+     * 下架商品
+     *
+     * @param CommodityId
+     * @return
+     */
+    int updateCommodityDel(int CommodityId);
 }

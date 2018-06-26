@@ -17,17 +17,30 @@
         </constructor>
     </resultMap>
 
+    <!--添加工作室-->
     <insert id="addStudio" parameterType="com.xiaomi.editor.bean.StudioBean">
-    INSERT INTO studio(studio_name, studio_pic, studio_money, studio_phone, studio_monthly_sales, studio_QQ, studio_briefIntroduction, studio_collection_nmuber, studio_del, system_userid)
-    VALUE (#{studioName},#{studioPic},#{studioMoney},#{studioPhone},#{studioMonthlySales},#{studioQq},#{studioBriefintroduction},#{studioCollectionNmuber},#{studioDel},#{systemUserid})
+    INSERT INTO studio(studio_name, studio_pic, studio_money, studio_phone, studio_monthly_sales, studio_QQ,
+     studio_briefIntroduction, studio_collection_nmuber, studio_del, system_userid)
+    VALUE (#{studioName},#{studioPic},#{studioMoney},#{studioPhone},#{studioMonthlySales},#{studioQq},
+    #{studioBriefintroduction},#{studioCollectionNmuber},#{studioDel},#{systemUserid})
   </insert>
 
+    <!--删除工作室(修改状态)-->
     <update id="updateDelState" parameterType="java.lang.Integer">
     UPDATE studio SET studio_del =1 WHERE studio_id=#{_parameter}
   </update>
 
+    <!--通过id查询没有被删掉的-->
     <select id="queryById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         SELECT * FROM studio WHERE studio_id=#{_parameter} AND studio_del=0;
     </select>
+
+    <!--工作室修改自己工作室的信息-->
+    <update id="updateStudio" parameterType="com.xiaomi.editor.bean.StudioBean">
+        UPDATE studio SET studio_name=#{studioName} ,studio_pic=#{studioPic},studio_phone=#{studioPhone},
+        studio_QQ=#{studioQq},studio_briefIntroduction=#{studioBriefintroduction}
+        WHERE studio_id=#{studioId}
+    </update>
+
 
 </mapper>
