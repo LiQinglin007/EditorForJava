@@ -2,12 +2,12 @@ package com.xiaomi.editor.controller;
 
 import com.xiaomi.editor.bean.CommodityBean;
 import com.xiaomi.editor.bean.StudioBean;
+import com.xiaomi.editor.bean.SystemBean;
 import com.xiaomi.editor.service.ICommodityService;
 import com.xiaomi.editor.service.IStudioService;
+import com.xiaomi.editor.service.ISystemService;
 import com.xiaomi.editor.system.ResponseJSON;
-import com.xiaomi.editor.utils.CheckStringEmptyUtils;
-import com.xiaomi.editor.utils.FileUtil;
-import com.xiaomi.editor.utils.ResponseUtils;
+import com.xiaomi.editor.utils.*;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
@@ -33,11 +34,35 @@ public class SystemController {
     private IStudioService studioService;
     @Resource
     private ICommodityService commodityService;
+    @Resource
+    private ISystemService mISystemService;
 
     Logger logger = Logger.getLogger(SystemController.class);
 
     /**
+     * 检查当前用户是不是超级管理员
+     *
+     * @param request
+     * @return
+     */
+    private boolean checkUser(HttpServletRequest request) {
+        //通过请求头中的token拿到当前用户的userId
+        String header = request.getHeader(FinalData.TOKENHEAD);
+        String userId = JedisUtil.getSystemUserId(header);
+        SystemBean systemBean = mISystemService.queryById(Integer.parseInt(userId));
+        if (systemBean == null) {
+            return false;
+        }
+        if (systemBean.getSystemUserType() == FinalData.SYSTEM_STUDIO) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * 修改自己工作室数据
+     *
      * @param session
      * @param studioId                工作室id
      * @param studioName              工作室名称
@@ -49,11 +74,15 @@ public class SystemController {
      */
     @ResponseBody
     @RequestMapping("/updateStudioData")
-    public ResponseJSON updateStudioData(HttpSession session, @RequestParam int studioId,
+    public ResponseJSON updateStudioData(HttpServletRequest request, HttpSession session, @RequestParam int studioId,
                                          @RequestParam String studioName, @RequestParam String phone,
                                          @RequestParam String qq, @RequestParam String studioBriefintroduction,
                                          @RequestParam(value = "file") MultipartFile file) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("修改失败", null);
+        if (!checkUser(request)) {
+            responseJSON.setMsg("用户权限不足，请联系管理员");
+            return responseJSON;
+        }
         String checkStringList = CheckStringEmptyUtils.CheckStringList(
                 new CheckStringEmptyUtils.CheckStringBean(studioName, "工作室名称不能为空"),
                 new CheckStringEmptyUtils.CheckStringBean(phone, "工作室联系电话不能为空"),
@@ -98,13 +127,16 @@ public class SystemController {
      */
     @ResponseBody
     @RequestMapping("/addCommodity")
-    public ResponseJSON addCommodity(HttpSession session, @RequestParam int studioId,
+    public ResponseJSON addCommodity(HttpServletRequest request, HttpSession session, @RequestParam int studioId,
                                      @RequestParam String commodityName, @RequestParam Float commodityPresentPrice,
                                      @RequestParam int commodityType,
                                      @RequestParam(value = "picFile") MultipartFile file,
                                      @RequestParam(value = "picsFile") MultipartFile[] files) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("添加失败");
-
+        if (!checkUser(request)) {
+            responseJSON.setMsg("用户权限不足，请联系管理员");
+            return responseJSON;
+        }
         if (CheckStringEmptyUtils.IsEmpty(commodityName)) {
             responseJSON.setMsg("服务名称不能为空");
             return responseJSON;
@@ -164,13 +196,16 @@ public class SystemController {
      */
     @ResponseBody
     @RequestMapping("/updateCommodity")
-    public ResponseJSON updateCommodity(HttpSession session, @RequestParam int commodityId,
+    public ResponseJSON updateCommodity(HttpServletRequest request, HttpSession session, @RequestParam int commodityId,
                                         @RequestParam String commodityName, @RequestParam Float commodityPresentPrice,
                                         @RequestParam int commodityType,
                                         @RequestParam(value = "picFile") MultipartFile file,
                                         @RequestParam(value = "picsFile") MultipartFile[] files) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("修改失败");
-
+        if (!checkUser(request)) {
+            responseJSON.setMsg("用户权限不足，请联系管理员");
+            return responseJSON;
+        }
         String picUrl = "";
         if (file != null) {
             try {
@@ -236,8 +271,12 @@ public class SystemController {
      */
     @ResponseBody
     @RequestMapping("/delCommodity")
-    public ResponseJSON delCommodity(@RequestParam int commodityId) {
+    public ResponseJSON delCommodity(HttpServletRequest request, @RequestParam int commodityId) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("下架失败");
+        if (!checkUser(request)) {
+            responseJSON.setMsg("用户权限不足，请联系管理员");
+            return responseJSON;
+        }
         CommodityBean commodityBean = commodityService.queryById(commodityId);
         if (commodityBean == null) {
             responseJSON.setMsg("暂无该商品");

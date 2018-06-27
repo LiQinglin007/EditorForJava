@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import redis.clients.jedis.Jedis;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -61,7 +61,8 @@ public class AdminController {
      */
     @RequestMapping("/systemLogin")
     @ResponseBody
-    public ResponseJSON systemLogin(@RequestParam(value = "userLoginName") String userLoginName, @RequestParam(value = "userPassword") String userPassword) {
+    public ResponseJSON systemLogin(@RequestParam(value = "userLoginName") String userLoginName,
+                                    @RequestParam(value = "userPassword") String userPassword) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("登录失败", null);
         //检查参数
         String checkStringList = CheckStringEmptyUtils.CheckStringList(
@@ -83,10 +84,33 @@ public class AdminController {
             responseJSON.setMsg("密码错误");
             return responseJSON;
         }
+
+        // 判断redis是否有该用户 ,如果有则重新设置 失效时间
+        List<String> liststr = JedisClientUtil.getAllKeys(FinalData.SYSTEM_TOKEN + "*");
+        System.out.println(liststr);
+        String token = "";
+        if (liststr.size() > 0) {
+            for (int i = 0; i < liststr.size(); i++) {
+                String key = liststr.get(i);
+                int uid = Integer.valueOf(JedisClientUtil.getString(key));
+                if (systemBean.getSystemUserid() == uid) {
+                    // 如果有则重新设置 失效时间,将原来的token返回
+                    JedisClientUtil.setExpiryTime(key, FinalData.TOKEN_EXPIRY_SECONDS);
+                    token = key.substring(FinalData.SYSTEM_TOKEN.length(), key.length());
+                    break;
+                }
+            }
+        }
+
+        if (CheckStringEmptyUtils.IsEmpty(token)) {
+            token = RandomUtils.getRandom(20, RandomUtils.NUMBER_LETTER);
+            JedisClientUtil.saveString(FinalData.SYSTEM_TOKEN + token, systemBean.getSystemUserid() + "", FinalData.TOKEN_EXPIRY_SECONDS);
+        }
+
         Map<String, Object> map = new HashMap<>();
         map.put("systemUserId", systemBean.getSystemUserid());
         map.put("systemUserType", systemBean.getSystemUserType());
-        map.put("token", TokenUtil.getToken(systemBean.getSystemUserid(), TokenUtil.SYSTEM_TOKEN));
+        map.put("token", token);
 
         ResponseUtils.getSuccessResponseBean("登录成功", map);
 
@@ -94,16 +118,43 @@ public class AdminController {
     }
 
     /**
-     * 修改密码
+     * 检查当前用户是不是超级管理员
      *
-     * @param userId
+     * @param request
+     * @return
+     */
+    private boolean checkUser(HttpServletRequest request) {
+        //通过请求头中的token拿到当前用户的userId
+        String header = request.getHeader(FinalData.TOKENHEAD);
+        String userId = JedisUtil.getSystemUserId(header);
+        SystemBean systemBean = mISystemService.queryById(Integer.parseInt(userId));
+        if (systemBean == null) {
+            return false;
+        }
+        if (systemBean.getSystemUserType() == FinalData.SYSTEM_ADMIN) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 修改自己的密码
+     *
      * @param userPassword
      * @return
      */
     @RequestMapping("/updateSystemPassword")
     @ResponseBody
-    public ResponseJSON updateSystemPassword(@RequestParam(value = "userId") int userId, @RequestParam(value = "userPassword") String userPassword) {
+    public ResponseJSON updateSystemPassword(HttpServletRequest request,
+                                             @RequestParam(value = "userPassword") String userPassword) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("修改失败", null);
+        if (!checkUser(request)) {
+            responseJSON.setMsg("用户权限不足，请联系管理员");
+            return responseJSON;
+        }
+        String header = request.getHeader(FinalData.TOKENHEAD);
+        int userId = Integer.parseInt(JedisUtil.getSystemUserId(header));
         SystemBean systemBean = new SystemBean();
         systemBean.setSystemUserid(userId);
         systemBean.setSystemUserPassword(MD5Util.string2MD5(userPassword));
@@ -124,8 +175,14 @@ public class AdminController {
      */
     @RequestMapping("/addSysteamUser")
     @ResponseBody
-    public ResponseJSON addSystemUser(@RequestParam(value = "userLoginName") String userLoginName, @RequestParam(value = "userPassword") String userPassword) {
+    public ResponseJSON addSystemUser(HttpServletRequest request,
+                                      @RequestParam(value = "userLoginName") String userLoginName,
+                                      @RequestParam(value = "userPassword") String userPassword) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("添加失败", null);
+        if (!checkUser(request)) {
+            responseJSON.setMsg("用户权限不足，请联系管理员");
+            return responseJSON;
+        }
         //检查参数
         String checkStringList = CheckStringEmptyUtils.CheckStringList(
                 new CheckStringEmptyUtils.CheckStringBean(userLoginName, "用户名不能为空"),
@@ -152,8 +209,12 @@ public class AdminController {
      */
     @RequestMapping("/delSystemUser")
     @ResponseBody
-    public ResponseJSON delSystemUser(@RequestParam(value = "userId") int userId) {
+    public ResponseJSON delSystemUser(HttpServletRequest request, @RequestParam(value = "userId") int userId) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("删除失败", null);
+        if (!checkUser(request)) {
+            responseJSON.setMsg("用户权限不足，请联系管理员");
+            return responseJSON;
+        }
         SystemBean systemBean = mISystemService.queryById(userId);
         if (systemBean == null) {
             responseJSON.setMsg("暂无该用户");
@@ -181,9 +242,16 @@ public class AdminController {
      */
     @RequestMapping("/addBanner")
     @ResponseBody
-    public ResponseJSON addBanner(HttpSession session, @RequestParam(value = "webUrl") String webUrl,
-                                  @RequestParam(value = "weight") int weight, @RequestParam(value = "file") MultipartFile file) {
+    public ResponseJSON addBanner(HttpServletRequest request, HttpSession session,
+                                  @RequestParam(value = "webUrl") String webUrl,
+                                  @RequestParam(value = "weight") int weight,
+                                  @RequestParam(value = "file") MultipartFile file) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("添加失败", null);
+        if (!checkUser(request)) {
+            responseJSON.setMsg("用户权限不足，请联系管理员");
+            return responseJSON;
+        }
+
         if (file == null) {
             responseJSON.setMsg("图片不能为空");
             return responseJSON;
@@ -214,8 +282,12 @@ public class AdminController {
      */
     @RequestMapping("/delBanner")
     @ResponseBody
-    public ResponseJSON delBanner(@RequestParam(value = "bannerId") int bannerId) {
+    public ResponseJSON delBanner(HttpServletRequest request, @RequestParam(value = "bannerId") int bannerId) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("删除失败", null);
+        if (!checkUser(request)) {
+            responseJSON.setMsg("用户权限不足，请联系管理员");
+            return responseJSON;
+        }
         int i = mIBannerService.updateDelState(bannerId);
         if (i == 0) {
             return responseJSON;
@@ -233,11 +305,16 @@ public class AdminController {
      */
     @RequestMapping("/updateBanner")
     @ResponseBody
-    public ResponseJSON updateBanner(HttpSession session, @RequestParam(value = "bannerId") int bannerId,
+    public ResponseJSON updateBanner(HttpServletRequest request, HttpSession session,
+                                     @RequestParam(value = "bannerId") int bannerId,
                                      @RequestParam(value = "webUrl") String webUrl,
                                      @RequestParam(value = "weight") int weight,
                                      @RequestParam(value = "file", required = false) MultipartFile file) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("添加失败", null);
+        if (!checkUser(request)) {
+            responseJSON.setMsg("用户权限不足，请联系管理员");
+            return responseJSON;
+        }
         String saveFile = "";
         if (file != null) {
             try {
@@ -267,9 +344,14 @@ public class AdminController {
      */
     @RequestMapping("/addNotice")
     @ResponseBody
-    public ResponseJSON addNotice(@RequestParam(value = "noticeTitle") String noticeTitle,
+    public ResponseJSON addNotice(HttpServletRequest request,
+                                  @RequestParam(value = "noticeTitle") String noticeTitle,
                                   @RequestParam(value = "noticeContent") String noticeContent) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("发布失败", null);
+        if (!checkUser(request)) {
+            responseJSON.setMsg("用户权限不足，请联系管理员");
+            return responseJSON;
+        }
         String checkStringList = CheckStringEmptyUtils.CheckStringList(new CheckStringEmptyUtils.CheckStringBean(noticeTitle, "公告标题不能为空"),
                 new CheckStringEmptyUtils.CheckStringBean(noticeContent, "公告内容不能为空"));
         if (!checkStringList.equals(CheckStringEmptyUtils.ListSuccess)) {
@@ -294,8 +376,12 @@ public class AdminController {
      */
     @RequestMapping("/delNotice")
     @ResponseBody
-    public ResponseJSON delNotice(@RequestParam(value = "noticeId") int noticeId) {
+    public ResponseJSON delNotice(HttpServletRequest request, @RequestParam(value = "noticeId") int noticeId) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("发布失败", null);
+        if (!checkUser(request)) {
+            responseJSON.setMsg("用户权限不足，请联系管理员");
+            return responseJSON;
+        }
         NoticeBean noticeBean = mINoticeBeanService.queryById(noticeId);
         if (noticeBean == null) {
             responseJSON.setMsg("暂无当前公告");
@@ -323,18 +409,22 @@ public class AdminController {
      */
     @RequestMapping("/addStudio")
     @ResponseBody
-    public ResponseJSON addStudio(HttpSession session, @RequestParam(value = "studioName") String studioName,
+    public ResponseJSON addStudio(HttpServletRequest request, HttpSession session,
+                                  @RequestParam(value = "studioName") String studioName,
                                   @RequestParam(value = "studioMoney") Float studioMoney,
                                   @RequestParam(value = "studioPhone") String studioPhone,
                                   @RequestParam(value = "studioQQ") String studioQQ,
                                   @RequestParam(value = "studioBriefintroduction") String studioBriefintroduction,
                                   @RequestParam(value = "file") MultipartFile file
     ) {
-
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("添加失败", null);
+        if (!checkUser(request)) {
+            responseJSON.setMsg("用户权限不足，请联系管理员");
+            return responseJSON;
+        }
         //检查参数
         String checkStringList = CheckStringEmptyUtils.CheckStringList(new CheckStringEmptyUtils.CheckStringBean(studioName, "工作室名称不能为空"),
-                    new CheckStringEmptyUtils.CheckStringBean(studioPhone, "工作室联系电话不能为空"),
+                new CheckStringEmptyUtils.CheckStringBean(studioPhone, "工作室联系电话不能为空"),
                 new CheckStringEmptyUtils.CheckStringBean(studioQQ, "工作QQ不能为空"),
                 new CheckStringEmptyUtils.CheckStringBean(studioBriefintroduction, "工作室简介不能为空"));
         if (!checkStringList.equals(CheckStringEmptyUtils.ListSuccess)) {
@@ -381,8 +471,12 @@ public class AdminController {
      */
     @RequestMapping("/delStudio")
     @ResponseBody
-    public ResponseJSON delStudio(@RequestParam(value = "studioId") int studioId) {
+    public ResponseJSON delStudio(HttpServletRequest request, @RequestParam(value = "studioId") int studioId) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("添加失败", null);
+        if (!checkUser(request)) {
+            responseJSON.setMsg("用户权限不足，请联系管理员");
+            return responseJSON;
+        }
         StudioBean studioBean = mIStudioService.queryById(studioId);
         if (studioBean == null) {
             responseJSON.setMsg("暂无该工作室");
@@ -407,9 +501,13 @@ public class AdminController {
      */
     @RequestMapping("/setHotCommodity")
     @ResponseBody
-    public ResponseJSON updateBanner(@RequestParam(value = "CommodityId") int CommodityId,
+    public ResponseJSON updateBanner(HttpServletRequest request, @RequestParam(value = "CommodityId") int CommodityId,
                                      @RequestParam(value = "HotCommodity") int HotCommodity) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("添加失败", null);
+        if (!checkUser(request)) {
+            responseJSON.setMsg("用户权限不足，请联系管理员");
+            return responseJSON;
+        }
         CommodityBean commodityBean = mICommodityService.queryById(CommodityId);
         if (commodityBean == null) {
             responseJSON.setMsg("暂无当前服务");
@@ -426,5 +524,10 @@ public class AdminController {
         }
         responseJSON = ResponseUtils.getSuccessResponseBean("修改成功", null);
         return responseJSON;
+    }
+
+    public static void main(String[] args) {
+        String uId = JedisClientUtil.getString("");
+        System.out.println("uId:"+uId);
     }
 }

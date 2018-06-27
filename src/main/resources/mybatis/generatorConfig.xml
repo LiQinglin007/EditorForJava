@@ -168,11 +168,18 @@
 
 
         <table schema="editormi" tableName="system"
-        domainObjectName="SystemBean"
-        enableCountByExample="false"
-        enableDeleteByExample="false"
-        enableSelectByExample="false"
-        enableUpdateByExample="false">
+               domainObjectName="SystemBean"
+               enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false">
+        </table>
+        <table schema="editormi" tableName="tokensys"
+               domainObjectName="TokensysBean"
+               enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false">
         </table>
     </context>
 </generatorConfiguration>

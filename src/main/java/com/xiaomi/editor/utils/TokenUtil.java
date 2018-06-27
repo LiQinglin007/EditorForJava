@@ -20,7 +20,11 @@ public class TokenUtil {
 
     public static String getToken(int userId, int type) {
         String uuid = UUIDUtil.getUUID();
-        String token = uuid + "," + userId + "," + type;
+        String token1 = uuid + "," + userId + "," + type;
+        String token = MD5Util.convertMD5(token1);
         return token;
     }
+
+
+
 }

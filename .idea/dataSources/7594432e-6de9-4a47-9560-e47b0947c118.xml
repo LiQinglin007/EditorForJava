@@ -232,8 +232,9 @@
     </key>
     <column id="60" parent="16" name="notice_id">
       <Position>1</Position>
-      <DataType>int(11)|0</DataType>
+      <DataType>int(11) unsigned|0</DataType>
       <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
     </column>
     <column id="61" parent="16" name="notice_title">
       <Position>2</Position>
@@ -492,8 +493,9 @@
     </key>
     <column id="109" parent="21" name="system_userid">
       <Position>1</Position>
-      <DataType>int(11)|0</DataType>
+      <DataType>int(11) unsigned|0</DataType>
       <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
     </column>
     <column id="110" parent="21" name="system_user_loginname">
       <Position>2</Position>

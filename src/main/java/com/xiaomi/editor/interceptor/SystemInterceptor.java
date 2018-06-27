@@ -1,8 +1,9 @@
 package com.xiaomi.editor.interceptor;
 
 import com.alibaba.fastjson.JSONObject;
+import com.xiaomi.editor.controller.AdminController;
 import com.xiaomi.editor.system.ResponseJSON;
-import com.xiaomi.editor.utils.HttpCode;
+import com.xiaomi.editor.utils.*;
 import org.apache.log4j.Logger;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -49,7 +50,7 @@ public class SystemInterceptor implements HandlerInterceptor {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");
         String url = request.getServletPath();
-        request.getHeader("Authorization");
+        String header = request.getHeader(FinalData.TOKENHEAD);
         // 过滤静态文件
         if (url.indexOf("/static/") > -1) {
             return true;
@@ -67,23 +68,32 @@ public class SystemInterceptor implements HandlerInterceptor {
         }
         logger.warn("接口：" + url + "入参：" + s);
 
-//        // 过滤登录
-//        if (url != null && checkUrls(url)) {
-//            return true;
-//        } else {
-////            String userId = request.getParameter("userId");
-//            if (1==1) {
-//                System.out.println("过去，继续向下走");
-//                return true;
-//            } else {
-//                ResponseJSON json = new ResponseJSON(HttpCode.FiledCode, "你被拦截啦", null);
-//                System.out.println("你被拦截啦");
-//                response.getWriter().write(JSONObject.toJSONString(json));
-//                return false;
-//            }
-//        }
+        //通过
+        if (url != null && checkUrls(url)) {
+            return true;
+        }
 
-        //这里为了把参数记录下来  就所有的接口都不拦截
+        //检查token
+        if (CheckStringEmptyUtils.IsEmpty(header)) {
+            ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("token不能为空");
+            System.out.println(url + "被拦截了,token不能为空");
+            response.getWriter().write(JSONObject.toJSONString(responseJSON));
+            return false;
+        }
+        String tokenvalue = "";
+        if (url.contains(FinalData.SYSTEM_BASEURL)) {//验证token(系统用户的token)
+            tokenvalue = JedisClientUtil.getString(FinalData.SYSTEM_TOKEN + header);
+        } else if (url.contains(FinalData.APP_BASEURL)) {//App客户端用户
+            tokenvalue = JedisClientUtil.getString(FinalData.SYSTEM_TOKEN + header);
+        }
+
+        if (CheckStringEmptyUtils.IsEmpty(tokenvalue)) {
+            ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("token失效,请重新登录");
+            System.out.println(url + "被拦截了,token失效");
+            response.getWriter().write(JSONObject.toJSONString(responseJSON));
+            return false;
+        }
+
         return true;
     }
 
