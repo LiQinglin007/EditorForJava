@@ -23,6 +23,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Description: 工作室<br>
@@ -44,7 +46,7 @@ public class SystemController {
     Logger logger = Logger.getLogger(SystemController.class);
 
     /**
-     * 检查当前用户是不是超级管理员
+     * 检查当前用户是不是工作室管理员
      *
      * @param request
      * @return
@@ -209,6 +211,45 @@ public class SystemController {
         return responseJSON;
     }
 
+
+    /**
+     * 查询某个商品的详情
+     *
+     * @param request
+     * @param commodityId
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/queryCommodityById", method = RequestMethod.POST)
+    public ResponseJSON queryCommodityById(HttpServletRequest request,
+                                           @RequestParam int commodityId) {
+        ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("查询失败");
+        if (!checkUser(request)) {
+            responseJSON.setMsg("用户权限不足，请联系管理员");
+            return responseJSON;
+        }
+        CommodityBean commodityBean = commodityService.queryById(commodityId);
+        if (commodityBean == null) {
+            responseJSON.setMsg("暂无该商品");
+            return responseJSON;
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("commodity_name", commodityBean.getCommodityName());
+        map.put("commodity_present_price", commodityBean.getCommodityPresentPrice());
+        map.put("studio_id", commodityBean.getStudioId());
+        map.put("commodity_type", commodityBean.getCommodityType());
+        map.put("commodity_name", commodityBean.getCommodityName());
+        map.put("commodity_pics", commodityBean.getCommodityPics());
+        map.put("commodity_pic", commodityBean.getCommodityPic());
+        map.put("commodity_hot", commodityBean.getCommodityHot());
+        map.put("commodity_introduce", commodityBean.getCommodityIntroduce());
+        map.put("commodity_id", commodityBean.getCommodityId());
+        map.put("commodity_collection_quantity", commodityBean.getCommodityCollectionQuantity());
+        map.put("commodity_original_price", commodityBean.getCommodityOriginalPrice());
+        responseJSON = ResponseUtils.getSuccessResponseBean("查询成功", map);
+        return responseJSON;
+    }
+
     /**
      * 修改商品
      *
@@ -315,7 +356,7 @@ public class SystemController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/delCommodity", method = RequestMethod.POST)
+        @RequestMapping(value = "/delCommodity", method = RequestMethod.POST)
     public ResponseJSON delCommodity(HttpServletRequest request, @RequestParam int commodityId) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("下架失败");
         if (!checkUser(request)) {
