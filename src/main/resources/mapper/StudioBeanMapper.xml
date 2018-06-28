@@ -5,6 +5,7 @@
         <constructor>
             <idArg column="studio_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="studio_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="studio_name_pin" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="studio_pic" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="studio_money" javaType="java.lang.Float" jdbcType="REAL"/>
             <arg column="studio_phone" javaType="java.lang.String" jdbcType="VARCHAR"/>
@@ -19,9 +20,9 @@
 
     <!--添加工作室-->
     <insert id="addStudio" parameterType="com.xiaomi.editor.bean.StudioBean">
-    INSERT INTO studio(studio_name, studio_pic, studio_money, studio_phone, studio_monthly_sales, studio_QQ,
+    INSERT INTO studio(studio_name, studio_name_pin,studio_pic, studio_money, studio_phone, studio_monthly_sales, studio_QQ,
      studio_briefIntroduction, studio_collection_nmuber, studio_del, system_userid)
-    VALUE (#{studioName},#{studioPic},#{studioMoney},#{studioPhone},#{studioMonthlySales},#{studioQq},
+    VALUE (#{studioName},#{studioNamePin} ,#{studioPic},#{studioMoney},#{studioPhone},#{studioMonthlySales},#{studioQq},
     #{studioBriefintroduction},#{studioCollectionNmuber},#{studioDel},#{systemUserid})
   </insert>
 
@@ -37,14 +38,14 @@
 
     <!--工作室修改自己工作室的信息-->
     <update id="updateStudio" parameterType="com.xiaomi.editor.bean.StudioBean">
-        UPDATE studio SET studio_name=#{studioName} ,studio_pic=#{studioPic},studio_phone=#{studioPhone},
+        UPDATE studio SET studio_name=#{studioName} ,studio_name_pin=#{studioNamePin} ,studio_pic=#{studioPic},studio_phone=#{studioPhone},
         studio_QQ=#{studioQq},studio_briefIntroduction=#{studioBriefintroduction}
         WHERE studio_id=#{studioId}
     </update>
 
     <!--管理员修改工作室信息-->
     <update id="updateStudioByAdmin" parameterType="com.xiaomi.editor.bean.StudioBean">
-        UPDATE studio SET studio_name=#{studioName} ,studio_pic=#{studioPic},studio_phone=#{studioPhone},
+        UPDATE studio SET studio_name=#{studioName}  ,studio_name_pin=#{studioNamePin},studio_pic=#{studioPic},studio_phone=#{studioPhone},
         studio_QQ=#{studioQq},studio_briefIntroduction=#{studioBriefintroduction},system_userid=#{systemUserid},
         studio_money=#{studioMoney}
         WHERE studio_id=#{studioId}

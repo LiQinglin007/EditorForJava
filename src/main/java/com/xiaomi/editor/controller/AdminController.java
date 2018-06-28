@@ -469,8 +469,17 @@ public class AdminController {
             responseJSON.setMsg("添加失败");
             return responseJSON;
         }
+        String studioNamePin = "";
+        try {
+            studioNamePin = PinyinHelper.convertToPinyinString(studioName, "", PinyinFormat.WITHOUT_TONE);// ni,hao,shi,jie
+        } catch (PinyinException e) {
+            e.printStackTrace();
+            logger.error("addStudio汉字转换拼音失败：" + e.toString());
+            responseJSON.setMsg("添加失败");
+            return responseJSON;
+        }
         //插入数据库
-        StudioBean mStudioBean = new StudioBean(studioName, studioPic, studioMoney, studioPhone, studioQQ, studioBriefintroduction, studioUserId);
+        StudioBean mStudioBean = new StudioBean(studioName, studioNamePin,studioPic, studioMoney, studioPhone, studioQQ, studioBriefintroduction, studioUserId);
         int i = mIStudioService.addStudio(mStudioBean);
         if (i < 0) {
             responseJSON.setMsg("添加失败");

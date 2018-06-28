@@ -1,5 +1,8 @@
 package com.xiaomi.editor.controller;
 
+import com.github.stuxuhai.jpinyin.PinyinException;
+import com.github.stuxuhai.jpinyin.PinyinFormat;
+import com.github.stuxuhai.jpinyin.PinyinHelper;
 import com.xiaomi.editor.bean.CommodityBean;
 import com.xiaomi.editor.bean.StudioBean;
 import com.xiaomi.editor.bean.SystemBean;
@@ -74,7 +77,7 @@ public class SystemController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value ="/updateStudioData", method = RequestMethod.POST)
+    @RequestMapping(value = "/updateStudioData", method = RequestMethod.POST)
     public ResponseJSON updateStudioData(HttpServletRequest request, HttpSession session, @RequestParam int studioId,
                                          @RequestParam String studioName, @RequestParam String phone,
                                          @RequestParam String qq, @RequestParam String studioBriefintroduction,
@@ -105,7 +108,16 @@ public class SystemController {
                 return responseJSON;
             }
         }
-        StudioBean mStudioBean = new StudioBean(studioId, studioName, studioPic, phone, qq, studioBriefintroduction);
+        String studioNamePin = "";
+        try {
+            studioNamePin = PinyinHelper.convertToPinyinString(studioName, "", PinyinFormat.WITHOUT_TONE);// ni,hao,shi,jie
+        } catch (PinyinException e) {
+            e.printStackTrace();
+            logger.error("updateStudioData汉字转换拼音失败：" + e.toString());
+            responseJSON.setMsg("添加失败");
+            return responseJSON;
+        }
+        StudioBean mStudioBean = new StudioBean(studioId, studioName, studioNamePin, studioPic, phone, qq, studioBriefintroduction);
         int i = studioService.updateStudio(mStudioBean);
         if (i == 0) {
             return responseJSON;
@@ -127,7 +139,7 @@ public class SystemController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value ="/addCommodity", method = RequestMethod.POST)
+    @RequestMapping(value = "/addCommodity", method = RequestMethod.POST)
     public ResponseJSON addCommodity(HttpServletRequest request, HttpSession session, @RequestParam int studioId,
                                      @RequestParam String commodityName, @RequestParam Float commodityPresentPrice,
                                      @RequestParam int commodityType,
@@ -196,7 +208,7 @@ public class SystemController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value ="/updateCommodity", method = RequestMethod.POST)
+    @RequestMapping(value = "/updateCommodity", method = RequestMethod.POST)
     public ResponseJSON updateCommodity(HttpServletRequest request, HttpSession session, @RequestParam int commodityId,
                                         @RequestParam String commodityName, @RequestParam Float commodityPresentPrice,
                                         @RequestParam int commodityType,
@@ -271,7 +283,7 @@ public class SystemController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value ="/delCommodity", method = RequestMethod.POST)
+    @RequestMapping(value = "/delCommodity", method = RequestMethod.POST)
     public ResponseJSON delCommodity(HttpServletRequest request, @RequestParam int commodityId) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("下架失败");
         if (!checkUser(request)) {

@@ -13,6 +13,10 @@ public class StudioBean {
      * 工作室名称
      */
     private String studioName;
+    /**
+     * 工作室名称(拼音)
+     */
+    private String studioNamePin;
 
     /**
      * 工作室图片
@@ -74,9 +78,10 @@ public class StudioBean {
         this.systemUserid = systemUserid;
     }
 
-    public StudioBean(String studioName, String studioPic, Float studioMoney, String studioPhone, String studioQq, String studioBriefintroduction,int systemUserid) {
+    public StudioBean(String studioName,String studioNamePin, String studioPic, Float studioMoney, String studioPhone, String studioQq, String studioBriefintroduction, int systemUserid) {
         this.studioId = null;
         this.studioName = studioName;
+        this.studioNamePin = studioNamePin;
         this.studioPic = studioPic;
         this.studioMoney = studioMoney;
         this.studioPhone = studioPhone;
@@ -89,9 +94,10 @@ public class StudioBean {
     }
 
 
-    public StudioBean(Integer studioId, String studioName, String studioPic, String studioPhone, String studioQq, String studioBriefintroduction) {
+    public StudioBean(Integer studioId, String studioName,String studioNamePin,  String studioPic, String studioPhone, String studioQq, String studioBriefintroduction) {
         this.studioId = studioId;
         this.studioName = studioName;
+        this.studioNamePin = studioNamePin;
         this.studioPic = studioPic;
         this.studioPhone = studioPhone;
         this.studioQq = studioQq;
@@ -109,6 +115,14 @@ public class StudioBean {
 
     public void setStudioDel(Short studioDel) {
         this.studioDel = studioDel;
+    }
+
+    public String getStudioNamePin() {
+        return studioNamePin;
+    }
+
+    public void setStudioNamePin(String studioNamePin) {
+        this.studioNamePin = studioNamePin;
     }
 
     public Integer getSystemUserid() {
