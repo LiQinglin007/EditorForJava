@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.xiaomi.editor.bean.BannerBean;
 import com.xiaomi.editor.bean.CommodityBean;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -56,9 +57,42 @@ public interface ICommodityService {
 
 
     /**
-     * 分页查询
+     * 查询工作室中所有商品
      *
+     * @param studioId    工作室id
+     * @param currentPage
+     * @param pageSize
      * @return
      */
-    PageInfo<CommodityBean> selectByPage(int studioId, int currentPage, int pageSize);
+    PageInfo selectByPage(int studioId, int currentPage, int pageSize);
+
+    /**
+     * 查询某个工作室中非热门商品
+     *
+     * @param studioId    工作室id
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
+    PageInfo selectNotHotCommodityByPage(int studioId, int currentPage, int pageSize);
+
+    /**
+     * 分页查询全部热门商品
+     *
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
+    PageInfo selectHotCommodityByPage(int currentPage, int pageSize);
+
+
+    /**
+     * 按商品名称模糊查询
+     *
+     * @param commodityNamePin
+     * @return
+     */
+    List<CommodityBean> selectByCommodityNamePin(String commodityNamePin);
+
+
 }

@@ -1,5 +1,6 @@
 package com.xiaomi.editor.dao;
 
+import com.xiaomi.editor.bean.CommodityBean;
 import com.xiaomi.editor.bean.StudioBean;
 import com.xiaomi.editor.bean.SystemBean;
 
@@ -62,5 +63,14 @@ public interface StudioBeanMapper {
      *
      * @return
      */
-    List<StudioBean> selectByPage();
+    List selectByPage();
+
+
+    /**
+     * 按工作室名称模糊查询
+     *
+     * @param studioBeanNamePin
+     * @return
+     */
+    List selectByStudioBeanNamePin(String studioBeanNamePin);
 }

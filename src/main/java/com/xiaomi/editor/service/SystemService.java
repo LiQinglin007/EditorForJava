@@ -49,10 +49,10 @@ public class SystemService implements ISystemService {
     }
 
     @Override
-    public PageInfo<SystemBean> selectByPage(int currentPage, int pageSize) {
+    public PageInfo selectByPage(int currentPage, int pageSize) {
         PageHelper.startPage(currentPage, pageSize);
-        List<SystemBean> systemBeanList = systemBeanMapper.selectByPage();
-        PageInfo<SystemBean> pageInfo = new PageInfo<>(systemBeanList);
+        List systemBeanList = systemBeanMapper.selectByPage();
+        PageInfo pageInfo = new PageInfo<>(systemBeanList);
         return pageInfo;
     }
 }

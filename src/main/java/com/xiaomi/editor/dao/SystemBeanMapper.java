@@ -51,5 +51,5 @@ public interface SystemBeanMapper {
      *
      * @return
      */
-    List<SystemBean> selectByPage();
+    List selectByPage();
 }

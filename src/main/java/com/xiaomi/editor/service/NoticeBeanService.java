@@ -42,10 +42,10 @@ public class NoticeBeanService implements INoticeBeanService {
     }
 
     @Override
-    public PageInfo<NoticeBean> selectByPage(int currentPage, int pageSize) {
+    public PageInfo selectByPage(int currentPage, int pageSize) {
         PageHelper.startPage(currentPage, pageSize);
-        List<NoticeBean>  noticeBeanList = noticeBeanMapper.selectByPage();
-        PageInfo<NoticeBean> pageInfo = new PageInfo<>(noticeBeanList);
+        List noticeBeanList = noticeBeanMapper.selectByPage();
+        PageInfo pageInfo = new PageInfo<>(noticeBeanList);
         return pageInfo;
     }
 }

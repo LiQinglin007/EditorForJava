@@ -45,5 +45,5 @@ public interface INoticeBeanService {
      *
      * @return
      */
-    PageInfo<NoticeBean> selectByPage(int currentPage, int pageSize);
+    PageInfo selectByPage(int currentPage, int pageSize);
 }

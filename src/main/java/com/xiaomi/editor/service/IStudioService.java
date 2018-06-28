@@ -4,6 +4,8 @@ import com.github.pagehelper.PageInfo;
 import com.xiaomi.editor.bean.BannerBean;
 import com.xiaomi.editor.bean.StudioBean;
 
+import java.util.List;
+
 /**
  * Description: <br>
  * User: dell - XiaomiLi<br>
@@ -67,6 +69,13 @@ public interface IStudioService {
      *
      * @return
      */
-    PageInfo<StudioBean> selectByPage(int currentPage, int pageSize);
+    PageInfo selectByPage(int currentPage, int pageSize);
 
+    /**
+     * 按工作室名称模糊查询
+     *
+     * @param studioBeanNamePin
+     * @return
+     */
+    List selectByStudioBeanNamePin(String studioBeanNamePin);
 }

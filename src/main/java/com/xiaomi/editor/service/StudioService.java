@@ -79,11 +79,16 @@ public class StudioService implements IStudioService {
     }
 
     @Override
-    public PageInfo<StudioBean> selectByPage(int currentPage, int pageSize) {
+    public PageInfo selectByPage(int currentPage, int pageSize) {
         PageHelper.startPage(currentPage, pageSize);
-        List<StudioBean> studioBeanList = studioBeanMapper.selectByPage();
-        PageInfo<StudioBean> pageInfo = new PageInfo<>(studioBeanList);
+        List studioBeanList = studioBeanMapper.selectByPage();
+        PageInfo pageInfo = new PageInfo<>(studioBeanList);
         return pageInfo;
+    }
+
+    @Override
+    public List selectByStudioBeanNamePin(String studioBeanNamePin) {
+        return studioBeanMapper.selectByStudioBeanNamePin(studioBeanNamePin);
     }
 
 }

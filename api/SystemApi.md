@@ -7,24 +7,24 @@ code:200 成功   100失败<br>
 msg:接口说明<br>
 BaseUrl:http://home.hbhanzhi.com:7052/system/<br>
 API版本：1.0.0(初稿)<br>
-更新时间：2018/6/27<br>**
+更新时间：2018/6/28<br>**
 
 
-超级管理员：<br>
-轮播图模块<br>
-公告模块<br>
-工作室模块<br>
-热门服务(商品)<br>
-增加新用户(系统用户)<br>
+**超级管理员：<br>**
+**轮播图模块<br>**
+**公告模块<br>**
+**工作室模块<br>**
+**热门服务(商品)<br>**
+**增加新用户(系统用户)<br>**
 
-工作室用户：<br>
-修改自己店铺的信息<br>
-商品模块<br>
+**工作室用户：<br>**
+**修改自己店铺的信息<br>**
+**商品模块<br>**
 
 
-订单模块<br>
-工作室的评论列表<br>
-具体商品的评论列表<br>
+**订单模块<br>**
+**工作室的评论列表<br>**
+**具体商品的评论列表<br>**
 
 
 ###2、API
@@ -49,7 +49,31 @@ API版本：1.0.0(初稿)<br>
     "msg":"登录成功"
 }
 ```
-#####2.1.2 修改密码
+##### 2.1.2 添加工作室用户
+
+函数调用地址：admin/addSysteamUser <br>
+请求方式：POST<br>
+函数入参：<br>
+
+```
+"userLoginName":"xiaomiStudio"，String  (必传)
+"userPassword":"123456789" String		(必传)
+```
+
+函数出参：
+
+```
+{
+    "code":200,
+    "data":null,
+    "msg":"添加成功"
+}
+```
+
+##### 
+
+#####2.1.3 修改密码
+
 函数调用地址：admin/updateSystemPassword <br>
 请求方式：POST<br>
 函数入参：<br>
@@ -65,27 +89,9 @@ API版本：1.0.0(初稿)<br>
 }
 ```
 
-#####2.1.3 添加工作室用户
-函数调用地址：admin/addSysteamUser <br>
-请求方式：POST<br>
-函数入参：<br>
-```
-"userLoginName":"xiaomiStudio"，String  (必传)
-"userPassword":"123456789" String		(必传)
-```
-函数出参：
-```
-{
-    "code":200,
-    "data":null,
-    "msg":"添加成功"
-}
-```
+#####2.1.4 获取工作室全部用户分页
+函数调用地址：admin/getSysteamUserList<br>请求方式：POST<br>函数入参：<br>
 
-#####2.1.4 获取工作室全部用户分页(暂时不要调用)
-函数调用地址：admin/getSysteamUserList <br>
-请求方式：POST<br>
-函数入参：<br>
 ```
 "page":1，int  (必传)获取第几页  从1开始
 "pageSize":10，int  (必传)每页获取多少条
@@ -94,8 +100,36 @@ API版本：1.0.0(初稿)<br>
 ```
 {
     "code":200,
-    "data":null,
-    "msg":"添加成功"
+    "data":{ 
+        "endRow":1, 
+        "firstPage":1,//第一页
+        "hasNextPage":false,//是不是有下一页
+        "hasPreviousPage":false,//是不是有上一页
+        "isFirstPage":true,//是不是第一页
+        "isLastPage":true,//是不是最后一页
+        "lastPage":1,//最后一页页码
+        "list":[
+            {
+                "systemUserLoginname":"xiaomi",//登录名称
+                "systemUserid":2//用户id
+            }
+        ],
+        "navigateFirstPage":1,
+        "navigateLastPage":1,
+        "navigatePages":8,
+        "navigatepageNums":[//页码列表
+            1
+        ],
+        "nextPage":0,
+        "pageNum":1,//现在请求的是第几页
+        "pageSize":2,//当前页数量
+        "pages":1,//总共有多少页
+        "prePage":0,
+        "size":1,
+        "startRow":1,
+        "total":1//总共有多少条
+    },
+    "msg":"查询成功"
 }
 ```
 
@@ -133,10 +167,11 @@ API版本：1.0.0(初稿)<br>
 }
 ```
 
-#####2.1.7 获取轮播图列表(暂时不要调用，没有实现)
-函数调用地址：admin/getBannerList <br>
+#####2.1.7 获取轮播图列表
+函数调用地址：admin/getBannerList<br>
 请求方式：POST<br>
 函数入参：<br>
+
 ```
 "page":1，int  (必传)获取第几页  从1开始
 "pageSize":10，int  (必传)每页获取多少条
@@ -145,8 +180,44 @@ API版本：1.0.0(初稿)<br>
 ```
 {
     "code":200,
-    "data":null,
-    "msg":"添加成功"
+    "data":{
+        "endRow":2,
+        "firstPage":1,
+        "hasNextPage":false,
+        "hasPreviousPage":false,
+        "isFirstPage":true,
+        "isLastPage":true,
+        "lastPage":1,
+        "list":[
+            {
+                "banner_id":3,//轮播图id
+                "banner_weight":4,//权重
+                "banner_url":"http://image.baidu.com/search/detail?ct=503316480",//图片地址
+                "banner_web_url":"https://blog.csdn.net/qq_15037349/article/details/72832306"//外部连接地址
+            },
+            {
+                "banner_id":2,
+                "banner_weight":3,
+                "banner_url":"http://image.baidu.com/search/detail?ct=503316480",
+                "banner_web_url":"https://blog.csdn.net/hgg923/article/details/54616287"
+            }
+        ],
+        "navigateFirstPage":1,
+        "navigateLastPage":1,
+        "navigatePages":8,
+        "navigatepageNums":[
+            1
+        ],
+        "nextPage":0,
+        "pageNum":1,
+        "pageSize":2,
+        "pages":1,
+        "prePage":0,
+        "size":2,
+        "startRow":1,
+        "total":2
+    },
+    "msg":"查询成功"
 }
 ```
 
@@ -161,8 +232,39 @@ API版本：1.0.0(初稿)<br>
 ```
 {
     "code":200,
-    "data":null,
-    "msg":"删除成功"
+    "data":{ 
+        "endRow":1, 
+        "firstPage":1,//第一页
+        "hasNextPage":false,//是不是有下一页
+        "hasPreviousPage":false,//是不是有上一页
+        "isFirstPage":true,//是不是第一页
+        "isLastPage":true,//是不是最后一页
+        "lastPage":1,//最后一页页码
+        "list":[
+            {
+                "bannerDel":0,
+                "bannerWebUrl":"http://www.baidu.com",//外部连接地址
+                "bannerWeight":100,//权重
+                "bannerUrl":"http://www.XXX.XX.JPG",//图片地址
+                "bannerId":2//轮播图id
+            }
+        ],
+        "navigateFirstPage":1,
+        "navigateLastPage":1,
+        "navigatePages":8,
+        "navigatepageNums":[//页码列表
+            1
+        ],
+        "nextPage":0,
+        "pageNum":1,//现在请求的是第几页
+        "pageSize":2,//当前页数量
+        "pages":1,//总共有多少页
+        "prePage":0,
+        "size":1,
+        "startRow":1,
+        "total":1//总共有多少条
+    },
+    "msg":"查询成功"
 }
 ```
 #####2.1.9 修改轮播图信息
@@ -202,7 +304,7 @@ API版本：1.0.0(初稿)<br>
 }
 ```
 
-#####2.1.11 获取公告列表(暂时不要调用，没有实现)
+#####2.1.11 获取公告列表
 函数调用地址：admin/getNoticeList <br>
 请求方式：POST<br>
 函数入参：<br>
@@ -225,14 +327,12 @@ API版本：1.0.0(初稿)<br>
         "list":[
             {
                 "noticeContent":"公告内容10", //公告内容
-                "noticeDel":0,
                 "noticeId":11,//公告id
                 "noticeTime":"2018-06-27 17:47:22",//发表时间
                 "noticeTitle":"公告标题10"//公告标题
             },
             {
                 "noticeContent":"公告内容9",
-                "noticeDel":0,
                 "noticeId":10,
                 "noticeTime":"2018-06-27 17:47:14",
                 "noticeTitle":"公告标题9"
@@ -322,7 +422,38 @@ API版本：1.0.0(初稿)<br>
     "msg":"添加成功"
 }
 ```
-#####2.1.15 获取工作室列表(暂时不要调用，没有实现)
+##### 2.1.15 获取工作室详情
+
+函数调用地址：admin/getStudioData<br>
+请求方式：POST<br>
+函数入参：<br>
+
+```
+"studioId":1，int  (必传)系统用户id(谁开的这家店)
+```
+
+函数出参：
+
+```
+{
+    "code":200,
+    "data":{
+        "studioCollectionNmuber":0,//收藏数量
+        "studioMonthlySales":0,//月销售量
+        "studioMoney":10000,//押金
+        "studioBriefintroduction":"这是一家小米店铺",//店铺简介
+        "studioQq":"531192555",//联系QQ
+        "systemUserid":2,//系统用户id(法人id)
+        "studioName":"xiaomiStudio",店铺名称
+        "studioPhone":"15284224244",//联系电话
+        "studioPic":"https://gss1.bdstatic.com/9vo3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=e9449e382d9759ee4a5067cd8ac0242b/94cad1c8a786c9179e80a80cc23d70cf3bc75700.jpg"//头像图片
+    },
+    "msg":"获取成功"
+}
+```
+
+#####2.1.16 获取工作室列表
+
 函数调用地址：admin/addStudio <br>
 请求方式：POST<br>
 函数入参：<br>
@@ -334,11 +465,47 @@ API版本：1.0.0(初稿)<br>
 ```
 {
     "code":200,
-    "data":null,
-    "msg":"添加成功"
+    "data":{
+        "endRow":1,
+        "firstPage":1,
+        "hasNextPage":false,
+        "hasPreviousPage":false,
+        "isFirstPage":true,
+        "isLastPage":true,
+        "lastPage":1,
+        "list":[
+            {
+                "studio_name":"xiaomiStudio",//工作室名称
+                "studio_phone":"15284224244",//联系电话
+                "studio_briefIntroduction":"这是一家小米店铺1",//简介
+                "studio_QQ":"531192555",//QQ
+                "system_userid":2,//系统用户id
+                "studio_id":1,//工作室id
+                "studio_monthly_sales":0,//月销量
+                "studio_collection_nmuber":0,//收藏数量
+                "studio_money":10000,//押金
+                "studio_pic":"https://gss1.bdstatic.com/9vo3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=e9449e382d9759ee4a5067cd8ac0242b/94cad1c8a786c9179e80a80cc23d70cf3bc75700.jpg"//图片
+            }
+        ],
+        "navigateFirstPage":1,
+        "navigateLastPage":1,
+        "navigatePages":8,
+        "navigatepageNums":[
+            1
+        ],
+        "nextPage":0,
+        "pageNum":1,
+        "pageSize":2,
+        "pages":1,
+        "prePage":0,
+        "size":1,
+        "startRow":1,
+        "total":1
+    },
+    "msg":"查询成功"
 }
 ```
-#####2.1.16 删除工作室
+#####2.1.17 删除工作室
 函数调用地址：admin/delStudio <br>
 请求方式：POST<br>
 函数入参：<br>
@@ -354,14 +521,264 @@ API版本：1.0.0(初稿)<br>
 }
 ```
 
-#####2.1.17 设置热门服务(就是热门商品)
+##### 2.1.18 查询工作室(按工作室名称模糊查询)
+
+函数调用地址：admin/getStudioByStudioNamePin<br>
+请求方式：POST<br>
+函数入参：<br>
+
+```
+"searchContent":"xiaomi"，String  (必传)工作室的名称
+```
+
+函数出参：
+
+```
+{
+    "code":200,
+    "data":[
+        {
+            "studio_name":"xiaomiStudio",//工作室名称
+            "studio_phone":"15284224244",//电话
+            "studio_briefIntroduction":"这是一家小米店铺1",//简介
+            "studio_QQ":"531192555",//联系QQ
+            "system_userid":2,//系统用户id
+            "studio_id":1,//工作室id
+            "studio_monthly_sales":0,//月销量
+            "studio_collection_nmuber":0,//收藏数量
+            "studio_money":10000,//押金
+            "studio_pic":"https://gss1.bdstatic.com/9vo3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=e9449e382d9759ee4a5067cd8ac0242b/94cad1c8a786c9179e80a80cc23d70cf3bc75700.jpg"//图片
+        }
+    ],
+    "msg":"查询成功"
+}
+```
+
+##### 2.1.19 获取工作室的全部商品
+
+函数调用地址：admin/getCommodityListByStudioId<br>
+请求方式：POST<br>
+函数入参：<br>
+
+```
+"studioId":1 int  (必传) 工作室id
+"page":1，int  (必传)页码
+"size":1，int  (必传)每页多少条
+```
+
+函数出参：
+
+```
+{
+    "code":200,
+    "data":{
+        "endRow":2,
+        "firstPage":1,
+        "hasNextPage":false,
+        "hasPreviousPage":false,
+        "isFirstPage":true,
+        "isLastPage":true,
+        "lastPage":1,
+        "list":[
+            {
+                "commodity_original_price":1,//商品原价
+                "commodity_collection_quantity":0,//收藏数量
+                "commodity_id":1,//商品id
+                "commodity_introduce":"大红袍茶叶",//商品简介
+                "commodity_hot":0,//是否为热门商品  1：热门  0：非热门
+                "commodity_pic":"http://www.xxx.jpg",//图片
+                "commodity_pics":"http://www.xxx.jpg,http://www.xxx.jpg,http://www.xxx.jpg",//详情图片逗号分隔
+                "commodity_type":1,//商品类型 1:查重、2:降重、3:速审
+                "studio_id":1,//工作室id
+                "commodity_present_price":1,//现在价格
+                "commodity_name":"大红袍"//名称
+            },
+            {
+                "commodity_original_price":1,
+                "commodity_collection_quantity":0,
+                "commodity_id":2,
+                "commodity_introduce":"菊花茶叶",
+                "commodity_hot":0,
+                "commodity_pic":"http://www.xxx.jpg",
+                "commodity_pics":"http://www.xxx.jpg,http://www.xxx.jpg,http://www.xxx.jpg",
+                "commodity_type":1,
+                "studio_id":1,
+                "commodity_present_price":1,
+                "commodity_name":"菊花"
+            }
+        ],
+        "navigateFirstPage":1,
+        "navigateLastPage":1,
+        "navigatePages":8,
+        "navigatepageNums":[
+            1
+        ],
+        "nextPage":0,
+        "pageNum":1,
+        "pageSize":10,
+        "pages":1,
+        "prePage":0,
+        "size":2,
+        "startRow":1,
+        "total":2
+    },
+    "msg":"查询成功"
+}
+```
+
+##### 2.1.20 获取工作室的全部非热门商品
+
+函数调用地址：admin/getNotHotCommodityListByStudioId<br>
+请求方式：POST<br>
+函数入参：<br>
+
+```
+"studioId":1 int  (必传) 工作室id
+"page":1，int  (必传)页码
+"size":1，int  (必传)每页多少条
+```
+
+函数出参：
+
+```
+{
+    "code":200,
+    "data":{
+        "endRow":2,
+        "firstPage":1,
+        "hasNextPage":false,
+        "hasPreviousPage":false,
+        "isFirstPage":true,
+        "isLastPage":true,
+        "lastPage":1,
+        "list":[
+            {
+                "commodity_original_price":1,//商品原价
+                "commodity_collection_quantity":0,//收藏数量
+                "commodity_id":1,//商品id
+                "commodity_introduce":"大红袍茶叶",//商品简介
+                "commodity_hot":0,//是否为热门商品  1：热门  0：非热门
+                "commodity_pic":"http://www.xxx.jpg",//图片
+                "commodity_pics":"http://www.xxx.jpg,http://www.xxx.jpg,http://www.xxx.jpg",//详情图片逗号分隔
+                "commodity_type":1,//商品类型 1:查重、2:降重、3:速审
+                "studio_id":1,//工作室id
+                "commodity_present_price":1,//现在价格
+                "commodity_name":"大红袍"//名称
+            },
+            {
+                "commodity_original_price":1,
+                "commodity_collection_quantity":0,
+                "commodity_id":2,
+                "commodity_introduce":"菊花茶叶",
+                "commodity_hot":0,
+                "commodity_pic":"http://www.xxx.jpg",
+                "commodity_pics":"http://www.xxx.jpg,http://www.xxx.jpg,http://www.xxx.jpg",
+                "commodity_type":1,
+                "studio_id":1,
+                "commodity_present_price":1,
+                "commodity_name":"菊花"
+            }
+        ],
+        "navigateFirstPage":1,
+        "navigateLastPage":1,
+        "navigatePages":8,
+        "navigatepageNums":[
+            1
+        ],
+        "nextPage":0,
+        "pageNum":1,
+        "pageSize":10,
+        "pages":1,
+        "prePage":0,
+        "size":2,
+        "startRow":1,
+        "total":2
+    },
+    "msg":"查询成功"
+}
+```
+
+
+
+##### 2.1.21 获取全部热门商品
+
+函数调用地址：admin/getHotCommodityList<br>
+请求方式：POST<br>
+函数入参：<br>
+
+```
+"page":1，int  (必传)页码
+"size":1，int  (必传)每页多少条
+```
+
+函数出参：
+
+```
+{
+    "code":200,
+    "data":{
+        "endRow":2,
+        "firstPage":1,
+        "hasNextPage":false,
+        "hasPreviousPage":false,
+        "isFirstPage":true,
+        "isLastPage":true,
+        "lastPage":1,
+        "list":[
+            {
+                "commodity_original_price":1,//商品原价
+                "commodity_collection_quantity":0,//收藏数量
+                "commodity_id":1,//商品id
+                "commodity_introduce":"大红袍茶叶",//商品简介
+                "commodity_hot":1,//是否为热门商品  1：热门  0：非热门
+                "commodity_pic":"http://www.xxx.jpg",//图片
+                "commodity_pics":"http://www.xxx.jpg,http://www.xxx.jpg,http://www.xxx.jpg",//详情图片逗号分隔
+                "commodity_type":1,//商品类型 1:查重、2:降重、3:速审
+                "studio_id":1,//工作室id
+                "commodity_present_price":1,//现在价格
+                "commodity_name":"大红袍"//名称
+            },
+            {
+                "commodity_original_price":1,
+                "commodity_collection_quantity":0,
+                "commodity_id":2,
+                "commodity_introduce":"菊花茶叶",
+                "commodity_hot":1,
+                "commodity_pic":"http://www.xxx.jpg",
+                "commodity_pics":"http://www.xxx.jpg,http://www.xxx.jpg,http://www.xxx.jpg",
+                "commodity_type":1,
+                "studio_id":1,
+                "commodity_present_price":1,
+                "commodity_name":"菊花"
+            }
+        ],
+        "navigateFirstPage":1,
+        "navigateLastPage":1,
+        "navigatePages":8,
+        "navigatepageNums":[
+            1
+        ],
+        "nextPage":0,
+        "pageNum":1,
+        "pageSize":10,
+        "pages":1,
+        "prePage":0,
+        "size":2,
+        "startRow":1,
+        "total":2
+    },
+    "msg":"查询成功"
+}
+```
+
+#####2.1.22 设置热门服务(就是热门商品)
+
 函数调用地址：admin/setHotCommodity <br>
 请求方式：POST<br>
 函数入参：<br>
 ```
 "CommodityId":1，int  (必传)商品id
 "HotCommodity":1，int  (必传)1:设置热门服务  0:取消设置
-
 ```
 函数出参：
 ```

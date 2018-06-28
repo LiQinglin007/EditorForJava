@@ -38,8 +38,8 @@
     </select>
 
     <!--分页查询倒序-->
-    <select id="selectByPage" resultMap="BaseResultMap">
-        SELECT banner_id,banner_weight,banner_web_url,banner_url FROM banner WHERE banner_del=0 ORDER BY banner_weight DESC
+    <select id="selectByPage" resultType="Map">
+        SELECT banner_id,banner_url,banner_web_url,banner_weight FROM banner WHERE banner_del=0 ORDER BY banner_weight DESC
     </select>
 
 </mapper>

@@ -59,9 +59,35 @@
         UPDATE commodity SET commodity_del = 1 where commodity_id=#{_parameter}
     </update>
 
-    <select id="selectByStudioId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-        SELECT * from commodity where studio_id=#{_parameter} AND commodity_del=1;
+    <!--分页查询-->
+    <select id="selectByStudioId" parameterType="java.lang.Integer" resultType="Map">
+        SELECT commodity_id,studio_id,commodity_name,commodity_pic,commodity_introduce,commodity_hot,
+        commodity_type,commodity_present_price,commodity_original_price,commodity_collection_quantity,
+        commodity_pic,commodity_pics
+        from commodity where  commodity_del=0 AND studio_id=#{_parameter}
     </select>
 
+    <!--查询某个工作室中全部非热门商品-->
+    <select id="selectNotHotCommodityByPage" parameterType="java.lang.Integer" resultType="Map">
+        SELECT commodity_id,studio_id,commodity_name,commodity_pic,commodity_introduce,commodity_hot,
+        commodity_type,commodity_present_price,commodity_original_price,commodity_collection_quantity,
+        commodity_pic,commodity_pics
+        from commodity where  commodity_del=0 AND commodity_hot=0 AND studio_id=#{_parameter}
+    </select>
+
+
+    <!--查询全部热门商品-->
+    <select id="selectHotCommodityByPage" resultType="Map">
+         SELECT commodity_id,studio_id,commodity_name,commodity_pic,commodity_introduce,commodity_hot,
+        commodity_type,commodity_present_price,commodity_original_price,commodity_collection_quantity,
+        commodity_pic,commodity_pics
+        from commodity where  commodity_del=0 AND commodity_hot=1
+    </select>
+
+
+    <!--按拼音模糊查询-->
+    <select id="selectByCommodityNamePin" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT * FROM commodity WHERE commodity_name_pin LIKE '%${_parameter}%' AND commodity_del=0;
+    </select>
 
 </mapper>

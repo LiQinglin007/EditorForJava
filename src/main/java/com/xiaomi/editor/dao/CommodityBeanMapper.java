@@ -50,6 +50,29 @@ public interface CommodityBeanMapper {
      *
      * @return
      */
-    List<CommodityBean> selectByStudioId(int studioId);
+    List selectByStudioId(int studioId);
+
+    /**
+     * 查询某个店铺的全部非热门商品
+     *
+     * @return
+     */
+    List selectNotHotCommodityByPage(int studioId);
+
+    /**
+     * 查询全部热门商品
+     *
+     * @return
+     */
+    List selectHotCommodityByPage();
+
+
+    /**
+     * 按商品名称模糊查询
+     *
+     * @param commodityNamePin
+     * @return
+     */
+    List<CommodityBean> selectByCommodityNamePin(String commodityNamePin);
 
 }

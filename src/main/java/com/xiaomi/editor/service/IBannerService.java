@@ -28,5 +28,5 @@ public interface IBannerService {
      *
      * @return
      */
-    PageInfo<BannerBean> selectByPage(int currentPage, int pageSize);
+    PageInfo selectByPage(int currentPage, int pageSize);
 }

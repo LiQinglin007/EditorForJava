@@ -38,7 +38,7 @@
     </update>
 
     <!--分页查询 超级管理员模块-->
-    <select id="selectByPage" resultMap="BaseResultMap">
+    <select id="selectByPage" resultType="Map">
         SELECT system_userid,system_user_loginname FROM system WHERE system_user_type=2 AND system_user_del=0
     </select>
 

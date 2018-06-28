@@ -55,10 +55,33 @@ public class CommodityService implements ICommodityService {
     }
 
     @Override
-    public PageInfo<CommodityBean> selectByPage(int studioId, int currentPage, int pageSize) {
+    public PageInfo selectByPage(int studioId, int currentPage, int pageSize) {
         PageHelper.startPage(currentPage, pageSize);
-        List<CommodityBean> commodityBeanList = commodityBeanMapper.selectByStudioId(studioId);
-        PageInfo<CommodityBean> pageInfo = new PageInfo<>(commodityBeanList);
+        List commodityBeanList = commodityBeanMapper.selectByStudioId(studioId);
+        PageInfo pageInfo = new PageInfo<>(commodityBeanList);
         return pageInfo;
     }
+
+    @Override
+    public PageInfo selectNotHotCommodityByPage(int studioId, int currentPage, int pageSize) {
+        PageHelper.startPage(currentPage, pageSize);
+        List commodityBeanList = commodityBeanMapper.selectByStudioId(studioId);
+        PageInfo pageInfo = new PageInfo<>(commodityBeanList);
+        return pageInfo;
+    }
+
+    @Override
+    public PageInfo selectHotCommodityByPage(int currentPage, int pageSize) {
+        PageHelper.startPage(currentPage, pageSize);
+        List commodityBeanList = commodityBeanMapper.selectHotCommodityByPage();
+        PageInfo pageInfo = new PageInfo<>(commodityBeanList);
+        return pageInfo;
+    }
+
+    @Override
+    public List<CommodityBean> selectByCommodityNamePin(String commodityNamePin) {
+        return commodityBeanMapper.selectByCommodityNamePin(commodityNamePin);
+    }
+
+
 }

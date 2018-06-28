@@ -59,5 +59,5 @@ public interface ISystemService {
      *
      * @return
      */
-    PageInfo<SystemBean> selectByPage(int currentPage, int pageSize);
+    PageInfo selectByPage(int currentPage, int pageSize);
 }

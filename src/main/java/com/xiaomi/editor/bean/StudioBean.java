@@ -64,9 +64,11 @@ public class StudioBean {
     private Integer systemUserid;
 
 
-    public StudioBean(Integer studioId, String studioName, String studioPic, Float studioMoney, String studioPhone, Integer studioMonthlySales, String studioQq, String studioBriefintroduction, Integer studioCollectionNmuber, Short studioDel, Integer systemUserid) {
+
+    public StudioBean(Integer studioId, String studioName,String studioNamePin, String studioPic, Float studioMoney, String studioPhone, Integer studioMonthlySales, String studioQq, String studioBriefintroduction, Integer studioCollectionNmuber, Short studioDel, Integer systemUserid) {
         this.studioId = studioId;
         this.studioName = studioName;
+        this.studioNamePin = studioNamePin;
         this.studioPic = studioPic;
         this.studioMoney = studioMoney;
         this.studioPhone = studioPhone;

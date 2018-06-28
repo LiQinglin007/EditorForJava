@@ -45,10 +45,10 @@ public class BannerService implements IBannerService {
     }
 
     @Override
-    public PageInfo<BannerBean> selectByPage(int currentPage, int pageSize) {
+    public PageInfo selectByPage(int currentPage, int pageSize) {
         PageHelper.startPage(currentPage, pageSize);
-        List<BannerBean> bannerBeanList = beanMapper.selectByPage();
-        PageInfo<BannerBean> pageInfo = new PageInfo<>(bannerBeanList);
+        List bannerBeanList = beanMapper.selectByPage();
+        PageInfo pageInfo = new PageInfo<>(bannerBeanList);
         return pageInfo;
     }
 }
