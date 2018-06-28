@@ -110,7 +110,7 @@ public class SystemController {
         }
         String studioNamePin = "";
         try {
-            studioNamePin = PinyinHelper.convertToPinyinString(studioName, "", PinyinFormat.WITHOUT_TONE);// ni,hao,shi,jie
+            studioNamePin = PinyinUtil.getPinyin(studioName);
         } catch (PinyinException e) {
             e.printStackTrace();
             logger.error("updateStudioData汉字转换拼音失败：" + e.toString());
@@ -132,6 +132,7 @@ public class SystemController {
      * @param session
      * @param studioId              工作室id
      * @param commodityName         商品名称
+     * @param commodityIntroduce    商品介绍
      * @param commodityPresentPrice 商品价格
      * @param commodityType         商品类型   (1:查重、2:降重、3:速审)
      * @param file                  商品头像
@@ -141,8 +142,8 @@ public class SystemController {
     @ResponseBody
     @RequestMapping(value = "/addCommodity", method = RequestMethod.POST)
     public ResponseJSON addCommodity(HttpServletRequest request, HttpSession session, @RequestParam int studioId,
-                                     @RequestParam String commodityName, @RequestParam Float commodityPresentPrice,
-                                     @RequestParam int commodityType,
+                                     @RequestParam String commodityName, @RequestParam String commodityIntroduce,
+                                     @RequestParam Float commodityPresentPrice, @RequestParam int commodityType,
                                      @RequestParam(value = "picFile") MultipartFile file,
                                      @RequestParam(value = "picsFile") MultipartFile[] files) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("添加失败");
@@ -152,6 +153,10 @@ public class SystemController {
         }
         if (CheckStringEmptyUtils.IsEmpty(commodityName)) {
             responseJSON.setMsg("服务名称不能为空");
+            return responseJSON;
+        }
+        if (CheckStringEmptyUtils.IsEmpty(commodityIntroduce)) {
+            responseJSON.setMsg("服务简介不能为空");
             return responseJSON;
         }
 
@@ -184,8 +189,17 @@ public class SystemController {
             responseJSON.setMsg("添加失败");
             return responseJSON;
         }
+        String commodityNamePin = "";
+        try {
+            commodityNamePin = PinyinUtil.getPinyin(commodityName);
+        } catch (PinyinException e) {
+            e.printStackTrace();
+            logger.error("addCommodity汉字转换拼音失败：" + e.toString());
+            responseJSON.setMsg("添加失败");
+            return responseJSON;
+        }
 
-        CommodityBean commodityBean = new CommodityBean(studioId, commodityName, picUrl, picsUrl,
+        CommodityBean commodityBean = new CommodityBean(studioId, commodityName, commodityNamePin, commodityIntroduce, picUrl, picsUrl,
                 commodityPresentPrice, Short.parseShort(commodityType + ""));
         int i = commodityService.addCommodity(commodityBean);
         if (i == 0) {
@@ -209,8 +223,11 @@ public class SystemController {
      */
     @ResponseBody
     @RequestMapping(value = "/updateCommodity", method = RequestMethod.POST)
-    public ResponseJSON updateCommodity(HttpServletRequest request, HttpSession session, @RequestParam int commodityId,
-                                        @RequestParam String commodityName, @RequestParam Float commodityPresentPrice,
+    public ResponseJSON updateCommodity(HttpServletRequest request, HttpSession session,
+                                        @RequestParam int commodityId,
+                                        @RequestParam String commodityName,
+                                        @RequestParam String commodityIntroduce,
+                                        @RequestParam Float commodityPresentPrice,
                                         @RequestParam int commodityType,
                                         @RequestParam(value = "picFile") MultipartFile file,
                                         @RequestParam(value = "picsFile") MultipartFile[] files) {
@@ -255,6 +272,21 @@ public class SystemController {
         //如果商品名变化
         if (!CheckStringEmptyUtils.IsEmpty(commodityName)) {
             commodityBean.setCommodityName(commodityName);
+            String commodityNamePin = "";
+            try {
+                commodityNamePin = PinyinUtil.getPinyin(commodityName);
+            } catch (PinyinException e) {
+                e.printStackTrace();
+                logger.error("addCommodity汉字转换拼音失败：" + e.toString());
+                responseJSON.setMsg("修改失败");
+                return responseJSON;
+            }
+            commodityBean.setCommodityNamePin(commodityNamePin);
+        }
+
+        //商品简介变化
+        if (!CheckStringEmptyUtils.IsEmpty(commodityIntroduce)) {
+            commodityBean.setCommodityIntroduce(commodityIntroduce);
         }
         //如果服务类型变化
         if (commodityType != commodityBean.getCommodityType()) {

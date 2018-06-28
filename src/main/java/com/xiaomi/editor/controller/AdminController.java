@@ -471,7 +471,7 @@ public class AdminController {
         }
         String studioNamePin = "";
         try {
-            studioNamePin = PinyinHelper.convertToPinyinString(studioName, "", PinyinFormat.WITHOUT_TONE);// ni,hao,shi,jie
+            studioNamePin = PinyinUtil.getPinyin(studioName);
         } catch (PinyinException e) {
             e.printStackTrace();
             logger.error("addStudio汉字转换拼音失败：" + e.toString());
@@ -479,7 +479,7 @@ public class AdminController {
             return responseJSON;
         }
         //插入数据库
-        StudioBean mStudioBean = new StudioBean(studioName, studioNamePin,studioPic, studioMoney, studioPhone, studioQQ, studioBriefintroduction, studioUserId);
+        StudioBean mStudioBean = new StudioBean(studioName, studioNamePin, studioPic, studioMoney, studioPhone, studioQQ, studioBriefintroduction, studioUserId);
         int i = mIStudioService.addStudio(mStudioBean);
         if (i < 0) {
             responseJSON.setMsg("添加失败");
@@ -756,20 +756,6 @@ public class AdminController {
 
     //todo 模糊搜索(汉字转化成拼音)
     public static void main(String[] args) {
-        String str = "你好世界";
-        try {
-//            PinyinHelper.convertToPinyinString(str, ",", PinyinFormat.WITH_TONE_MARK); // nǐ,hǎo,shì,jiè
-//            PinyinHelper.convertToPinyinString(str, ",", PinyinFormat.WITH_TONE_NUMBER); // ni3,hao3,shi4,jie4
-            String string = PinyinHelper.convertToPinyinString(str, "", PinyinFormat.WITHOUT_TONE);// ni,hao,shi,jie
-            System.out.println("string:" + string);
-//            PinyinHelper.getShortPinyin(str); // nhsj
-        } catch (PinyinException e) {
-            System.out.println("e:" + e.toString());
-            e.printStackTrace();
-        }
-
-
-//        PinyinHelper.addPinyinDict("user.dict");  // 添加用户自定义字典
     }
 
 

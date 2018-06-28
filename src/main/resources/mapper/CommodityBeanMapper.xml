@@ -6,6 +6,8 @@
             <idArg column="commodity_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="studio_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="commodity_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="commodity_name_pin" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="commodity_introduce" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="commodity_pic" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="commodity_pics" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="commodity_original_price" javaType="java.lang.Float" jdbcType="REAL"/>
@@ -30,10 +32,10 @@
 
     <!--工作室添加服务-->
     <insert id="addCommodity" parameterType="com.xiaomi.editor.bean.CommodityBean">
-      INSERT INTO commodity(studio_id, commodity_name, commodity_pic, commodity_pics, commodity_original_price,
+      INSERT INTO commodity(studio_id, commodity_name,commodity_name_pin,commodity_introduce, commodity_pic, commodity_pics, commodity_original_price,
       commodity_present_price, commodity_type,commodity_monthly_sales,commodity_collection_quantity,
       commodity_hot,commodity_del)
-      VALUE (#{studioId},#{commodityName},#{commodityPic},#{commodityPics},#{commodityOriginalPrice},
+      VALUE (#{studioId},#{commodityName},#{commodityNamePin},#{commodityIntroduce},#{commodityPic},#{commodityPics},#{commodityOriginalPrice},
       #{commodityPresentPrice},#{commodityType},#{commodityMonthlySales},#{commodityCollectionQuantity},
       #{commodityHot},#{commodityDel})
     </insert>
@@ -42,6 +44,8 @@
     <update id="updateCommodity" parameterType="com.xiaomi.editor.bean.CommodityBean">
           UPDATE commodity SET
           commodity_name = #{commodityName},
+          commodity_name_pin = #{commodityNamePin},
+          commodity_introduce = #{commodityIntroduce},
           commodity_pic = #{commodityPic},
           commodity_pics = #{commodityPics},
           commodity_original_price = #{commodityOriginalPrice},

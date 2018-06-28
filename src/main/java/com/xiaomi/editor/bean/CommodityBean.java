@@ -17,6 +17,14 @@ public class CommodityBean {
      */
     private String commodityName;
     /**
+     * 服务名称(拼音)
+     */
+    private String commodityNamePin;
+    /**
+     * 商品介绍
+     */
+    private String commodityIntroduce;
+    /**
      * 服务图片
      */
     private String commodityPic;
@@ -53,10 +61,16 @@ public class CommodityBean {
      */
     private Short commodityDel;
 
-    public CommodityBean(Integer commodityId, Integer studioId, String commodityName, String commodityPic, String commodityPics, Float commodityOriginalPrice, Float commodityPresentPrice, Short commodityType, Integer commodityMonthlySales, Integer commodityCollectionQuantity, Short commodityHot, Short commodityDel) {
+
+    public CommodityBean(Integer commodityId, Integer studioId, String commodityName, String commodityNamePin,
+                         String commodityIntroduce, String commodityPic, String commodityPics, Float commodityOriginalPrice,
+                         Float commodityPresentPrice, Short commodityType, Integer commodityMonthlySales,
+                         Integer commodityCollectionQuantity, Short commodityHot, Short commodityDel) {
         this.commodityId = commodityId;
         this.studioId = studioId;
         this.commodityName = commodityName;
+        this.commodityNamePin = commodityNamePin;
+        this.commodityIntroduce = commodityIntroduce;
         this.commodityPic = commodityPic;
         this.commodityPics = commodityPics;
         this.commodityOriginalPrice = commodityOriginalPrice;
@@ -69,9 +83,13 @@ public class CommodityBean {
     }
 
 
-    public CommodityBean(Integer studioId, String commodityName, String commodityPic, String commodityPics,  Float commodityPresentPrice, Short commodityType) {
+    public CommodityBean(Integer studioId, String commodityName,  String commodityNamePin,
+                         String commodityIntroduce, String commodityPic, String commodityPics,
+                         Float commodityPresentPrice, Short commodityType) {
         this.studioId = studioId;
         this.commodityName = commodityName;
+        this.commodityNamePin = commodityNamePin;
+        this.commodityIntroduce = commodityIntroduce;
         this.commodityPic = commodityPic;
         this.commodityPics = commodityPics;
         this.commodityOriginalPrice = commodityPresentPrice;
@@ -84,12 +102,26 @@ public class CommodityBean {
     }
 
 
-
-
     public CommodityBean() {
         super();
     }
 
+
+    public String getCommodityNamePin() {
+        return commodityNamePin;
+    }
+
+    public void setCommodityNamePin(String commodityNamePin) {
+        this.commodityNamePin = commodityNamePin;
+    }
+
+    public String getCommodityIntroduce() {
+        return commodityIntroduce;
+    }
+
+    public void setCommodityIntroduce(String commodityIntroduce) {
+        this.commodityIntroduce = commodityIntroduce;
+    }
 
     public Short getCommodityDel() {
         return commodityDel;
