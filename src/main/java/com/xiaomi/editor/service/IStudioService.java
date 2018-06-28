@@ -1,5 +1,7 @@
 package com.xiaomi.editor.service;
 
+import com.github.pagehelper.PageInfo;
+import com.xiaomi.editor.bean.BannerBean;
 import com.xiaomi.editor.bean.StudioBean;
 
 /**
@@ -44,7 +46,13 @@ public interface IStudioService {
      * @return
      */
     int updateStudio(StudioBean mStudioBean);
-
+    /**
+     * 超级管理员修改工作室数据
+     *
+     * @param mStudioBean
+     * @return
+     */
+    int updateStudioByAdmin(StudioBean mStudioBean);
 
     /**
      * 通过商品的id来查询这个商品是所属店铺的信息
@@ -53,5 +61,12 @@ public interface IStudioService {
      * @return
      */
     StudioBean querySystenUserIdByCommodityId(int commodityId);
+
+    /**
+     * 分页查询
+     *
+     * @return
+     */
+    PageInfo<StudioBean> selectByPage(int currentPage, int pageSize);
 
 }

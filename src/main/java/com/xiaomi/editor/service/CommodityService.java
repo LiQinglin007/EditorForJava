@@ -1,10 +1,13 @@
 package com.xiaomi.editor.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xiaomi.editor.bean.CommodityBean;
 import com.xiaomi.editor.dao.CommodityBeanMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -49,5 +52,13 @@ public class CommodityService implements ICommodityService {
     @Override
     public int updateCommodityDel(int CommodityId) {
         return commodityBeanMapper.updateCommodityDel(CommodityId);
+    }
+
+    @Override
+    public PageInfo<CommodityBean> selectByPage(int studioId, int currentPage, int pageSize) {
+        PageHelper.startPage(currentPage, pageSize);
+        List<CommodityBean> commodityBeanList = commodityBeanMapper.selectByStudioId(studioId);
+        PageInfo<CommodityBean> pageInfo = new PageInfo<>(commodityBeanList);
+        return pageInfo;
     }
 }

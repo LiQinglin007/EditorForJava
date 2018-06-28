@@ -49,7 +49,10 @@
     <orderEntry type="library" name="Gradle: javax.servlet:javax.servlet-api:3.1.0" level="project" />
     <orderEntry type="library" name="Gradle: redis.clients:jedis:2.9.0" level="project" />
     <orderEntry type="library" name="Gradle: commons-pool:commons-pool:1.6" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.pagehelper:pagehelper:5.1.4" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.stuxuhai:jpinyin:1.1.8" level="project" />
     <orderEntry type="library" name="Gradle: commons-logging:commons-logging:1.2" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.commons:commons-pool2:2.4.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.jsqlparser:jsqlparser:1.0" level="project" />
   </component>
 </module>

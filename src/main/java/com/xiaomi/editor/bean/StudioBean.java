@@ -74,7 +74,7 @@ public class StudioBean {
         this.systemUserid = systemUserid;
     }
 
-    public StudioBean(String studioName, String studioPic, Float studioMoney, String studioPhone, String studioQq, String studioBriefintroduction) {
+    public StudioBean(String studioName, String studioPic, Float studioMoney, String studioPhone, String studioQq, String studioBriefintroduction,int systemUserid) {
         this.studioId = null;
         this.studioName = studioName;
         this.studioPic = studioPic;
@@ -85,7 +85,7 @@ public class StudioBean {
         this.studioBriefintroduction = studioBriefintroduction;
         this.studioCollectionNmuber = 0;
         this.studioDel = 0;
-        this.systemUserid = 0;
+        this.systemUserid = systemUserid;
     }
 
 

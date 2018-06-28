@@ -2,6 +2,7 @@ package com.xiaomi.editor.dao;
 
 import com.xiaomi.editor.bean.CommodityBean;
 
+import java.util.List;
 import java.util.Map;
 
 public interface CommodityBeanMapper {
@@ -10,7 +11,7 @@ public interface CommodityBeanMapper {
      *
      * @return
      */
-    int updateHotState(Map<String,Object> CommodityMap);
+    int updateHotState(Map<String, Object> CommodityMap);
 
     /**
      * 查询没有被删除的商品
@@ -43,4 +44,12 @@ public interface CommodityBeanMapper {
      * @return
      */
     int updateCommodityDel(int CommodityId);
+
+    /**
+     * 分页查询
+     *
+     * @return
+     */
+    List<CommodityBean> selectByStudioId(int studioId);
+
 }

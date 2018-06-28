@@ -1,6 +1,9 @@
 package com.xiaomi.editor.dao;
 
 import com.xiaomi.editor.bean.StudioBean;
+import com.xiaomi.editor.bean.SystemBean;
+
+import java.util.List;
 
 public interface StudioBeanMapper {
     /**
@@ -39,6 +42,14 @@ public interface StudioBeanMapper {
     int updateStudio(StudioBean mStudioBean);
 
     /**
+     * 超级管理员修改工作室数据
+     *
+     * @param mStudioBean
+     * @return
+     */
+    int updateStudioByAdmin(StudioBean mStudioBean);
+
+    /**
      * 通过商品的id来查询这个商品是所属店铺的信息
      *
      * @param commodityId
@@ -46,4 +57,10 @@ public interface StudioBeanMapper {
      */
     StudioBean querySystenUserIdByCommodityId(int commodityId);
 
+    /**
+     * 分页查询
+     *
+     * @return
+     */
+    List<StudioBean> selectByPage();
 }

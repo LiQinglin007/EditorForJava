@@ -1,10 +1,14 @@
 package com.xiaomi.editor.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.xiaomi.editor.bean.BannerBean;
 import com.xiaomi.editor.bean.SystemBean;
 import com.xiaomi.editor.dao.SystemBeanMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Description: <br>
@@ -42,5 +46,13 @@ public class SystemService implements ISystemService {
     @Override
     public int updatePassword(SystemBean mSystemBean) {
         return systemBeanMapper.updatePassword(mSystemBean);
+    }
+
+    @Override
+    public PageInfo<SystemBean> selectByPage(int currentPage, int pageSize) {
+        PageHelper.startPage(currentPage, pageSize);
+        List<SystemBean> systemBeanList = systemBeanMapper.selectByPage();
+        PageInfo<SystemBean> pageInfo = new PageInfo<>(systemBeanList);
+        return pageInfo;
     }
 }

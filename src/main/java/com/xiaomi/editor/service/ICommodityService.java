@@ -1,5 +1,7 @@
 package com.xiaomi.editor.service;
 
+import com.github.pagehelper.PageInfo;
+import com.xiaomi.editor.bean.BannerBean;
 import com.xiaomi.editor.bean.CommodityBean;
 
 import java.util.Map;
@@ -52,4 +54,11 @@ public interface ICommodityService {
      */
     int updateCommodityDel(int CommodityId);
 
+
+    /**
+     * 分页查询
+     *
+     * @return
+     */
+    PageInfo<CommodityBean> selectByPage(int studioId, int currentPage, int pageSize);
 }

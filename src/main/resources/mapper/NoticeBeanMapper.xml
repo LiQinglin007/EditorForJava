@@ -27,5 +27,9 @@
         SELECT * FROM notice WHERE notice_id=#{_parameter}
     </select>
 
+    <!--分页查询倒序-->
+    <select id="selectByPage" resultMap="BaseResultMap">
+        SELECT notice_id,notice_title,notice_content,notice_time FROM notice WHERE notice_del=0 ORDER BY notice_time DESC
+    </select>
 
 </mapper>

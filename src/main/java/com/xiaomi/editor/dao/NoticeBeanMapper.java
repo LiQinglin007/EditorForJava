@@ -2,6 +2,8 @@ package com.xiaomi.editor.dao;
 
 import com.xiaomi.editor.bean.NoticeBean;
 
+import java.util.List;
+
 public interface NoticeBeanMapper {
     /**
      * 添加公告
@@ -28,4 +30,13 @@ public interface NoticeBeanMapper {
      * @return
      */
     NoticeBean queryById(int noticeId);
+
+    /**
+     * 分页查询
+     *
+     * @return
+     */
+    List<NoticeBean> selectByPage();
+
+
 }

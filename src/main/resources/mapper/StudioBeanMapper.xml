@@ -42,5 +42,17 @@
         WHERE studio_id=#{studioId}
     </update>
 
+    <!--管理员修改工作室信息-->
+    <update id="updateStudioByAdmin" parameterType="com.xiaomi.editor.bean.StudioBean">
+        UPDATE studio SET studio_name=#{studioName} ,studio_pic=#{studioPic},studio_phone=#{studioPhone},
+        studio_QQ=#{studioQq},studio_briefIntroduction=#{studioBriefintroduction},system_userid=#{systemUserid},
+        studio_money=#{studioMoney}
+        WHERE studio_id=#{studioId}
+    </update>
+
+    <!--分页查询-->
+    <select id="selectByPage" resultMap="BaseResultMap">
+        SELECT * from studio WHERE studio_del=0
+    </select>
 
 </mapper>

@@ -1,6 +1,9 @@
 package com.xiaomi.editor.dao;
 
+import com.xiaomi.editor.bean.BannerBean;
 import com.xiaomi.editor.bean.SystemBean;
+
+import java.util.List;
 
 public interface SystemBeanMapper {
     /**
@@ -42,4 +45,11 @@ public interface SystemBeanMapper {
      * @return
      */
     int updatePassword(SystemBean mSystemBean);
+
+    /**
+     * 分页查询
+     *
+     * @return
+     */
+    List<SystemBean> selectByPage();
 }

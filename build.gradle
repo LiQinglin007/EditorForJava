@@ -134,6 +134,12 @@ dependencies {
     //redis  https://mvnrepository.com/artifact/redis.clients/jedis
     compile "redis.clients:jedis:$redisVersion"
 // https://mvnrepository.com/artifact/commons-pool/commons-pool
-    compile group: 'commons-pool', name: 'commons-pool', version: '1.6'
+    compile 'commons-pool:commons-pool:1.6'
+
+    //分页工具
+    // https://mvnrepository.com/artifact/com.github.pagehelper/pagehelper
+    compile 'com.github.pagehelper:pagehelper:5.1.4'
+    //汉字转拼音的Java开源类库
+    compile 'com.github.stuxuhai:jpinyin:1.1.8'
 
 }

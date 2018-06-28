@@ -41,9 +41,12 @@
           <element id="library" level="project" name="Gradle: commons-io:commons-io:2.5" />
           <element id="library" level="project" name="Gradle: javax.servlet:javax.servlet-api:3.1.0" />
           <element id="library" level="project" name="Gradle: redis.clients:jedis:2.9.0" />
+          <element id="library" level="project" name="Gradle: commons-pool:commons-pool:1.6" />
+          <element id="library" level="project" name="Gradle: com.github.pagehelper:pagehelper:5.1.4" />
           <element id="library" level="project" name="Gradle: commons-logging:commons-logging:1.2" />
           <element id="library" level="project" name="Gradle: org.apache.commons:commons-pool2:2.4.2" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-pool/commons-pool/1.6/4572d589699f09d866a226a14b7f4323c6d8f040/commons-pool-1.6.jar" />
+          <element id="library" level="project" name="Gradle: com.github.jsqlparser:jsqlparser:1.0" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.stuxuhai/jpinyin/1.1.8/8f590971e39ba1274c9bd091c6122c82957b6267/jpinyin-1.1.8.jar" />
         </element>
       </element>
     </root>

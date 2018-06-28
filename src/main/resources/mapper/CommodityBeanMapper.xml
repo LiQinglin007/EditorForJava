@@ -55,4 +55,9 @@
         UPDATE commodity SET commodity_del = 1 where commodity_id=#{_parameter}
     </update>
 
+    <select id="selectByStudioId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT * from commodity where studio_id=#{_parameter} AND commodity_del=1;
+    </select>
+
+
 </mapper>

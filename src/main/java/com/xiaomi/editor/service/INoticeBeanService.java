@@ -1,6 +1,9 @@
 package com.xiaomi.editor.service;
 
+import com.github.pagehelper.PageInfo;
 import com.xiaomi.editor.bean.NoticeBean;
+
+import java.util.List;
 
 /**
  * Description:公告 <br>
@@ -37,4 +40,10 @@ public interface INoticeBeanService {
      */
     NoticeBean queryById(int noticeId);
 
+    /**
+     * 分页查询
+     *
+     * @return
+     */
+    PageInfo<NoticeBean> selectByPage(int currentPage, int pageSize);
 }

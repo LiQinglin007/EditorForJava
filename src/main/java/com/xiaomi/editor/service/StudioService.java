@@ -1,10 +1,14 @@
 package com.xiaomi.editor.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xiaomi.editor.bean.StudioBean;
+import com.xiaomi.editor.bean.SystemBean;
 import com.xiaomi.editor.dao.StudioBeanMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Description: <br>
@@ -52,6 +56,7 @@ public class StudioService implements IStudioService {
     public StudioBean queryById(int mStudioBeanId) {
         return studioBeanMapper.queryById(mStudioBeanId);
     }
+
     /**
      * 工作室修改自己工作室的数据
      *
@@ -64,8 +69,21 @@ public class StudioService implements IStudioService {
     }
 
     @Override
+    public int updateStudioByAdmin(StudioBean mStudioBean) {
+        return studioBeanMapper.updateStudioByAdmin(mStudioBean);
+    }
+
+    @Override
     public StudioBean querySystenUserIdByCommodityId(int commodityId) {
         return null;
+    }
+
+    @Override
+    public PageInfo<StudioBean> selectByPage(int currentPage, int pageSize) {
+        PageHelper.startPage(currentPage, pageSize);
+        List<StudioBean> studioBeanList = studioBeanMapper.selectByPage();
+        PageInfo<StudioBean> pageInfo = new PageInfo<>(studioBeanList);
+        return pageInfo;
     }
 
 }

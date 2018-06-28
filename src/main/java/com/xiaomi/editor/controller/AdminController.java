@@ -1,13 +1,20 @@
 package com.xiaomi.editor.controller;
 
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.github.stuxuhai.jpinyin.PinyinException;
+import com.github.stuxuhai.jpinyin.PinyinFormat;
+import com.github.stuxuhai.jpinyin.PinyinHelper;
 import com.xiaomi.editor.bean.*;
+import com.xiaomi.editor.dao.NoticeBeanMapper;
 import com.xiaomi.editor.service.*;
 import com.xiaomi.editor.system.ResponseJSON;
 import com.xiaomi.editor.utils.*;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -59,7 +66,7 @@ public class AdminController {
      * @param userPassword
      * @return
      */
-    @RequestMapping("/systemLogin")
+    @RequestMapping(value = "/systemLogin", method = RequestMethod.POST)
     @ResponseBody
     public ResponseJSON systemLogin(@RequestParam(value = "userLoginName") String userLoginName,
                                     @RequestParam(value = "userPassword") String userPassword) {
@@ -144,17 +151,18 @@ public class AdminController {
      * @param userPassword
      * @return
      */
-    @RequestMapping("/updateSystemPassword")
+    @RequestMapping(value = "/updateSystemPassword", method = RequestMethod.POST)
     @ResponseBody
     public ResponseJSON updateSystemPassword(HttpServletRequest request,
                                              @RequestParam(value = "userPassword") String userPassword) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("修改失败", null);
-        if (!checkUser(request)) {
-            responseJSON.setMsg("用户权限不足，请联系管理员");
-            return responseJSON;
-        }
         String header = request.getHeader(FinalData.TOKENHEAD);
         int userId = Integer.parseInt(JedisUtil.getSystemUserId(header));
+        SystemBean systemBean1 = mISystemService.queryById(userId);
+        if (systemBean1 == null) {
+            responseJSON.setMsg("暂无该用户");
+            return responseJSON;
+        }
         SystemBean systemBean = new SystemBean();
         systemBean.setSystemUserid(userId);
         systemBean.setSystemUserPassword(MD5Util.string2MD5(userPassword));
@@ -173,7 +181,7 @@ public class AdminController {
      * @param userPassword  登录密码
      * @return
      */
-    @RequestMapping("/addSysteamUser")
+    @RequestMapping(value = "/addSysteamUser", method = RequestMethod.POST)
     @ResponseBody
     public ResponseJSON addSystemUser(HttpServletRequest request,
                                       @RequestParam(value = "userLoginName") String userLoginName,
@@ -191,6 +199,12 @@ public class AdminController {
             responseJSON.setMsg(checkStringList);
             return responseJSON;
         }
+
+        SystemBean systemBean1 = mISystemService.queryByLoginName(userLoginName);
+        if (systemBean1 != null) {
+            responseJSON.setMsg("已有当前用户名");
+            return responseJSON;
+        }
         SystemBean systemBean = new SystemBean(userLoginName, MD5Util.string2MD5(userPassword));
         int i = mISystemService.addUser(systemBean);
         if (i > 0) {
@@ -201,13 +215,14 @@ public class AdminController {
         return responseJSON;
     }
 
+
     /**
      * 删除系统用户
      *
      * @param userId 用户id
      * @return
      */
-    @RequestMapping("/delSystemUser")
+    @RequestMapping(value = "/delSystemUser", method = RequestMethod.POST)
     @ResponseBody
     public ResponseJSON delSystemUser(HttpServletRequest request, @RequestParam(value = "userId") int userId) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("删除失败", null);
@@ -240,7 +255,7 @@ public class AdminController {
      * @param file
      * @return
      */
-    @RequestMapping("/addBanner")
+    @RequestMapping(value = "/addBanner", method = RequestMethod.POST)
     @ResponseBody
     public ResponseJSON addBanner(HttpServletRequest request, HttpSession session,
                                   @RequestParam(value = "webUrl") String webUrl,
@@ -274,13 +289,14 @@ public class AdminController {
         return responseJSON;
     }
 
+
     /**
      * 删除轮播图
      *
      * @param bannerId
      * @return
      */
-    @RequestMapping("/delBanner")
+    @RequestMapping(value = "/delBanner", method = RequestMethod.POST)
     @ResponseBody
     public ResponseJSON delBanner(HttpServletRequest request, @RequestParam(value = "bannerId") int bannerId) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("删除失败", null);
@@ -303,7 +319,7 @@ public class AdminController {
      * @param bannerId
      * @return
      */
-    @RequestMapping("/updateBanner")
+    @RequestMapping(value = "/updateBanner", method = RequestMethod.POST)
     @ResponseBody
     public ResponseJSON updateBanner(HttpServletRequest request, HttpSession session,
                                      @RequestParam(value = "bannerId") int bannerId,
@@ -342,7 +358,7 @@ public class AdminController {
      * @param noticeContent 公告内容
      * @return
      */
-    @RequestMapping("/addNotice")
+    @RequestMapping(value = "/addNotice", method = RequestMethod.POST)
     @ResponseBody
     public ResponseJSON addNotice(HttpServletRequest request,
                                   @RequestParam(value = "noticeTitle") String noticeTitle,
@@ -374,7 +390,7 @@ public class AdminController {
      * @param noticeId
      * @return
      */
-    @RequestMapping("/delNotice")
+    @RequestMapping(value = "/delNotice", method = RequestMethod.POST)
     @ResponseBody
     public ResponseJSON delNotice(HttpServletRequest request, @RequestParam(value = "noticeId") int noticeId) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("发布失败", null);
@@ -400,6 +416,7 @@ public class AdminController {
     /**
      * 添加工作室
      *
+     * @param studioUserId            系统用户id
      * @param studioName              工作室名称
      * @param studioMoney             工作室押金
      * @param studioPhone             联系电话
@@ -407,9 +424,10 @@ public class AdminController {
      * @param studioBriefintroduction 简介
      * @return
      */
-    @RequestMapping("/addStudio")
+    @RequestMapping(value = "/addStudio", method = RequestMethod.POST)
     @ResponseBody
     public ResponseJSON addStudio(HttpServletRequest request, HttpSession session,
+                                  @RequestParam(value = "studioUserId") int studioUserId,
                                   @RequestParam(value = "studioName") String studioName,
                                   @RequestParam(value = "studioMoney") Float studioMoney,
                                   @RequestParam(value = "studioPhone") String studioPhone,
@@ -452,7 +470,7 @@ public class AdminController {
             return responseJSON;
         }
         //插入数据库
-        StudioBean mStudioBean = new StudioBean(studioName, studioPic, studioMoney, studioPhone, studioQQ, studioBriefintroduction);
+        StudioBean mStudioBean = new StudioBean(studioName, studioPic, studioMoney, studioPhone, studioQQ, studioBriefintroduction, studioUserId);
         int i = mIStudioService.addStudio(mStudioBean);
         if (i < 0) {
             responseJSON.setMsg("添加失败");
@@ -464,12 +482,105 @@ public class AdminController {
 
 
     /**
+     * 获取工作室详情
+     *
+     * @param studioId 工作室id
+     * @return
+     */
+    @RequestMapping(value = "/getStudioData", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseJSON getStudioData(@RequestParam(value = "studioId") int studioId) {
+        ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("获取失败");
+        StudioBean studioBean = mIStudioService.queryById(studioId);
+        if (studioBean == null) {
+            responseJSON.setMsg("暂无此工作室");
+            return responseJSON;
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("studioName", studioBean.getStudioName());
+        map.put("systemUserid", studioBean.getSystemUserid());
+        map.put("studioCollectionNmuber", studioBean.getStudioCollectionNmuber());
+        map.put("studioBriefintroduction", studioBean.getStudioBriefintroduction());
+        map.put("studioMonthlySales", studioBean.getStudioMonthlySales());
+        map.put("studioQq", studioBean.getStudioQq());
+        map.put("studioPhone", studioBean.getStudioPhone());
+        map.put("studioMoney", studioBean.getStudioMoney());
+        map.put("studioPic", studioBean.getStudioPic());
+        responseJSON = ResponseUtils.getSuccessResponseBean("获取成功", map);
+        return responseJSON;
+    }
+
+
+    /**
+     * 修改工作室信息
+     *
+     * @param request
+     * @param session
+     * @param studioId                工作室id
+     * @param studioUserId            系统用户id
+     * @param studioName              工作室名称
+     * @param studioMoney             押金
+     * @param studioPhone             联系电话
+     * @param studioQQ                QQ
+     * @param studioBriefintroduction 简介
+     * @param file                    图片
+     * @return
+     */
+    @RequestMapping(value = "/updateStudioData", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseJSON updateStudioData(HttpServletRequest request, HttpSession session,
+                                         @RequestParam(value = "studioId") int studioId,
+                                         @RequestParam(value = "studioUserId") int studioUserId,
+                                         @RequestParam(value = "studioName") String studioName,
+                                         @RequestParam(value = "studioMoney") Float studioMoney,
+                                         @RequestParam(value = "studioPhone") String studioPhone,
+                                         @RequestParam(value = "studioQQ") String studioQQ,
+                                         @RequestParam(value = "studioBriefintroduction") String studioBriefintroduction,
+                                         @RequestParam(value = "file") MultipartFile file) {
+        ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("获取失败");
+        if (!checkUser(request)) {
+            responseJSON.setMsg("用户权限不足，请联系管理员");
+            return responseJSON;
+        }
+        StudioBean studioBean = mIStudioService.queryById(studioId);
+        if (studioBean == null) {
+            responseJSON.setMsg("暂无此工作室");
+            return responseJSON;
+        }
+        String saveUrl = "";
+        if (file != null) {
+            try {
+                saveUrl = FileUtil.saveFile(session, file);
+                studioBean.setStudioPic(saveUrl);
+            } catch (IOException e) {
+                e.printStackTrace();
+                logger.error("updateStudioData文件保存失败：" + e.toString());
+                responseJSON.setMsg("修改失败");
+                return responseJSON;
+            }
+        }
+        studioBean.setSystemUserid(studioUserId);//用户id
+        studioBean.setStudioName(studioName);//店铺名称
+        studioBean.setStudioMoney(studioMoney);//押金
+        studioBean.setStudioPhone(studioPhone);//电话
+        studioBean.setStudioQq(studioQQ);//QQ
+        studioBean.setStudioBriefintroduction(studioBriefintroduction);//简介
+        int i = mIStudioService.updateStudioByAdmin(studioBean);
+        if (i == 0) {
+            return responseJSON;
+        }
+        responseJSON = ResponseUtils.getSuccessResponseBean("修改成功");
+        return responseJSON;
+    }
+
+
+    /**
      * 删除工作室
      *
      * @param studioId
      * @return
      */
-    @RequestMapping("/delStudio")
+    @RequestMapping(value = "/delStudio", method = RequestMethod.POST)
     @ResponseBody
     public ResponseJSON delStudio(HttpServletRequest request, @RequestParam(value = "studioId") int studioId) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("添加失败", null);
@@ -499,7 +610,7 @@ public class AdminController {
      * @param HotCommodity 1:设置热门服务  0:取消设置
      * @return
      */
-    @RequestMapping("/setHotCommodity")
+    @RequestMapping(value = "/setHotCommodity", method = RequestMethod.POST)
     @ResponseBody
     public ResponseJSON updateBanner(HttpServletRequest request, @RequestParam(value = "CommodityId") int CommodityId,
                                      @RequestParam(value = "HotCommodity") int HotCommodity) {
@@ -526,8 +637,131 @@ public class AdminController {
         return responseJSON;
     }
 
-    public static void main(String[] args) {
-        String uId = JedisClientUtil.getString("");
-        System.out.println("uId:"+uId);
+
+    /**
+     * 获取公告列表
+     *
+     * @param request
+     * @param page
+     * @param size
+     * @return
+     */
+    @RequestMapping(value = "/getNoticeList", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseJSON getNoticeList(HttpServletRequest request, @RequestParam(value = "page") int page, @RequestParam(value = "size") int size) {
+        ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("查询失败");
+        if (!checkUser(request)) {
+            responseJSON.setMsg("用户权限不足，请联系管理员");
+            return responseJSON;
+        }
+        PageInfo<NoticeBean> noticeBeanPageInfo = mINoticeBeanService.selectByPage(page, size);
+        responseJSON = ResponseUtils.getSuccessResponseBean("查询成功", noticeBeanPageInfo);
+        return responseJSON;
     }
+
+
+    /**
+     * 获取轮播图列表
+     *
+     * @param request
+     * @param page
+     * @param size
+     * @return
+     */
+    @RequestMapping(value = "/getBannerList", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseJSON getBannerList(HttpServletRequest request, @RequestParam(value = "page") int page, @RequestParam(value = "size") int size) {
+        ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("查询失败");
+        if (!checkUser(request)) {
+            responseJSON.setMsg("用户权限不足，请联系管理员");
+            return responseJSON;
+        }
+        PageInfo<BannerBean> noticeBeanPageInfo = mIBannerService.selectByPage(page, size);
+        responseJSON = ResponseUtils.getSuccessResponseBean("查询成功", noticeBeanPageInfo);
+        return responseJSON;
+    }
+
+    /**
+     * 获取全部工作室用户
+     *
+     * @param request
+     * @param page
+     * @param size
+     * @return
+     */
+    @RequestMapping(value = "/getSystemUserList", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseJSON getSystemUserList(HttpServletRequest request, @RequestParam(value = "page") int page, @RequestParam(value = "size") int size) {
+        ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("查询失败");
+        if (!checkUser(request)) {
+            responseJSON.setMsg("用户权限不足，请联系管理员");
+            return responseJSON;
+        }
+        PageInfo<SystemBean> noticeBeanPageInfo = mISystemService.selectByPage(page, size);
+        responseJSON = ResponseUtils.getSuccessResponseBean("查询成功", noticeBeanPageInfo);
+        return responseJSON;
+    }
+
+
+    /**
+     * 获取全部工作室
+     *
+     * @param request
+     * @param page
+     * @param size
+     * @return
+     */
+    @RequestMapping(value = "/getStudioList", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseJSON getStudioList(HttpServletRequest request, @RequestParam(value = "page") int page, @RequestParam(value = "size") int size) {
+        ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("查询失败");
+        if (!checkUser(request)) {
+            responseJSON.setMsg("用户权限不足，请联系管理员");
+            return responseJSON;
+        }
+        PageInfo<StudioBean> studioBeanPageInfo = mIStudioService.selectByPage(page, size);
+        responseJSON = ResponseUtils.getSuccessResponseBean("查询成功", studioBeanPageInfo);
+        return responseJSON;
+    }
+
+    /**
+     * 获取全部工作室
+     *
+     * @param request
+     * @param page
+     * @param size
+     * @return
+     */
+    @RequestMapping(value = "/getCommodityListByStudioId", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseJSON getCommodityListByStudioId(HttpServletRequest request, @RequestParam(value = "studioId") int studioId, @RequestParam(value = "page") int page, @RequestParam(value = "size") int size) {
+        ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("查询失败");
+        if (!checkUser(request)) {
+            responseJSON.setMsg("用户权限不足，请联系管理员");
+            return responseJSON;
+        }
+        PageInfo<CommodityBean> studioBeanPageInfo = mICommodityService.selectByPage(studioId, page, size);
+        responseJSON = ResponseUtils.getSuccessResponseBean("查询成功", studioBeanPageInfo);
+        return responseJSON;
+    }
+
+    //todo 模糊搜索(汉字转化成拼音)
+    public static void main(String[] args) {
+        String str = "你好世界";
+        try {
+//            PinyinHelper.convertToPinyinString(str, ",", PinyinFormat.WITH_TONE_MARK); // nǐ,hǎo,shì,jiè
+//            PinyinHelper.convertToPinyinString(str, ",", PinyinFormat.WITH_TONE_NUMBER); // ni3,hao3,shi4,jie4
+            String string = PinyinHelper.convertToPinyinString(str, "", PinyinFormat.WITHOUT_TONE);// ni,hao,shi,jie
+            System.out.println("string:" + string);
+//            PinyinHelper.getShortPinyin(str); // nhsj
+        } catch (PinyinException e) {
+            System.out.println("e:" + e.toString());
+            e.printStackTrace();
+        }
+
+
+//        PinyinHelper.addPinyinDict("user.dict");  // 添加用户自定义字典
+    }
+
+
 }

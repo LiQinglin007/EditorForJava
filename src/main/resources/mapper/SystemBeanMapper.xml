@@ -28,7 +28,7 @@
     </select>
 
     <!--通过用户名去查询没有删掉(状态)的用户-->
-    <select id="queryByLoginName" parameterType="String" resultMap="BaseResultMap">
+    <select id="queryByLoginName" parameterType="java.lang.String" resultMap="BaseResultMap">
         SELECT * FROM system WHERE system_user_loginname=#{_parameter} AND system_user_del=0
     </select>
 
@@ -37,5 +37,9 @@
         UPDATE system SET system_user_password=#{systemUserPassword} WHERE system_userid=#{systemUserid}
     </update>
 
+    <!--分页查询 超级管理员模块-->
+    <select id="selectByPage" resultMap="BaseResultMap">
+        SELECT system_userid,system_user_loginname FROM system WHERE system_user_type=2 AND system_user_del=0
+    </select>
 
 </mapper>

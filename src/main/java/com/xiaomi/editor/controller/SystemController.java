@@ -11,6 +11,7 @@ import com.xiaomi.editor.utils.*;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -73,7 +74,7 @@ public class SystemController {
      * @return
      */
     @ResponseBody
-    @RequestMapping("/updateStudioData")
+    @RequestMapping(value ="/updateStudioData", method = RequestMethod.POST)
     public ResponseJSON updateStudioData(HttpServletRequest request, HttpSession session, @RequestParam int studioId,
                                          @RequestParam String studioName, @RequestParam String phone,
                                          @RequestParam String qq, @RequestParam String studioBriefintroduction,
@@ -126,7 +127,7 @@ public class SystemController {
      * @return
      */
     @ResponseBody
-    @RequestMapping("/addCommodity")
+    @RequestMapping(value ="/addCommodity", method = RequestMethod.POST)
     public ResponseJSON addCommodity(HttpServletRequest request, HttpSession session, @RequestParam int studioId,
                                      @RequestParam String commodityName, @RequestParam Float commodityPresentPrice,
                                      @RequestParam int commodityType,
@@ -195,7 +196,7 @@ public class SystemController {
      * @return
      */
     @ResponseBody
-    @RequestMapping("/updateCommodity")
+    @RequestMapping(value ="/updateCommodity", method = RequestMethod.POST)
     public ResponseJSON updateCommodity(HttpServletRequest request, HttpSession session, @RequestParam int commodityId,
                                         @RequestParam String commodityName, @RequestParam Float commodityPresentPrice,
                                         @RequestParam int commodityType,
@@ -270,7 +271,7 @@ public class SystemController {
      * @return
      */
     @ResponseBody
-    @RequestMapping("/delCommodity")
+    @RequestMapping(value ="/delCommodity", method = RequestMethod.POST)
     public ResponseJSON delCommodity(HttpServletRequest request, @RequestParam int commodityId) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("下架失败");
         if (!checkUser(request)) {

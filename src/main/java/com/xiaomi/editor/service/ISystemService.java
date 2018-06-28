@@ -1,5 +1,7 @@
 package com.xiaomi.editor.service;
 
+import com.github.pagehelper.PageInfo;
+import com.xiaomi.editor.bean.NoticeBean;
 import com.xiaomi.editor.bean.SystemBean;
 
 /**
@@ -51,4 +53,11 @@ public interface ISystemService {
      * @return
      */
     int updatePassword(SystemBean mSystemBean);
+
+    /**
+     * 分页查询
+     *
+     * @return
+     */
+    PageInfo<SystemBean> selectByPage(int currentPage, int pageSize);
 }

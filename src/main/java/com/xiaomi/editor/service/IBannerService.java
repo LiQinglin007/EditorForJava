@@ -1,6 +1,8 @@
 package com.xiaomi.editor.service;
 
+import com.github.pagehelper.PageInfo;
 import com.xiaomi.editor.bean.BannerBean;
+import com.xiaomi.editor.bean.NoticeBean;
 
 import java.util.List;
 
@@ -21,4 +23,10 @@ public interface IBannerService {
 
     List<BannerBean> selectAll();
 
+    /**
+     * 分页查询
+     *
+     * @return
+     */
+    PageInfo<BannerBean> selectByPage(int currentPage, int pageSize);
 }
