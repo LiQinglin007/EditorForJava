@@ -34,8 +34,8 @@ API版本：1.0.0(初稿)<br>
 请求方式：POST<br>
 函数入参：<br>
 ```
-"userLoginName":"admin"，String  		(必传)
-"userPassword":"123456789" String		(必传)
+"userLoginName":"admin"，String  		(必传)(前端限制最多12位)
+"userPassword":"123456789" String		(必传)(前端限制6-16位)
 ```
 函数出参：
 ```
@@ -56,8 +56,8 @@ API版本：1.0.0(初稿)<br>
 函数入参：<br>
 
 ```
-"userLoginName":"xiaomiStudio"，String  (必传)
-"userPassword":"123456789" String		(必传)
+"userLoginName":"xiaomiStudio"，String  (必传)(前端限制最多12位)
+"userPassword":"123456789" String		(必传)(前端限制6-16位)
 ```
 
 函数出参：
@@ -76,7 +76,7 @@ API版本：1.0.0(初稿)<br>
 请求方式：POST<br>
 函数入参：<br>
 ```
-"userPassword":"123456789" String			(必传)
+"userPassword":"123456789" String			(必传)(前端限制6-16位)
 ```
 函数出参：
 ```
@@ -290,8 +290,8 @@ API版本：1.0.0(初稿)<br>
 请求方式：POST<br>
 函数入参：<br>
 ```
-"noticeTitle":"公告标题"，String  (必传)
-"noticeContent":"公告内容"，String  (必传)
+"noticeTitle":"公告标题"，String  (必传)(前端限制20位)
+"noticeContent":"公告内容"，String  (必传)(前端限制1000位)
 ```
 函数出参：
 ```
@@ -384,10 +384,10 @@ API版本：1.0.0(初稿)<br>
 ```
 "studioUserId":1，int  (必传)系统用户id(谁开的这家店)
 "studioName":"小米工作室"，String  (必传)工作室名称(前端限制最多6字)
-"studioMoney":1000，folat  (必传)工作室押金
-"studioPhone":"15284224245"，int  (必传)联系电话
-"studioQQ":"531195555"，int  (必传)工作QQ
-"studioBriefintroduction":"这是一家店铺"，int  (必传)简介
+"studioMoney":1000，folat  (必传)工作室押金 (前端限制上限十万)
+"studioPhone":"15284224245"，int  (必传)联系电话(前端限制最多11位)
+"studioQQ":"531195555"，int  (必传)工作QQ(前端限制最多15位)
+"studioBriefintroduction":"这是一家店铺"，int  (必传)简介(前端限制最多100位)
 "file" File (必传) 工作室头像，上传图片，使用文件流上传
 ```
 函数出参：
@@ -399,27 +399,33 @@ API版本：1.0.0(初稿)<br>
 }
 ```
 
-##### 2.1.14 添加工作室
-函数调用地址：admin/addStudio <br>
+##### 2.1.14 修改工作室
+
+函数调用地址：admin/updateStudioData<br>
 请求方式：POST<br>
 函数入参：<br>
+
 ```
+"studioId":1,int (必传) 工作室id
 "studioUserId":1，int  (必传)系统用户id(谁开的这家店)
-"studioName":"小米工作室"，String  (必传)工作室名称(前端限制最多6字)
-"studioMoney":1000，folat  (必传)工作室押金
-"studioPhone":"15284224245"，int  (必传)联系电话
-"studioQQ":"531195555"，int  (必传)工作QQ
-"studioBriefintroduction":"这是一家店铺"，int  (必传)简介
-"file" File (必传) 工作室头像，上传图片，使用文件流上传
+"studioName":"小米工作室"，String   工作室名称(前端限制最多6字)
+"studioMoney":1000，folat   工作室押金(前端限制上限十万)
+"studioPhone":"15284224245"，int  联系电话(前端限制最多11位)
+"studioQQ":"531195555"，int   工作QQ(前端限制最多15位)
+"studioBriefintroduction":"这是一家店铺"，int  简介(前端限制最多100位)
+"file" File   工作室头像，上传图片，使用文件流上传  
 ```
+
 函数出参：
+
 ```
 {
     "code":200,
     "data":null,
-    "msg":"添加成功"
+    "msg":"修改成功"
 }
 ```
+
 ##### 2.1.15 获取工作室详情
 
 函数调用地址：admin/getStudioData<br>
@@ -786,3 +792,137 @@ API版本：1.0.0(初稿)<br>
     "msg":"设置成功"
 }
 ```
+
+
+#### 2.2 工作室用户登录
+
+##### 2.2.1 修改自己工作室数据
+
+函数调用地址：studio/updateStudioData <br>
+请求方式：POST<br>
+函数入参：<br>
+
+```
+"studioId":1，int  (必传)工作室id
+"studioName":"xiaomiStudio"，String  工作室名称(前端限制最多6字)
+"phone":"15284224245"，String  工作室电话(前端限制最多11位)
+"qq":"531192555"，String  工作室QQ(前端限制最多15位)
+"studioBriefintroduction":"这里是工作室简介"，String   (前端限制最多100位)
+"file":，File  工作室图片
+```
+
+函数出参：
+
+```
+{
+    "code":200,
+    "data":null,
+    "msg":"设置成功"
+}
+```
+
+##### 2.2.2 添加商品
+
+函数调用地址：studio/addCommodity<br>
+请求方式：POST<br>
+函数入参：<br>
+
+```
+"studioId":1 int (必传) 工作室id
+"commodityName":"大红袍" String (必传)   商品名称 (前端限制最多50位)
+"commodityIntroduce":"大红袍大红茶" String (必传)    商品介绍 (前端限制最多300位)
+"commodityPresentPrice":110.00 Folat (必传)   商品价格
+"commodityType":1  int (必传) 商品类型  (1:查重、2:降重、3:速审)
+"file": File (必传)   商品头像
+"files": File[] (必传)    商品详情图片
+```
+
+函数出参：
+
+```
+{
+    "code":200,
+    "data":null,
+    "msg":"设置成功"
+}
+```
+
+##### 2.2.3 查询某个商品的详情
+
+函数调用地址：studio/queryCommodityById<br>
+请求方式：POST<br>
+函数入参：<br>
+
+```
+"commodityId":1 int (必传) 商品id
+```
+
+函数出参：
+
+```
+{
+    "code":200,
+    "data":{
+        "commodity_original_price":1,
+        "commodity_collection_quantity":0,
+        "commodity_id":1,
+        "commodity_hot":0,
+        "commodity_introduce":"大红袍茶叶",
+        "commodity_pic":"http://www.xxx.jpg",
+        "commodity_pics":"http://www.xxx.jpg,http://www.xxx.jpg,http://www.xxx.jpg",
+        "commodity_type":1,
+        "studio_id":1,
+        "commodity_present_price":1,
+        "commodity_name":"大红袍"
+    },
+    "msg":"查询成功"
+} 
+```
+
+##### 2.2.4 修改商品
+
+函数调用地址：studio/updateCommodity<br>
+请求方式：POST<br>
+函数入参：<br>
+
+```
+"commodityId":1 int (必传) 商品id
+"commodityName":"大红袍" String     商品名称 (前端限制最多50位)
+"commodityIntroduce":"大红袍大红茶" String      商品介绍 (前端限制最多300位)
+"commodityPresentPrice":110.00 Folat    商品价格
+"commodityType":1  int   商品类型  (1:查重、2:降重、3:速审)
+"file": File     商品头像
+"files": File[]     商品详情图片
+```
+
+函数出参：
+
+```
+{
+    "code":200,
+    "data":null,
+    "msg":"设置成功"
+}
+```
+
+##### 2.2.5 下架商品
+
+函数调用地址：studio/delCommodity<br>
+请求方式：POST<br>
+函数入参：<br>
+
+```
+"commodityId":1 int (必传) 商品id
+```
+
+函数出参：
+
+```
+{
+    "code":200,
+    "data":null,
+    "msg":"下架成功"
+}
+```
+
+##### 
