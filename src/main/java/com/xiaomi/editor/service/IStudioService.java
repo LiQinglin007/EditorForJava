@@ -3,6 +3,7 @@ package com.xiaomi.editor.service;
 import com.github.pagehelper.PageInfo;
 import com.xiaomi.editor.bean.BannerBean;
 import com.xiaomi.editor.bean.StudioBean;
+import com.xiaomi.editor.paramsbean.PageListBean;
 
 import java.util.List;
 
@@ -69,7 +70,7 @@ public interface IStudioService {
      *
      * @return
      */
-    PageInfo selectByPage(int currentPage, int pageSize);
+    PageInfo selectByPage(PageListBean pageBean);
 
     /**
      * 按工作室名称模糊查询

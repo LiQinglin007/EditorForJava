@@ -4,6 +4,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xiaomi.editor.bean.CommodityBean;
 import com.xiaomi.editor.dao.CommodityBeanMapper;
+import com.xiaomi.editor.paramsbean.PageListBean;
+import com.xiaomi.editor.paramsbean.PageListBeanStudioId;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -55,24 +57,24 @@ public class CommodityService implements ICommodityService {
     }
 
     @Override
-    public PageInfo selectByPage(int studioId, int currentPage, int pageSize) {
-        PageHelper.startPage(currentPage, pageSize);
-        List commodityBeanList = commodityBeanMapper.selectByStudioId(studioId);
+    public PageInfo selectByPage(PageListBeanStudioId pageListBeanStudioId) {
+        PageHelper.startPage(pageListBeanStudioId.getPage(), pageListBeanStudioId.getSize());
+        List commodityBeanList = commodityBeanMapper.selectByStudioId(pageListBeanStudioId.getStudioId());
         PageInfo pageInfo = new PageInfo<>(commodityBeanList);
         return pageInfo;
     }
 
     @Override
-    public PageInfo selectNotHotCommodityByPage(int studioId, int currentPage, int pageSize) {
-        PageHelper.startPage(currentPage, pageSize);
-        List commodityBeanList = commodityBeanMapper.selectByStudioId(studioId);
+    public PageInfo selectNotHotCommodityByPage(PageListBeanStudioId pageListBeanStudioId) {
+        PageHelper.startPage(pageListBeanStudioId.getPage(), pageListBeanStudioId.getSize());
+        List commodityBeanList = commodityBeanMapper.selectNotHotCommodityByPage(pageListBeanStudioId.getStudioId());
         PageInfo pageInfo = new PageInfo<>(commodityBeanList);
         return pageInfo;
     }
 
     @Override
-    public PageInfo selectHotCommodityByPage(int currentPage, int pageSize) {
-        PageHelper.startPage(currentPage, pageSize);
+    public PageInfo selectHotCommodityByPage(PageListBean pageListBean) {
+        PageHelper.startPage(pageListBean.getPage(), pageListBean.getSize());
         List commodityBeanList = commodityBeanMapper.selectHotCommodityByPage();
         PageInfo pageInfo = new PageInfo<>(commodityBeanList);
         return pageInfo;

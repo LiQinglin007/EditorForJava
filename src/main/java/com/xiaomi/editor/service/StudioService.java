@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.xiaomi.editor.bean.StudioBean;
 import com.xiaomi.editor.bean.SystemBean;
 import com.xiaomi.editor.dao.StudioBeanMapper;
+import com.xiaomi.editor.paramsbean.PageListBean;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -79,8 +80,8 @@ public class StudioService implements IStudioService {
     }
 
     @Override
-    public PageInfo selectByPage(int currentPage, int pageSize) {
-        PageHelper.startPage(currentPage, pageSize);
+    public PageInfo selectByPage(PageListBean pageBean) {
+        PageHelper.startPage(pageBean.getPage(), pageBean.getSize());
         List studioBeanList = studioBeanMapper.selectByPage();
         PageInfo pageInfo = new PageInfo<>(studioBeanList);
         return pageInfo;

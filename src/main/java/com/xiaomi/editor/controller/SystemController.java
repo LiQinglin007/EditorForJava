@@ -1,11 +1,11 @@
 package com.xiaomi.editor.controller;
 
 import com.github.stuxuhai.jpinyin.PinyinException;
-import com.github.stuxuhai.jpinyin.PinyinFormat;
-import com.github.stuxuhai.jpinyin.PinyinHelper;
 import com.xiaomi.editor.bean.CommodityBean;
 import com.xiaomi.editor.bean.StudioBean;
 import com.xiaomi.editor.bean.SystemBean;
+import com.xiaomi.editor.paramsbean.Commodity;
+import com.xiaomi.editor.paramsbean.Studio;
 import com.xiaomi.editor.service.ICommodityService;
 import com.xiaomi.editor.service.IStudioService;
 import com.xiaomi.editor.service.ISystemService;
@@ -13,11 +13,7 @@ import com.xiaomi.editor.system.ResponseJSON;
 import com.xiaomi.editor.utils.*;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -70,39 +66,33 @@ public class SystemController {
      * 修改自己工作室数据
      *
      * @param session
-     * @param studioId                工作室id
-     * @param studioName              工作室名称
-     * @param phone                   联系电话
-     * @param qq                      联系QQ
-     * @param studioBriefintroduction 商铺简介
-     * @param file                    商铺头像
+     * @param studio  工作室id,工作室名称,联系电话,联系QQ,商铺简介,商铺头像
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/updateStudioData", method = RequestMethod.POST)
-    public ResponseJSON updateStudioData(HttpServletRequest request, HttpSession session, @RequestParam int studioId,
-                                         @RequestParam String studioName, @RequestParam String phone,
-                                         @RequestParam String qq, @RequestParam String studioBriefintroduction,
-                                         @RequestParam(value = "file") MultipartFile file) {
+    public ResponseJSON updateStudioData(HttpServletRequest request, HttpSession session,
+                                         @RequestBody Studio studio
+    ) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("修改失败", null);
         if (!checkUser(request)) {
             responseJSON.setMsg("用户权限不足，请联系管理员");
             return responseJSON;
         }
         String checkStringList = CheckStringEmptyUtils.CheckStringList(
-                new CheckStringEmptyUtils.CheckStringBean(studioName, "工作室名称不能为空"),
-                new CheckStringEmptyUtils.CheckStringBean(phone, "工作室联系电话不能为空"),
-                new CheckStringEmptyUtils.CheckStringBean(qq, "工作QQ不能为空"),
-                new CheckStringEmptyUtils.CheckStringBean(studioBriefintroduction, "工作室简介不能为空"));
+                new CheckStringEmptyUtils.CheckStringBean(studio.getStudioName(), "工作室名称不能为空"),
+                new CheckStringEmptyUtils.CheckStringBean(studio.getStudioPhone(), "工作室联系电话不能为空"),
+                new CheckStringEmptyUtils.CheckStringBean(studio.getStudioQq(), "工作QQ不能为空"),
+                new CheckStringEmptyUtils.CheckStringBean(studio.getStudioBriefintroduction(), "工作室简介不能为空"));
         if (!checkStringList.equals(CheckStringEmptyUtils.ListSuccess)) {
             responseJSON.setMsg(checkStringList);
             return responseJSON;
         }
         //保存图片
         String studioPic = "";
-        if (file != null) {
+        if (studio.getFile() != null) {
             try {
-                studioPic = FileUtil.saveFile(session, file);
+                studioPic = FileUtil.saveFile(session, studio.getFile());
             } catch (IOException e) {
                 e.printStackTrace();
                 logger.error("updateStudioData文件保存失败：" + e.toString());
@@ -112,14 +102,15 @@ public class SystemController {
         }
         String studioNamePin = "";
         try {
-            studioNamePin = PinyinUtil.getPinyin(studioName);
+            studioNamePin = PinyinUtil.getPinyin(studio.getStudioName());
         } catch (PinyinException e) {
             e.printStackTrace();
             logger.error("updateStudioData汉字转换拼音失败：" + e.toString());
             responseJSON.setMsg("添加失败");
             return responseJSON;
         }
-        StudioBean mStudioBean = new StudioBean(studioId, studioName, studioNamePin, studioPic, phone, qq, studioBriefintroduction);
+        StudioBean mStudioBean = new StudioBean(studio.getStudioId(), studio.getStudioName(), studioNamePin, studioPic, studio.getStudioPhone(), studio.getStudioQq(),
+                studio.getStudioBriefintroduction());
         int i = studioService.updateStudio(mStudioBean);
         if (i == 0) {
             return responseJSON;
@@ -132,49 +123,39 @@ public class SystemController {
      * 添加商品
      *
      * @param session
-     * @param studioId              工作室id
-     * @param commodityName         商品名称
-     * @param commodityIntroduce    商品介绍
-     * @param commodityPresentPrice 商品价格
-     * @param commodityType         商品类型   (1:查重、2:降重、3:速审)
-     * @param file                  商品头像
-     * @param files                 商品详情图片
+     * @param commodity 工作室id,商品名称,商品介绍,商品价格,商品类型   (1:查重、2:降重、3:速审),商品头像,商品详情图片
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/addCommodity", method = RequestMethod.POST)
-    public ResponseJSON addCommodity(HttpServletRequest request, HttpSession session, @RequestParam int studioId,
-                                     @RequestParam String commodityName, @RequestParam String commodityIntroduce,
-                                     @RequestParam Float commodityPresentPrice, @RequestParam int commodityType,
-                                     @RequestParam(value = "picFile") MultipartFile file,
-                                     @RequestParam(value = "picsFile") MultipartFile[] files) {
+    public ResponseJSON addCommodity(HttpServletRequest request, HttpSession session, @RequestBody Commodity commodity) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("添加失败");
         if (!checkUser(request)) {
             responseJSON.setMsg("用户权限不足，请联系管理员");
             return responseJSON;
         }
-        if (CheckStringEmptyUtils.IsEmpty(commodityName)) {
+        if (CheckStringEmptyUtils.IsEmpty(commodity.getCommodityName())) {
             responseJSON.setMsg("服务名称不能为空");
             return responseJSON;
         }
-        if (CheckStringEmptyUtils.IsEmpty(commodityIntroduce)) {
+        if (CheckStringEmptyUtils.IsEmpty(commodity.getCommodityIntroduce())) {
             responseJSON.setMsg("服务简介不能为空");
             return responseJSON;
         }
 
-        if (file == null) {
+        if (commodity.getFile() == null) {
             responseJSON.setMsg("服务图片不能为空");
             return responseJSON;
         }
 
-        if (files == null || files.length == 0) {
+        if (commodity.getFiles() == null || commodity.getFiles().length == 0) {
             responseJSON.setMsg("服务详情图片不能为空");
             return responseJSON;
         }
 
         String picUrl = "";
         try {
-            picUrl = FileUtil.saveFile(session, file);
+            picUrl = FileUtil.saveFile(session, commodity.getFile());
         } catch (IOException e) {
             e.printStackTrace();
             logger.error("addCommodity文件保存失败：" + e.toString());
@@ -184,7 +165,7 @@ public class SystemController {
 
         String picsUrl = "";
         try {
-            picsUrl = FileUtil.saveFile(session, files);
+            picsUrl = FileUtil.saveFile(session, commodity.getFiles());
         } catch (IOException e) {
             e.printStackTrace();
             logger.error("addCommodity服务详情文件保存失败：" + e.toString());
@@ -193,7 +174,7 @@ public class SystemController {
         }
         String commodityNamePin = "";
         try {
-            commodityNamePin = PinyinUtil.getPinyin(commodityName);
+            commodityNamePin = PinyinUtil.getPinyin(commodity.getCommodityName());
         } catch (PinyinException e) {
             e.printStackTrace();
             logger.error("addCommodity汉字转换拼音失败：" + e.toString());
@@ -201,8 +182,9 @@ public class SystemController {
             return responseJSON;
         }
 
-        CommodityBean commodityBean = new CommodityBean(studioId, commodityName, commodityNamePin, commodityIntroduce, picUrl, picsUrl,
-                commodityPresentPrice, Short.parseShort(commodityType + ""));
+        CommodityBean commodityBean = new CommodityBean(commodity.getCommodityId(), commodity.getCommodityName(), commodityNamePin,
+                commodity.getCommodityIntroduce(), picUrl, picsUrl, commodity.getCommodityPresentPrice(), commodity.getCommodityType()
+        );
         int i = commodityService.addCommodity(commodityBean);
         if (i == 0) {
             return responseJSON;
@@ -216,19 +198,18 @@ public class SystemController {
      * 查询某个商品的详情
      *
      * @param request
-     * @param commodityId
+     * @param commodity id
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/queryCommodityById", method = RequestMethod.POST)
-    public ResponseJSON queryCommodityById(HttpServletRequest request,
-                                           @RequestParam int commodityId) {
+    public ResponseJSON queryCommodityById(HttpServletRequest request, @RequestBody Commodity commodity) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("查询失败");
         if (!checkUser(request)) {
             responseJSON.setMsg("用户权限不足，请联系管理员");
             return responseJSON;
         }
-        CommodityBean commodityBean = commodityService.queryById(commodityId);
+        CommodityBean commodityBean = commodityService.queryById(commodity.getCommodityId());
         if (commodityBean == null) {
             responseJSON.setMsg("暂无该商品");
             return responseJSON;
@@ -254,33 +235,21 @@ public class SystemController {
      * 修改商品
      *
      * @param session
-     * @param commodityId           商品id
-     * @param commodityName         商品名称
-     * @param commodityPresentPrice 商品价格
-     * @param commodityType         商品类型
-     * @param file                  图片
-     * @param files                 详情图片
+     * @param commodity 商品id,商品名称,商品价格,商品类型,图片,详情图片
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/updateCommodity", method = RequestMethod.POST)
-    public ResponseJSON updateCommodity(HttpServletRequest request, HttpSession session,
-                                        @RequestParam int commodityId,
-                                        @RequestParam String commodityName,
-                                        @RequestParam String commodityIntroduce,
-                                        @RequestParam Float commodityPresentPrice,
-                                        @RequestParam int commodityType,
-                                        @RequestParam(value = "picFile") MultipartFile file,
-                                        @RequestParam(value = "picsFile") MultipartFile[] files) {
+    public ResponseJSON updateCommodity(HttpServletRequest request, HttpSession session, @RequestBody Commodity commodity) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("修改失败");
         if (!checkUser(request)) {
             responseJSON.setMsg("用户权限不足，请联系管理员");
             return responseJSON;
         }
         String picUrl = "";
-        if (file != null) {
+        if (commodity.getFile() != null) {
             try {
-                picUrl = FileUtil.saveFile(session, file);
+                picUrl = FileUtil.saveFile(session, commodity.getFile());
             } catch (IOException e) {
                 e.printStackTrace();
                 logger.error("addCommodity文件保存失败：" + e.toString());
@@ -290,9 +259,9 @@ public class SystemController {
         }
 
         String picsUrl = "";
-        if (files != null && files.length != 0) {
+        if (commodity.getFiles() != null && commodity.getFiles().length != 0) {
             try {
-                picsUrl = FileUtil.saveFile(session, files);
+                picsUrl = FileUtil.saveFile(session, commodity.getFiles());
             } catch (IOException e) {
                 e.printStackTrace();
                 logger.error("addCommodity服务详情文件保存失败：" + e.toString());
@@ -301,21 +270,21 @@ public class SystemController {
             }
         }
 
-        CommodityBean commodityBean = commodityService.queryById(commodityId);
+        CommodityBean commodityBean = commodityService.queryById(commodity.getCommodityId());
         if (commodityBean == null) {
             responseJSON.setMsg("暂无该商品");
             return responseJSON;
         }
         //如果价格变化了,把之前的现价放在原价里边
-        if (commodityPresentPrice != commodityBean.getCommodityPresentPrice()) {
+        if (commodity.getCommodityPresentPrice() != commodityBean.getCommodityPresentPrice()) {
             commodityBean.setCommodityOriginalPrice(commodityBean.getCommodityPresentPrice());
         }
         //如果商品名变化
-        if (!CheckStringEmptyUtils.IsEmpty(commodityName)) {
-            commodityBean.setCommodityName(commodityName);
+        if (!CheckStringEmptyUtils.IsEmpty(commodity.getCommodityName())) {
+            commodityBean.setCommodityName(commodity.getCommodityName());
             String commodityNamePin = "";
             try {
-                commodityNamePin = PinyinUtil.getPinyin(commodityName);
+                commodityNamePin = PinyinUtil.getPinyin(commodity.getCommodityName());
             } catch (PinyinException e) {
                 e.printStackTrace();
                 logger.error("addCommodity汉字转换拼音失败：" + e.toString());
@@ -326,12 +295,12 @@ public class SystemController {
         }
 
         //商品简介变化
-        if (!CheckStringEmptyUtils.IsEmpty(commodityIntroduce)) {
-            commodityBean.setCommodityIntroduce(commodityIntroduce);
+        if (!CheckStringEmptyUtils.IsEmpty(commodity.getCommodityIntroduce())) {
+            commodityBean.setCommodityIntroduce(commodity.getCommodityIntroduce());
         }
         //如果服务类型变化
-        if (commodityType != commodityBean.getCommodityType()) {
-            commodityBean.setCommodityType(Short.parseShort(commodityType + ""));
+        if (commodity.getCommodityType() != commodityBean.getCommodityType()) {
+            commodityBean.setCommodityType(commodity.getCommodityType());
         }
 
         if (!CheckStringEmptyUtils.IsEmpty(picUrl)) {
@@ -352,23 +321,23 @@ public class SystemController {
     /**
      * 下架商品
      *
-     * @param commodityId 商品id
+     * @param commodity 商品id
      * @return
      */
     @ResponseBody
-        @RequestMapping(value = "/delCommodity", method = RequestMethod.POST)
-    public ResponseJSON delCommodity(HttpServletRequest request, @RequestParam int commodityId) {
+    @RequestMapping(value = "/delCommodity", method = RequestMethod.POST)
+    public ResponseJSON delCommodity(HttpServletRequest request, @RequestBody Commodity commodity) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("下架失败");
         if (!checkUser(request)) {
             responseJSON.setMsg("用户权限不足，请联系管理员");
             return responseJSON;
         }
-        CommodityBean commodityBean = commodityService.queryById(commodityId);
+        CommodityBean commodityBean = commodityService.queryById(commodity.getCommodityId());
         if (commodityBean == null) {
             responseJSON.setMsg("暂无该商品");
             return responseJSON;
         }
-        int i = commodityService.updateCommodityDel(commodityId);
+        int i = commodityService.updateCommodityDel(commodity.getCommodityId());
         if (i == 0) {
             return responseJSON;
         }

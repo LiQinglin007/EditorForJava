@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.xiaomi.editor.bean.BannerBean;
 import com.xiaomi.editor.bean.SystemBean;
 import com.xiaomi.editor.dao.SystemBeanMapper;
+import com.xiaomi.editor.paramsbean.PageListBean;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -49,8 +50,8 @@ public class SystemService implements ISystemService {
     }
 
     @Override
-    public PageInfo selectByPage(int currentPage, int pageSize) {
-        PageHelper.startPage(currentPage, pageSize);
+    public PageInfo selectByPage(PageListBean pageListBean) {
+        PageHelper.startPage(pageListBean.getPage(), pageListBean.getSize());
         List systemBeanList = systemBeanMapper.selectByPage();
         PageInfo pageInfo = new PageInfo<>(systemBeanList);
         return pageInfo;

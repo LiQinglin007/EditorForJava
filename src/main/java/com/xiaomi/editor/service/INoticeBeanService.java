@@ -2,6 +2,7 @@ package com.xiaomi.editor.service;
 
 import com.github.pagehelper.PageInfo;
 import com.xiaomi.editor.bean.NoticeBean;
+import com.xiaomi.editor.paramsbean.PageListBean;
 
 import java.util.List;
 
@@ -45,5 +46,5 @@ public interface INoticeBeanService {
      *
      * @return
      */
-    PageInfo selectByPage(int currentPage, int pageSize);
+    PageInfo selectByPage(PageListBean pageBean);
 }

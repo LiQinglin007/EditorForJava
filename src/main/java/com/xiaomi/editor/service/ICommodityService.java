@@ -3,6 +3,8 @@ package com.xiaomi.editor.service;
 import com.github.pagehelper.PageInfo;
 import com.xiaomi.editor.bean.BannerBean;
 import com.xiaomi.editor.bean.CommodityBean;
+import com.xiaomi.editor.paramsbean.PageListBean;
+import com.xiaomi.editor.paramsbean.PageListBeanStudioId;
 
 import java.util.List;
 import java.util.Map;
@@ -64,7 +66,7 @@ public interface ICommodityService {
      * @param pageSize
      * @return
      */
-    PageInfo selectByPage(int studioId, int currentPage, int pageSize);
+    PageInfo selectByPage( PageListBeanStudioId pageListBeanStudioId);
 
     /**
      * 查询某个工作室中非热门商品
@@ -74,7 +76,7 @@ public interface ICommodityService {
      * @param pageSize
      * @return
      */
-    PageInfo selectNotHotCommodityByPage(int studioId, int currentPage, int pageSize);
+    PageInfo selectNotHotCommodityByPage( PageListBeanStudioId pageListBeanStudioId);
 
     /**
      * 分页查询全部热门商品
@@ -83,7 +85,7 @@ public interface ICommodityService {
      * @param pageSize
      * @return
      */
-    PageInfo selectHotCommodityByPage(int currentPage, int pageSize);
+    PageInfo selectHotCommodityByPage(PageListBean pageListBean);
 
 
     /**

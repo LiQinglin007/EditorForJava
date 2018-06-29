@@ -92,7 +92,7 @@ API版本：1.0.0(初稿)<br>
 
 ```
 "page":1，int  (必传)获取第几页  从1开始
-"pageSize":10，int  (必传)每页获取多少条
+"size":10，int  (必传)每页获取多少条
 ```
 函数出参：
 ```
@@ -152,8 +152,8 @@ API版本：1.0.0(初稿)<br>
 请求方式：POST<br>
 函数入参：<br>
 ```
-"webUrl":"http://www.baidu.com"，String  (必传)轮播图的外部连接
-"weight":1，int  (必传)轮播图权重,用于轮播图的展示顺序  越大排序越在前边
+"bannerWebUrl":"http://www.baidu.com"，String  (必传)轮播图的外部连接
+"bannerWeight":1，int  (必传)轮播图权重,用于轮播图的展示顺序  越大排序越在前边
 "file":File  (必传)上传图片，使用文件流上传
 ```
 函数出参：
@@ -172,7 +172,7 @@ API版本：1.0.0(初稿)<br>
 
 ```
 "page":1，int  (必传)获取第几页  从1开始
-"pageSize":10，int  (必传)每页获取多少条
+"size":10，int  (必传)每页获取多少条
 ```
 函数出参：
 ```
@@ -271,8 +271,8 @@ API版本：1.0.0(初稿)<br>
 函数入参：<br>
 ```
 "bannerId":1 (必传)轮播图id
-"webUrl":"http://www.baidu.com"，String   轮播图的外部连接
-"weight":1，int   轮播图权重,用于轮播图的展示顺序  越大排序越在前边
+"bannerWebUrl":"http://www.baidu.com"，String   轮播图的外部连接
+"bannerWeight":1，int   轮播图权重,用于轮播图的展示顺序  越大排序越在前边
 "file":File   上传图片，使用文件流上传
 ```
 函数出参：
@@ -308,7 +308,7 @@ API版本：1.0.0(初稿)<br>
 函数入参：<br>
 ```
 "page":1，int  (必传)获取第几页  从1开始
-"pageSize":10，int  (必传)每页获取多少条
+"size":10，int  (必传)每页获取多少条
 ```
 函数出参：
 ```
@@ -382,11 +382,11 @@ API版本：1.0.0(初稿)<br>
 请求方式：POST<br>
 函数入参：<br>
 ```
-"studioUserId":1，int  (必传)系统用户id(谁开的这家店)
+"systemUserid":1，int  (必传)系统用户id(谁开的这家店)
 "studioName":"小米工作室"，String  (必传)工作室名称(前端限制最多6字)
 "studioMoney":1000，folat  (必传)工作室押金 (前端限制上限十万)
 "studioPhone":"15284224245"，int  (必传)联系电话(前端限制最多11位)
-"studioQQ":"531195555"，int  (必传)工作QQ(前端限制最多15位)
+"studioQq":"531195555"，int  (必传)工作QQ(前端限制最多15位)
 "studioBriefintroduction":"这是一家店铺"，int  (必传)简介(前端限制最多100位)
 "file" File (必传) 工作室头像，上传图片，使用文件流上传
 ```
@@ -407,11 +407,11 @@ API版本：1.0.0(初稿)<br>
 
 ```
 "studioId":1,int (必传) 工作室id
-"studioUserId":1，int  (必传)系统用户id(谁开的这家店)
+"systemUserid":1，int  (必传)系统用户id(谁开的这家店)
 "studioName":"小米工作室"，String   工作室名称(前端限制最多6字)
 "studioMoney":1000，folat   工作室押金(前端限制上限十万)
 "studioPhone":"15284224245"，int  联系电话(前端限制最多11位)
-"studioQQ":"531195555"，int   工作QQ(前端限制最多15位)
+"studioQq":"531195555"，int   工作QQ(前端限制最多15位)
 "studioBriefintroduction":"这是一家店铺"，int  简介(前端限制最多100位)
 "file" File   工作室头像，上传图片，使用文件流上传  
 ```
@@ -463,7 +463,7 @@ API版本：1.0.0(初稿)<br>
 函数入参：<br>
 ```
 "page":1，int  (必传)获取第几页  从1开始
-"pageSize":10，int  (必传)每页获取多少条
+"size":10，int  (必传)每页获取多少条
 ```
 函数出参：
 ```
@@ -532,7 +532,7 @@ API版本：1.0.0(初稿)<br>
 函数入参：<br>
 
 ```
-"searchContent":"xiaomi"，String  (必传)工作室的名称
+"studioName":"xiaomi"，String  (必传)工作室的名称
 ```
 
 函数出参：
@@ -782,7 +782,7 @@ API版本：1.0.0(初稿)<br>
 函数入参：<br>
 ```
 "CommodityId":1，int  (必传)商品id
-"HotCommodity":1，int  (必传)1:设置热门服务  0:取消设置
+"CommodityHot":1，int  (必传)1:设置热门服务  0:取消设置
 ```
 函数出参：
 ```

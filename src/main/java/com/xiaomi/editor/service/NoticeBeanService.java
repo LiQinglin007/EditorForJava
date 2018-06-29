@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xiaomi.editor.bean.NoticeBean;
 import com.xiaomi.editor.dao.NoticeBeanMapper;
+import com.xiaomi.editor.paramsbean.PageListBean;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -42,8 +43,8 @@ public class NoticeBeanService implements INoticeBeanService {
     }
 
     @Override
-    public PageInfo selectByPage(int currentPage, int pageSize) {
-        PageHelper.startPage(currentPage, pageSize);
+    public PageInfo selectByPage(PageListBean pageBean) {
+        PageHelper.startPage(pageBean.getPage(), pageBean.getSize());
         List noticeBeanList = noticeBeanMapper.selectByPage();
         PageInfo pageInfo = new PageInfo<>(noticeBeanList);
         return pageInfo;

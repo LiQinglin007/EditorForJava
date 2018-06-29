@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.xiaomi.editor.bean.BannerBean;
 import com.xiaomi.editor.bean.NoticeBean;
 import com.xiaomi.editor.dao.BannerBeanMapper;
+import com.xiaomi.editor.paramsbean.PageListBean;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -45,8 +46,8 @@ public class BannerService implements IBannerService {
     }
 
     @Override
-    public PageInfo selectByPage(int currentPage, int pageSize) {
-        PageHelper.startPage(currentPage, pageSize);
+    public PageInfo selectByPage(PageListBean pageBean) {
+        PageHelper.startPage(pageBean.getPage(), pageBean.getSize());
         List bannerBeanList = beanMapper.selectByPage();
         PageInfo pageInfo = new PageInfo<>(bannerBeanList);
         return pageInfo;

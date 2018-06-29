@@ -3,6 +3,7 @@ package com.xiaomi.editor.service;
 import com.github.pagehelper.PageInfo;
 import com.xiaomi.editor.bean.NoticeBean;
 import com.xiaomi.editor.bean.SystemBean;
+import com.xiaomi.editor.paramsbean.PageListBean;
 
 /**
  * Description: 系统用户<br>
@@ -59,5 +60,5 @@ public interface ISystemService {
      *
      * @return
      */
-    PageInfo selectByPage(int currentPage, int pageSize);
+    PageInfo selectByPage(PageListBean pageBean);
 }
