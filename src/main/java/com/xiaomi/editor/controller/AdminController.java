@@ -69,7 +69,9 @@ public class AdminController {
     @RequestMapping(value = "/systemLogin", method = RequestMethod.POST)
     @ResponseBody
     public ResponseJSON systemLogin(@RequestParam(value = "userLoginName") String userLoginName,
-                                    @RequestParam(value = "userPassword") String userPassword) {
+                                    @RequestParam(value = "userPassword") String userPassword,
+                                    @RequestParam(value = "systemUserType") int systemUserType
+    ) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("登录失败", null);
         //检查参数
         String checkStringList = CheckStringEmptyUtils.CheckStringList(
@@ -89,6 +91,11 @@ public class AdminController {
 
         if (!systemBean.getSystemUserPassword().equals(MD5Util.string2MD5(userPassword))) {
             responseJSON.setMsg("密码错误");
+            return responseJSON;
+        }
+
+        if (systemBean.getSystemUserType() != systemUserType) {
+            responseJSON.setMsg("用户身份错误");
             return responseJSON;
         }
 

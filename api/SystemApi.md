@@ -36,6 +36,7 @@ API版本：1.0.0(初稿)<br>
 ```
 "userLoginName":"admin"，String  		(必传)(前端限制最多12位)
 "userPassword":"123456789" String		(必传)(前端限制6-16位)
+"systemUserType":1//用户类型 (必传)  1：超级管理员  2：工作室
 ```
 函数出参：
 ```
@@ -43,7 +44,6 @@ API版本：1.0.0(初稿)<br>
     "code":200,
     "data":{
         "systemUserId":1,//用户id
-        "systemUserType":1,//用户类型  1：超级管理员  2：工作室
         "token":"Y05dGDw7EGTW4dxYK8v5"
     },
     "msg":"登录成功"
