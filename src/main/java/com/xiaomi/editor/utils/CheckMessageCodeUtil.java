@@ -1,5 +1,7 @@
 package com.xiaomi.editor.utils;
 
+import java.util.Date;
+
 /**
  * Description:检查短信验证码 <br>
  * User: dell - XiaomiLi<br>
@@ -26,11 +28,13 @@ public class CheckMessageCodeUtil {
         if (code.length() < 6) {
             return false;
         }
-        if (code.equals("123456")) {
-            return true;
-        } else {
-            return true;
+        if (type == MESSAGE_REGISTER) {
+            //根据手机号去获取验证码,看看存在不存在
+            String registerCode = JedisUtil.getRegisterCode(phone);
+            if (!CheckStringEmptyUtils.IsEmpty(registerCode)) {//存在,去看时间
+                return true;
+            }
         }
+        return false;
     }
-
 }
