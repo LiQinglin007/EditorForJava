@@ -87,7 +87,7 @@ public class AdminController {
         }
 
         // 判断redis是否有该用户 ,如果有则重新设置 失效时间
-        List<String> liststr = JedisClientUtil.getAllKeys(FinalData.SYSTEM_TOKEN + "*");
+        List<String> liststr = JedisUtil.getAllSystemToken();
         System.out.println(liststr);
         String token = "";
         if (liststr.size() > 0) {
@@ -96,7 +96,7 @@ public class AdminController {
                 int uid = Integer.valueOf(JedisClientUtil.getString(key));
                 if (systemBean.getSystemUserid() == uid) {
                     // 如果有则重新设置 失效时间,将原来的token返回
-                    JedisClientUtil.setExpiryTime(key, FinalData.TOKEN_EXPIRY_SECONDS);
+                    JedisUtil.setTokenTime(key);
                     token = key.substring(FinalData.SYSTEM_TOKEN.length(), key.length());
                     break;
                 }
@@ -105,7 +105,7 @@ public class AdminController {
 
         if (CheckStringEmptyUtils.IsEmpty(token)) {
             token = RandomUtils.getRandom(20, RandomUtils.NUMBER_LETTER);
-            JedisClientUtil.saveString(FinalData.SYSTEM_TOKEN + token, systemBean.getSystemUserid() + "", FinalData.TOKEN_EXPIRY_SECONDS);
+            JedisUtil.saveSystemToken(token, systemBean.getSystemUserid());
         }
 
         Map<String, Object> map = new HashMap<>();

@@ -10,14 +10,23 @@ package com.xiaomi.editor.utils;
 public class FinalData {
     private static final String PACKAGENAME = "COM.XIAOMI.EDITOR";
     /**
-     * 用户手机号redis
+     * 短信验证码注册redis
      */
-    public static final String CODE = PACKAGENAME + "USERMOBILE:";
+    public static final String REGISTER_CODE = PACKAGENAME + "REGISTER_MESSAGE_CODE:";
+    /**
+     * 短信验证码找回密码redis
+     */
+    public static final String FORGET_PASSWORD_CODE = PACKAGENAME + "FORGET_PASSWORD_MESSAGE_CODE:";
+
 
     /**
-     * 手机验证码 有效时长 （秒）
+     * 手机验证码 有效时长 （秒） 10min
      */
-    public static final int CODE_EXPIRY_SECONDS = 180;
+    public static final int MESSAGE_CODE_EXPIRY_SECONDS = 600;
+    /**
+     * 多长时间不能重复获取验证码  秒
+     */
+    public static final int MESSAGE_CODE_REPEAT_TIME = 60;
 
 
     /**
@@ -36,7 +45,6 @@ public class FinalData {
      * app token 失效时间  秒（12小时）
      */
     public static final int TOKEN_EXPIRY_SECONDS = 43200;
-//    public static final int TOKEN_EXPIRY_SECONDS = 60;
 
     public static final String SYSTEM_BASEURL = "/system/";
 
