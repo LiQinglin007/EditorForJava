@@ -12,13 +12,13 @@ public interface BannerBeanMapper {
 
     int updateBanner(BannerBean mBannerBean);
 
-    List<BannerBean> selectAll();
+    List<BannerBean> selectAllList();
 
     /**
      * 分页查询
      *
      * @return
      */
-    List<BannerBean> selectByPage();
+    List<BannerBean> selectByPageList();
 
 }

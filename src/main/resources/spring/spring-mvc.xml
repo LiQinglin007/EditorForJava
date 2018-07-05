@@ -116,6 +116,8 @@
                         <value>/system/admin/systemLogin</value>
                         <!--App用户注册-->
                         <value>/api/user/register</value>
+                        <!--APP用户登录-->
+                        <value>/api/user/login</value>
                         <!--获取短信验证码-->
                         <value>/api/message/getMessageCode</value>
                     </list>

@@ -1,9 +1,11 @@
 package com.xiaomi.editor.service;
 
 import com.github.pagehelper.PageInfo;
+import com.github.stuxuhai.jpinyin.PinyinException;
 import com.xiaomi.editor.bean.BannerBean;
 import com.xiaomi.editor.bean.StudioBean;
 import com.xiaomi.editor.paramsbean.PageListBean;
+import com.xiaomi.editor.paramsbean.PageListBeanSearch;
 
 import java.util.List;
 
@@ -70,13 +72,7 @@ public interface IStudioService {
      *
      * @return
      */
-    PageInfo selectByPage(PageListBean pageBean);
+    PageInfo selectByPageList(PageListBeanSearch pageBean) throws PinyinException;
 
-    /**
-     * 按工作室名称模糊查询
-     *
-     * @param studioBeanNamePin
-     * @return
-     */
-    List selectByStudioBeanNamePin(String studioBeanNamePin);
+
 }

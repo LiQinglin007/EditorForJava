@@ -8,9 +8,7 @@ import com.xiaomi.editor.paramsbean.PageListBean;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import javax.print.Doc;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Description: <br>
@@ -43,9 +41,9 @@ public class NoticeBeanService implements INoticeBeanService {
     }
 
     @Override
-    public PageInfo selectByPage(PageListBean pageBean) {
+    public PageInfo selectByPageList(PageListBean pageBean) {
         PageHelper.startPage(pageBean.getPage(), pageBean.getSize());
-        List noticeBeanList = noticeBeanMapper.selectByPage();
+        List noticeBeanList = noticeBeanMapper.selectByPageList();
         PageInfo pageInfo = new PageInfo<>(noticeBeanList);
         return pageInfo;
     }

@@ -11,7 +11,6 @@ import com.xiaomi.editor.utils.*;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -113,7 +112,7 @@ public class AdminController {
         map.put("systemUserType", systemBean.getSystemUserType());
         map.put("token", token);
 
-        ResponseUtils.getSuccessResponseBean("登录成功", map);
+        responseJSON = ResponseUtils.getSuccessResponseBean("登录成功", map);
 
         return responseJSON;
     }
@@ -170,7 +169,16 @@ public class AdminController {
             responseJSON.setMsg("已有当前用户名");
             return responseJSON;
         }
-        SystemBean systemBean = new SystemBean(systemUser.getUserLoginName(), MD5Util.string2MD5(systemUser.getUserPassword()));
+        String loginUserNamePin = "";
+        try {
+            loginUserNamePin = PinyinUtil.getPinyin(systemUser.getUserLoginName());
+        } catch (PinyinException e) {
+            e.printStackTrace();
+            logger.error("addSysteamUser汉字转换拼音失败：" + e.toString());
+            responseJSON.setMsg("添加失败");
+            return responseJSON;
+        }
+        SystemBean systemBean = new SystemBean(systemUser.getUserLoginName(), loginUserNamePin, MD5Util.string2MD5(systemUser.getUserPassword()));
         int i = mISystemService.addUser(systemBean);
         if (i > 0) {
             responseJSON = ResponseUtils.getSuccessResponseBean("添加成功", null);
@@ -214,15 +222,22 @@ public class AdminController {
      * @param request 页码,数量
      * @return
      */
-    @RequestMapping(value = "/getSysteamUserList", method = RequestMethod.POST)
+    @RequestMapping(value = "/getSystemUserList", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseJSON getSysteamUserList(HttpServletRequest request, @RequestBody PageListBean pageBean) {
+    public ResponseJSON getSystemUserList(HttpServletRequest request, @RequestBody PageListBeanSearch pageBean) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("查询失败");
         if (!checkUser(request)) {
             responseJSON.setMsg("用户权限不足，请联系管理员");
             return responseJSON;
         }
-        PageInfo noticeBeanPageInfo = mISystemService.selectByPage(pageBean);
+        PageInfo noticeBeanPageInfo = null;
+        try {
+            noticeBeanPageInfo = mISystemService.selectByPageList(pageBean);
+        } catch (PinyinException e) {
+            logger.error("getSystemUserList汉字转换拼音失败：" + e.toString());
+            e.printStackTrace();
+            return responseJSON;
+        }
         responseJSON = ResponseUtils.getSuccessResponseBean("查询成功", noticeBeanPageInfo);
         return responseJSON;
     }
@@ -378,7 +393,7 @@ public class AdminController {
             responseJSON.setMsg("用户权限不足，请联系管理员");
             return responseJSON;
         }
-        PageInfo noticeBeanPageInfo = mIBannerService.selectByPage(pageBean);
+        PageInfo noticeBeanPageInfo = mIBannerService.selectByPageList(pageBean);
         responseJSON = ResponseUtils.getSuccessResponseBean("查询成功", noticeBeanPageInfo);
         return responseJSON;
     }
@@ -465,7 +480,7 @@ public class AdminController {
             responseJSON.setMsg("用户权限不足，请联系管理员");
             return responseJSON;
         }
-        PageInfo noticeBeanPageInfo = mINoticeBeanService.selectByPage(pageBean);
+        PageInfo noticeBeanPageInfo = mINoticeBeanService.selectByPageList(pageBean);
         responseJSON = ResponseUtils.getSuccessResponseBean("查询成功", noticeBeanPageInfo);
         return responseJSON;
     }
@@ -666,43 +681,21 @@ public class AdminController {
      */
     @RequestMapping(value = "/getStudioList", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseJSON getStudioList(HttpServletRequest request, @RequestBody PageListBean pageBean) {
+    public ResponseJSON getStudioList(HttpServletRequest request, @RequestBody PageListBeanSearch pageBean) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("查询失败");
         if (!checkUser(request)) {
             responseJSON.setMsg("用户权限不足，请联系管理员");
             return responseJSON;
         }
-        PageInfo studioBeanPageInfo = mIStudioService.selectByPage(pageBean);
-        responseJSON = ResponseUtils.getSuccessResponseBean("查询成功", studioBeanPageInfo);
-        return responseJSON;
-    }
-
-
-    /**
-     * 查询工作室(按工作室名称模糊查询)
-     *
-     * @param request
-     * @param studio  查询内容
-     * @return
-     */
-    @RequestMapping(value = "/getStudioByStudioNamePin", method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseJSON getStudioByStudioNamePin(HttpServletRequest request, @RequestBody Studio studio) {
-        ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("查询失败");
-        if (!checkUser(request)) {
-            responseJSON.setMsg("用户权限不足，请联系管理员");
-            return responseJSON;
-        }
-        String searchContentPin = "";
+        PageInfo studioBeanPageInfo = null;
         try {
-            searchContentPin = PinyinUtil.getPinyin(studio.getStudioName());
+            studioBeanPageInfo = mIStudioService.selectByPageList(pageBean);
         } catch (PinyinException e) {
-            e.printStackTrace();
             logger.error("getStudioByStudioNamePin汉字转换拼音失败：" + e.toString());
+            e.printStackTrace();
             return responseJSON;
         }
-        List studioBeanList = mIStudioService.selectByStudioBeanNamePin(searchContentPin);
-        responseJSON = ResponseUtils.getSuccessResponseBean("查询成功", studioBeanList);
+        responseJSON = ResponseUtils.getSuccessResponseBean("查询成功", studioBeanPageInfo);
         return responseJSON;
     }
 
@@ -762,7 +755,7 @@ public class AdminController {
             responseJSON.setMsg("用户权限不足，请联系管理员");
             return responseJSON;
         }
-        PageInfo studioBeanPageInfo = mICommodityService.selectByPage(pageListBeanStudioId);
+        PageInfo studioBeanPageInfo = mICommodityService.selectByPageList(pageListBeanStudioId);
         responseJSON = ResponseUtils.getSuccessResponseBean("查询成功", studioBeanPageInfo);
         return responseJSON;
     }
@@ -783,7 +776,7 @@ public class AdminController {
             responseJSON.setMsg("用户权限不足，请联系管理员");
             return responseJSON;
         }
-        PageInfo studioBeanPageInfo = mICommodityService.selectNotHotCommodityByPage(pageListBeanStudioId);
+        PageInfo studioBeanPageInfo = mICommodityService.selectNotHotCommodityByPageList(pageListBeanStudioId);
         responseJSON = ResponseUtils.getSuccessResponseBean("查询成功", studioBeanPageInfo);
         return responseJSON;
     }
@@ -804,7 +797,7 @@ public class AdminController {
             responseJSON.setMsg("用户权限不足，请联系管理员");
             return responseJSON;
         }
-        PageInfo studioBeanPageInfo = mICommodityService.selectHotCommodityByPage(pageBean);
+        PageInfo studioBeanPageInfo = mICommodityService.selectHotCommodityByPageList(pageBean);
         responseJSON = ResponseUtils.getSuccessResponseBean("查询成功", studioBeanPageInfo);
         return responseJSON;
     }

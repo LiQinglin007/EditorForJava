@@ -66,7 +66,7 @@ public interface ICommodityService {
      * @param pageSize
      * @return
      */
-    PageInfo selectByPage( PageListBeanStudioId pageListBeanStudioId);
+    PageInfo selectByPageList(PageListBeanStudioId pageListBeanStudioId);
 
     /**
      * 查询某个工作室中非热门商品
@@ -76,7 +76,7 @@ public interface ICommodityService {
      * @param pageSize
      * @return
      */
-    PageInfo selectNotHotCommodityByPage( PageListBeanStudioId pageListBeanStudioId);
+    PageInfo selectNotHotCommodityByPageList(PageListBeanStudioId pageListBeanStudioId);
 
     /**
      * 分页查询全部热门商品
@@ -85,7 +85,7 @@ public interface ICommodityService {
      * @param pageSize
      * @return
      */
-    PageInfo selectHotCommodityByPage(PageListBean pageListBean);
+    PageInfo selectHotCommodityByPageList(PageListBean pageListBean);
 
 
     /**
@@ -94,7 +94,7 @@ public interface ICommodityService {
      * @param commodityNamePin
      * @return
      */
-    List<CommodityBean> selectByCommodityNamePin(String commodityNamePin);
+    List<CommodityBean> selectByCommodityNamePinList(String commodityNamePin);
 
 
 }

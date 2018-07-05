@@ -42,7 +42,8 @@ public class MessageController {
             String[] split = registerCode.split(",");
             if (split.length == 2) {
                 //现在的时间>那个时间之前不能重复获取
-                if (new Date().getTime() - Long.parseLong(split[1]) > 0) {
+                long time = new Date().getTime();
+                if (time - Long.parseLong(split[1]) < 0) {
                     responseJSON.setMsg(FinalData.MESSAGE_CODE_REPEAT_TIME + "s内不能重复发送");
                     return responseJSON;
                 } else {//更改验证码和时间

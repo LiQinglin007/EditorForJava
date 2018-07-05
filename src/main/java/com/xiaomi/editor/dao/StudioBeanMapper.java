@@ -63,7 +63,7 @@ public interface StudioBeanMapper {
      *
      * @return
      */
-    List selectByPage();
+    List selectByPageList(String searchContent);
 
 
     /**
@@ -72,5 +72,5 @@ public interface StudioBeanMapper {
      * @param studioBeanNamePin
      * @return
      */
-    List selectByStudioBeanNamePin(String studioBeanNamePin);
+    List selectByStudioBeanNamePinList(String studioBeanNamePin);
 }

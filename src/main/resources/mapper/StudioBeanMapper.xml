@@ -52,14 +52,10 @@
     </update>
 
     <!--分页查询-->
-    <select id="selectByPage" resultType="Map">
-        SELECT studio_id,studio_name,studio_briefIntroduction,studio_pic,studio_collection_nmuber,
-         studio_money, studio_monthly_sales,studio_phone,studio_QQ,system_userid from studio WHERE studio_del=0
-    </select>
-
-    <select id="selectByStudioBeanNamePin" parameterType="java.lang.String" resultType="Map">
+    <select id="selectByPageList" parameterType="java.lang.String" resultType="Map">
         SELECT studio_id,studio_name,studio_briefIntroduction,studio_pic,studio_collection_nmuber,
          studio_money, studio_monthly_sales,studio_phone,studio_QQ,system_userid from studio WHERE studio_del=0 AND studio_name_pin like '%${_parameter}%'
     </select>
+
 
 </mapper>

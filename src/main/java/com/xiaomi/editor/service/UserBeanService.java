@@ -32,7 +32,7 @@ public class UserBeanService implements IUserBeanService {
     }
 
     @Override
-    public List<UserBean> selectByPhone(String phone) {
+    public UserBean selectByPhone(String phone) {
         return userBeanMapper.selectByPhone(phone);
     }
 }

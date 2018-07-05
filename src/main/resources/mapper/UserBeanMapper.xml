@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xiaomi.editor.dao.UserBeanMapper">
-  <resultMap id="BaseResultMap" type="com.xiaomi.editor.bean.UserBean">
-    <constructor>
-      <idArg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="user_name" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="user_password" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="user_pic" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="user_balance" javaType="java.lang.Float" jdbcType="REAL" />
-      <arg column="user_phone" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="user_school" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="user_job" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="user_education" javaType="java.lang.String" jdbcType="VARCHAR" />
-    </constructor>
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.xiaomi.editor.bean.UserBean">
+        <constructor>
+            <idArg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="user_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="user_password" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="user_pic" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="user_balance" javaType="java.lang.Float" jdbcType="REAL"/>
+            <arg column="user_phone" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="user_school" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="user_job" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="user_education" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </constructor>
+    </resultMap>
 
 
-  <!--插入一个-->
-  <insert id="insert" parameterType="com.xiaomi.editor.bean.UserBean">
+    <!--插入一个-->
+    <insert id="insert" parameterType="com.xiaomi.editor.bean.UserBean">
     INSERT INTO user(user_name, user_password,
       user_pic, user_balance, user_phone,
       user_school, user_job, user_education) VALUE (#{userName},#{userPassword},
@@ -26,7 +26,9 @@
       )
   </insert>
 
-  <select id="selectByPhone" parameterType="String" resultMap="BaseResultMap">
+    <select id="selectByPhone" parameterType="String" resultMap="BaseResultMap">
     SELECT * FROM user where user_phone =#{userphone}
   </select>
+
+
 </mapper>

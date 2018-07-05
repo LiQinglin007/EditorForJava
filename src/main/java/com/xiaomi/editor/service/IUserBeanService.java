@@ -14,6 +14,7 @@ import java.util.List;
 public interface IUserBeanService {
     /**
      * 插入
+     *
      * @param userBean
      * @return
      */
@@ -25,5 +26,5 @@ public interface IUserBeanService {
      *
      * @param phone
      */
-    List<UserBean> selectByPhone(String phone);
+    UserBean selectByPhone(String phone);
 }

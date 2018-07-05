@@ -33,12 +33,12 @@
     </update>
 
     <!--查询banner-->
-    <select id="selectAll" resultMap="BaseResultMap">
+    <select id="selectAllList" resultMap="BaseResultMap">
         SELECT * FROM banner where banner_del=1 order BY banner_weight DESC
     </select>
 
     <!--分页查询倒序-->
-    <select id="selectByPage" resultType="Map">
+    <select id="selectByPageList" resultType="Map">
         SELECT banner_id,banner_url,banner_web_url,banner_weight FROM banner WHERE banner_del=0 ORDER BY banner_weight DESC
     </select>
 

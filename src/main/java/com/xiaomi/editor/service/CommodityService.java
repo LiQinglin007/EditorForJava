@@ -57,32 +57,32 @@ public class CommodityService implements ICommodityService {
     }
 
     @Override
-    public PageInfo selectByPage(PageListBeanStudioId pageListBeanStudioId) {
+    public PageInfo selectByPageList(PageListBeanStudioId pageListBeanStudioId) {
         PageHelper.startPage(pageListBeanStudioId.getPage(), pageListBeanStudioId.getSize());
-        List commodityBeanList = commodityBeanMapper.selectByStudioId(pageListBeanStudioId.getStudioId());
+        List commodityBeanList = commodityBeanMapper.selectByStudioIdList(pageListBeanStudioId.getStudioId());
         PageInfo pageInfo = new PageInfo<>(commodityBeanList);
         return pageInfo;
     }
 
     @Override
-    public PageInfo selectNotHotCommodityByPage(PageListBeanStudioId pageListBeanStudioId) {
+    public PageInfo selectNotHotCommodityByPageList(PageListBeanStudioId pageListBeanStudioId) {
         PageHelper.startPage(pageListBeanStudioId.getPage(), pageListBeanStudioId.getSize());
-        List commodityBeanList = commodityBeanMapper.selectNotHotCommodityByPage(pageListBeanStudioId.getStudioId());
+        List commodityBeanList = commodityBeanMapper.selectNotHotCommodityByPageList(pageListBeanStudioId.getStudioId());
         PageInfo pageInfo = new PageInfo<>(commodityBeanList);
         return pageInfo;
     }
 
     @Override
-    public PageInfo selectHotCommodityByPage(PageListBean pageListBean) {
+    public PageInfo selectHotCommodityByPageList(PageListBean pageListBean) {
         PageHelper.startPage(pageListBean.getPage(), pageListBean.getSize());
-        List commodityBeanList = commodityBeanMapper.selectHotCommodityByPage();
+        List commodityBeanList = commodityBeanMapper.selectHotCommodityByPageList();
         PageInfo pageInfo = new PageInfo<>(commodityBeanList);
         return pageInfo;
     }
 
     @Override
-    public List<CommodityBean> selectByCommodityNamePin(String commodityNamePin) {
-        return commodityBeanMapper.selectByCommodityNamePin(commodityNamePin);
+    public List<CommodityBean> selectByCommodityNamePinList(String commodityNamePin) {
+        return commodityBeanMapper.selectByCommodityNamePinList(commodityNamePin);
     }
 
 

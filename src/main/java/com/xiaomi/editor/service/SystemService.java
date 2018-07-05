@@ -2,10 +2,12 @@ package com.xiaomi.editor.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.xiaomi.editor.bean.BannerBean;
+import com.github.stuxuhai.jpinyin.PinyinException;
 import com.xiaomi.editor.bean.SystemBean;
 import com.xiaomi.editor.dao.SystemBeanMapper;
 import com.xiaomi.editor.paramsbean.PageListBean;
+import com.xiaomi.editor.paramsbean.PageListBeanSearch;
+import com.xiaomi.editor.utils.PinyinUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -50,9 +52,10 @@ public class SystemService implements ISystemService {
     }
 
     @Override
-    public PageInfo selectByPage(PageListBean pageListBean) {
+    public PageInfo selectByPageList(PageListBeanSearch pageListBean) throws PinyinException {
         PageHelper.startPage(pageListBean.getPage(), pageListBean.getSize());
-        List systemBeanList = systemBeanMapper.selectByPage();
+        String pinyin = PinyinUtil.getPinyin(pageListBean.getSearchContent());
+        List systemBeanList = systemBeanMapper.selectByPageList(pinyin);
         PageInfo pageInfo = new PageInfo<>(systemBeanList);
         return pageInfo;
     }

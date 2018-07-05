@@ -36,7 +36,7 @@ public interface NoticeBeanMapper {
      *
      * @return
      */
-    List<NoticeBean> selectByPage();
+    List<NoticeBean> selectByPageList();
 
 
 }

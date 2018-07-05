@@ -60,7 +60,7 @@
     </update>
 
     <!--分页查询-->
-    <select id="selectByStudioId" parameterType="java.lang.Integer" resultType="Map">
+    <select id="selectByStudioIdList" parameterType="java.lang.Integer" resultType="Map">
         SELECT commodity_id,studio_id,commodity_name,commodity_pic,commodity_introduce,commodity_hot,
         commodity_type,commodity_present_price,commodity_original_price,commodity_collection_quantity,
         commodity_pic,commodity_pics
@@ -68,7 +68,7 @@
     </select>
 
     <!--查询某个工作室中全部非热门商品-->
-    <select id="selectNotHotCommodityByPage" parameterType="java.lang.Integer" resultType="Map">
+    <select id="selectNotHotCommodityByPageList" parameterType="java.lang.Integer" resultType="Map">
         SELECT commodity_id,studio_id,commodity_name,commodity_pic,commodity_introduce,commodity_hot,
         commodity_type,commodity_present_price,commodity_original_price,commodity_collection_quantity,
         commodity_pic,commodity_pics
@@ -77,7 +77,7 @@
 
 
     <!--查询全部热门商品-->
-    <select id="selectHotCommodityByPage" resultType="Map">
+    <select id="selectHotCommodityByPageList" resultType="Map">
          SELECT commodity_id,studio_id,commodity_name,commodity_pic,commodity_introduce,commodity_hot,
         commodity_type,commodity_present_price,commodity_original_price,commodity_collection_quantity,
         commodity_pic,commodity_pics
@@ -86,7 +86,7 @@
 
 
     <!--按拼音模糊查询-->
-    <select id="selectByCommodityNamePin" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <select id="selectByCommodityNamePinList" parameterType="java.lang.String" resultMap="BaseResultMap">
         SELECT * FROM commodity WHERE commodity_name_pin LIKE '%${_parameter}%' AND commodity_del=0;
     </select>
 

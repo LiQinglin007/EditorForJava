@@ -4,6 +4,7 @@
 特殊接口：<br>
 1、App用户注册：api/user/register<br>
 2、获取短信验证码：api/message/getMessageCode<br>
+3、App用户登录：api/user/login<br>
 code:200 成功   100失败<br>
 msg:接口说明<br>
 BaseUrl:http://home.hbhanzhi.com:7052/api/<br>
@@ -21,6 +22,23 @@ API版本：1.0.0(初稿)<br>
 "phone":"15284224245"，String  		(必传)(前端限制最多11位)
 "password":"123456789" String		(必传)(前端限制6-16位)
 "messageCode":"123456"   //短信验证码 (必传)
+```
+函数出参：
+```
+{
+    "code":200,
+    "data":null,
+    "msg":"注册成功"
+}
+```
+
+##### 2.1.2 用户登录
+函数调用地址：user/login  <br>
+请求方式：POST<br>
+函数入参：<br>
+```
+"phone":"15284224245"，String  		(必传)(前端限制最多11位)
+"password":"123456789" String		(必传)(前端限制6-16位)
 ```
 函数出参：
 ```

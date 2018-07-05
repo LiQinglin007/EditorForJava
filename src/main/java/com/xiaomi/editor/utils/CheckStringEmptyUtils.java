@@ -36,6 +36,45 @@ public class CheckStringEmptyUtils {
     }
 
 
+    /**
+     * 检查字符串长度
+     *
+     * @param beans
+     * @return
+     */
+    public static String CheckStringList(CheckStringBean... beans) {
+        for (CheckStringBean bean : beans) {
+            if (IsEmpty(bean.content)) {
+                return bean.prompt;
+            }
+        }
+        return ListSuccess;
+    }
+
+
+    /**
+     * 检查字符串长度
+     *
+     * @param beans
+     * @return
+     */
+    public static String CheckStringLengList(CheckStringLengBean... beans) {
+        for (CheckStringLengBean bean : beans) {
+            if (IsEmpty(bean.content)) {
+                return bean.prompt;
+            } else {
+                if (bean.content.length() < bean.minLeng || bean.content.length() > bean.maxLeng) {
+                    return bean.prompt;
+                }
+            }
+        }
+        return ListSuccess;
+    }
+
+
+    /**
+     * 检查是否为空的bean
+     */
     public static class CheckStringBean {
         String content;
         String prompt;
@@ -46,13 +85,17 @@ public class CheckStringEmptyUtils {
         }
     }
 
-    public static String CheckStringList(CheckStringBean... beans) {
-        for (CheckStringBean bean : beans) {
-            if (IsEmpty(bean.content)) {
-                return bean.prompt;
-            }
-        }
-        return ListSuccess;
-    }
+    /**
+     * 检查字符串长度的bean
+     */
+    public static class CheckStringLengBean extends CheckStringBean {
+        int minLeng;
+        int maxLeng;
 
+        public CheckStringLengBean(String content, String prompt, int minLeng, int maxLeng) {
+            super(content, prompt);
+            this.minLeng = minLeng;
+            this.maxLeng = maxLeng;
+        }
+    }
 }

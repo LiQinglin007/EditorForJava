@@ -1,9 +1,11 @@
 package com.xiaomi.editor.service;
 
 import com.github.pagehelper.PageInfo;
+import com.github.stuxuhai.jpinyin.PinyinException;
 import com.xiaomi.editor.bean.NoticeBean;
 import com.xiaomi.editor.bean.SystemBean;
 import com.xiaomi.editor.paramsbean.PageListBean;
+import com.xiaomi.editor.paramsbean.PageListBeanSearch;
 
 /**
  * Description: 系统用户<br>
@@ -56,9 +58,9 @@ public interface ISystemService {
     int updatePassword(SystemBean mSystemBean);
 
     /**
-     * 分页查询
+     * 分页查询+模糊搜索
      *
      * @return
      */
-    PageInfo selectByPage(PageListBean pageBean);
+    PageInfo selectByPageList(PageListBeanSearch pageBean) throws PinyinException;
 }

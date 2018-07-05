@@ -19,6 +19,6 @@ public interface UserBeanMapper {
      *
      * @param phone
      */
-    List<UserBean> selectByPhone(String phone);
+    UserBean selectByPhone(String phone);
 
 }

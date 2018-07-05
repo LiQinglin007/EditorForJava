@@ -5,6 +5,8 @@ public class SystemBean {
 
     private String systemUserLoginname;
 
+    private String systemUserLoginnamePin;
+
     private String systemUserPassword;
     /**
      * 用户类型  1：超级管理员  2：工作室
@@ -15,17 +17,19 @@ public class SystemBean {
      */
     private Short systemUserDel;
 
-    public SystemBean(Integer systemUserid, String systemUserLoginname, String systemUserPassword, Short systemUserType, Short systemUserDel) {
+    public SystemBean(Integer systemUserid, String systemUserLoginname, String systemUserLoginnamePin, String systemUserPassword, Short systemUserType, Short systemUserDel) {
         this.systemUserid = systemUserid;
         this.systemUserLoginname = systemUserLoginname;
+        this.systemUserLoginnamePin = systemUserLoginnamePin;
         this.systemUserPassword = systemUserPassword;
         this.systemUserType = systemUserType;
         this.systemUserDel = systemUserDel;
     }
 
-    public SystemBean(String systemUserLoginname, String systemUserPassword) {
+    public SystemBean(String systemUserLoginname, String systemUserLoginnamePin, String systemUserPassword) {
         this.systemUserid = null;
         this.systemUserLoginname = systemUserLoginname;
+        this.systemUserLoginnamePin = systemUserLoginnamePin;
         this.systemUserPassword = systemUserPassword;
         this.systemUserType = 2;
         this.systemUserDel = 0;

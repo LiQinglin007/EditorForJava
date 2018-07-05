@@ -41,6 +41,7 @@ public interface SystemBeanMapper {
 
     /**
      * 修改密码
+     *
      * @param mSystemBean
      * @return
      */
@@ -51,5 +52,5 @@ public interface SystemBeanMapper {
      *
      * @return
      */
-    List selectByPage();
+    List selectByPageList(String searchContent);
 }

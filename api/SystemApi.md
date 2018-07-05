@@ -88,11 +88,11 @@ API版本：1.0.0(初稿)<br>
 ```
 
 ##### 2.1.4 获取工作室全部用户分页
-函数调用地址：admin/getSysteamUserList<br>请求方式：POST<br>函数入参：<br>
-
+函数调用地址：admin/getSystemUserList<br>请求方式：POST<br>函数入参：<br>
 ```
 "page":1，int  (必传)获取第几页  从1开始
 "size":10，int  (必传)每页获取多少条
+"searchContent":""，String  模糊查询条件
 ```
 函数出参：
 ```
@@ -458,12 +458,13 @@ API版本：1.0.0(初稿)<br>
 
 ##### 2.1.16 获取工作室列表
 
-函数调用地址：admin/addStudio <br>
+函数调用地址：admin/getStudioList <br>
 请求方式：POST<br>
 函数入参：<br>
 ```
 "page":1，int  (必传)获取第几页  从1开始
 "size":10，int  (必传)每页获取多少条
+"searchContent":""，String  (必传)模糊搜索条件
 ```
 函数出参：
 ```
@@ -522,39 +523,6 @@ API版本：1.0.0(初稿)<br>
     "code":200,
     "data":null,
     "msg":"删除成功"
-}
-```
-
-##### 2.1.18 查询工作室(按工作室名称模糊查询)
-
-函数调用地址：admin/getStudioByStudioNamePin<br>
-请求方式：POST<br>
-函数入参：<br>
-
-```
-"studioName":"xiaomi"，String  (必传)工作室的名称
-```
-
-函数出参：
-
-```
-{
-    "code":200,
-    "data":[
-        {
-            "studio_name":"xiaomiStudio",//工作室名称
-            "studio_phone":"15284224244",//电话
-            "studio_briefIntroduction":"这是一家小米店铺1",//简介
-            "studio_QQ":"531192555",//联系QQ
-            "system_userid":2,//系统用户id
-            "studio_id":1,//工作室id
-            "studio_monthly_sales":0,//月销量
-            "studio_collection_nmuber":0,//收藏数量
-            "studio_money":10000,//押金
-            "studio_pic":"https://gss1.bdstatic.com/9vo3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=e9449e382d9759ee4a5067cd8ac0242b/94cad1c8a786c9179e80a80cc23d70cf3bc75700.jpg"//图片
-        }
-    ],
-    "msg":"查询成功"
 }
 ```
 

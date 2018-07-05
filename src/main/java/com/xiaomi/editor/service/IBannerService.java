@@ -22,12 +22,12 @@ public interface IBannerService {
 
     int updateBanner(BannerBean mBannerBean);
 
-    List<BannerBean> selectAll();
+    List<BannerBean> selectAllList();
 
     /**
      * 分页查询
      *
      * @return
      */
-    PageInfo selectByPage(PageListBean pageBean);
+    PageInfo selectByPageList(PageListBean pageBean);
 }

@@ -20,16 +20,6 @@ public class JedisUtil {
         return JedisClientUtil.getString(FinalData.SYSTEM_TOKEN + token);
     }
 
-    /**
-     * 保存系统token
-     *
-     * @param token
-     * @param userId
-     */
-    public static void saveSystemToken(String token, int userId) {
-        JedisClientUtil.saveString(FinalData.SYSTEM_TOKEN + token, userId + "", FinalData.TOKEN_EXPIRY_SECONDS);
-    }
-
 
     /**
      * 获取所有系统用户token
@@ -60,6 +50,14 @@ public class JedisUtil {
         return JedisClientUtil.getString(FinalData.APP_TOKEN + token);
     }
 
+    /**
+     * 获取所有APP用户token
+     *
+     * @return
+     */
+    public static List<String> getAllAppUserToken() {
+        return JedisClientUtil.getAllKeys(FinalData.APP_TOKEN + "*");
+    }
 
     /**
      * 获取这个手机号
@@ -82,6 +80,26 @@ public class JedisUtil {
         JedisClientUtil.saveString(FinalData.REGISTER_CODE + phone, code + "," + time, FinalData.MESSAGE_CODE_EXPIRY_SECONDS);
     }
 
+    /**
+     * 保存系统token
+     *
+     * @param token
+     * @param userId
+     */
+    public static void saveSystemToken(String token, int userId) {
+        JedisClientUtil.saveString(FinalData.SYSTEM_TOKEN + token, userId + "", FinalData.TOKEN_EXPIRY_SECONDS);
+    }
+
+
+    /**
+     * 保存系统token
+     *
+     * @param token
+     * @param userId
+     */
+    public static void saveAppToken(String token, int userId) {
+        JedisClientUtil.saveString(FinalData.APP_TOKEN + token, userId + "", FinalData.TOKEN_EXPIRY_SECONDS);
+    }
 
     /**
      * 修改验证码和时间

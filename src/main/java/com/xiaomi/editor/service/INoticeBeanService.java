@@ -46,5 +46,5 @@ public interface INoticeBeanService {
      *
      * @return
      */
-    PageInfo selectByPage(PageListBean pageBean);
+    PageInfo selectByPageList(PageListBean pageBean);
 }

@@ -5,6 +5,7 @@
         <constructor>
             <idArg column="system_userid" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="system_user_loginname" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="system_user_loginname_pin" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="system_user_password" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="system_user_type" javaType="java.lang.Short" jdbcType="SMALLINT"/>
             <arg column="system_user_del" javaType="java.lang.Short" jdbcType="SMALLINT"/>
@@ -13,8 +14,8 @@
 
     <!--添加用户-->
     <insert id="addSystemUser" parameterType="com.xiaomi.editor.bean.SystemBean">
-    INSERT INTO system(system_user_loginname,system_user_password,system_user_type,system_user_del)
-    VALUE (#{systemUserLoginname},#{systemUserPassword},#{systemUserType},#{systemUserDel})
+    INSERT INTO system(system_user_loginname,system_user_loginname_pin,system_user_password,system_user_type,system_user_del)
+    VALUE (#{systemUserLoginname},(#{systemUserLoginnamePin},#{systemUserPassword},#{systemUserType},#{systemUserDel})
   </insert>
 
     <!--修改用户删除状态-->
@@ -38,8 +39,8 @@
     </update>
 
     <!--分页查询 超级管理员模块-->
-    <select id="selectByPage" resultType="Map">
-        SELECT system_userid,system_user_loginname FROM system WHERE system_user_type=2 AND system_user_del=0
+    <select id="selectByPageList" parameterType="String" resultType="Map">
+        SELECT system_userid,system_user_loginname FROM system WHERE system_user_type=2 AND system_user_del=0 AND system_user_loginname_pin like '%${_parameter}%'
     </select>
 
 </mapper>
