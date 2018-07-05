@@ -1,8 +1,10 @@
 package com.xiaomi.editor.dao;
 
 import com.xiaomi.editor.bean.UserBean;
+import com.xiaomi.editor.paramsbean.ForgotPasswordBean;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserBeanMapper {
 
@@ -21,4 +23,11 @@ public interface UserBeanMapper {
      */
     UserBean selectByPhone(String phone);
 
+    /**
+     * 找回密码
+     *
+     * @param map phoneNumber,password
+     * @return
+     */
+    int updatePassword(Map<String, String> map);
 }

@@ -30,5 +30,8 @@
     SELECT * FROM user where user_phone =#{userphone}
   </select>
 
+    <update id="updatePassword" parameterType="Map">
+        UPDATE user SET user_password=#{password} WHERE user_phone=#{phoneNumber}
+    </update>
 
 </mapper>

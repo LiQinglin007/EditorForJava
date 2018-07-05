@@ -1,6 +1,7 @@
 package com.xiaomi.editor.controller;
 
 import com.xiaomi.editor.bean.UserBean;
+import com.xiaomi.editor.paramsbean.ForgotPasswordBean;
 import com.xiaomi.editor.paramsbean.LoginBean;
 import com.xiaomi.editor.paramsbean.RegisterBean;
 import com.xiaomi.editor.service.IUserBeanService;
@@ -137,4 +138,39 @@ public class UserController {
         return responseJSON;
     }
 
+
+    /**
+     * 重置密码接口
+     *
+     * @param forgotPasswordBean
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/forgotPassword", method = RequestMethod.POST)
+    public ResponseJSON ForgotPassword(@RequestBody ForgotPasswordBean forgotPasswordBean) {
+        ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("重置失败", null);
+        String checkStringList = CheckStringEmptyUtils.CheckStringList(new CheckStringEmptyUtils.CheckStringBean(forgotPasswordBean.getPhoneNumber(), "手机号码不能为空"),
+                new CheckStringEmptyUtils.CheckStringBean(forgotPasswordBean.getPassword(), "密码不能为空"),
+                new CheckStringEmptyUtils.CheckStringBean(forgotPasswordBean.getMessageCode(), "短信验证码不能为空"));
+        if (!checkStringList.equals(CheckStringEmptyUtils.ListSuccess)) {
+            responseJSON.setMsg(checkStringList);
+            return responseJSON;
+        }
+        //检查有没有被注册过
+        UserBean userBeans = mUserBeanService.selectByPhone(forgotPasswordBean.getPhoneNumber());
+        if (userBeans == null) {
+            responseJSON.setMsg("该手机号未注册");
+            return responseJSON;
+        }
+        Map<String, String> map = new HashMap<>();
+        map.put("phoneNumber", forgotPasswordBean.getPhoneNumber());
+        map.put("password", MD5Util.string2MD5(forgotPasswordBean.getPassword()));
+        int i = mUserBeanService.updatePassword(map);
+        if (i == 0) {
+            responseJSON.setMsg("重置失败");
+            return responseJSON;
+        }
+        responseJSON = ResponseUtils.getSuccessResponseBean("重置成功,请登录");
+        return responseJSON;
+    }
 }
