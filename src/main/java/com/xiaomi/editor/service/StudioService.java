@@ -5,7 +5,6 @@ import com.github.pagehelper.PageInfo;
 import com.github.stuxuhai.jpinyin.PinyinException;
 import com.xiaomi.editor.bean.StudioBean;
 import com.xiaomi.editor.dao.StudioBeanMapper;
-import com.xiaomi.editor.paramsbean.PageListBean;
 import com.xiaomi.editor.paramsbean.PageListBeanSearch;
 import com.xiaomi.editor.utils.PinyinUtil;
 import org.springframework.stereotype.Service;
@@ -84,8 +83,10 @@ public class StudioService implements IStudioService {
     @Override
     public PageInfo selectByPageList(PageListBeanSearch pageBean) throws PinyinException {
         PageHelper.startPage(pageBean.getPage(), pageBean.getSize());
+        System.out.println("pageBean.getSearchContent():" + pageBean.getSearchContent());
         String searchContentPin = PinyinUtil.getPinyin(pageBean.getSearchContent());
-        List studioBeanList = studioBeanMapper.selectByPageList(searchContentPin);
+        System.out.println("searchContentPin:" + searchContentPin);
+        List studioBeanList = studioBeanMapper.selectStudioByPageList(searchContentPin);
         PageInfo pageInfo = new PageInfo<>(studioBeanList);
         return pageInfo;
     }

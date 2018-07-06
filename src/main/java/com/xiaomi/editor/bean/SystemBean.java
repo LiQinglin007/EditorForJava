@@ -17,6 +17,14 @@ public class SystemBean {
      */
     private Short systemUserDel;
 
+    public String getSystemUserLoginnamePin() {
+        return systemUserLoginnamePin;
+    }
+
+    public void setSystemUserLoginnamePin(String systemUserLoginnamePin) {
+        this.systemUserLoginnamePin = systemUserLoginnamePin;
+    }
+
     public SystemBean(Integer systemUserid, String systemUserLoginname, String systemUserLoginnamePin, String systemUserPassword, Short systemUserType, Short systemUserDel) {
         this.systemUserid = systemUserid;
         this.systemUserLoginname = systemUserLoginname;
@@ -25,6 +33,8 @@ public class SystemBean {
         this.systemUserType = systemUserType;
         this.systemUserDel = systemUserDel;
     }
+
+
 
     public SystemBean(String systemUserLoginname, String systemUserLoginnamePin, String systemUserPassword) {
         this.systemUserid = null;

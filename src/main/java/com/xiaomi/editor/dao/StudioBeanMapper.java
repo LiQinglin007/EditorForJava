@@ -63,14 +63,6 @@ public interface StudioBeanMapper {
      *
      * @return
      */
-    List selectByPageList(String searchContent);
+    List selectStudioByPageList(String searchContent);
 
-
-    /**
-     * 按工作室名称模糊查询
-     *
-     * @param studioBeanNamePin
-     * @return
-     */
-    List selectByStudioBeanNamePinList(String studioBeanNamePin);
 }

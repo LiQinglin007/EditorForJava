@@ -38,9 +38,14 @@
         UPDATE system SET system_user_password=#{systemUserPassword} WHERE system_userid=#{systemUserid}
     </update>
 
+    <!--&#45;&#45;           AND system_user_loginname_pin-->
+    <!--&#45;&#45;         like '%${_parameter}%'-->
     <!--分页查询 超级管理员模块-->
     <select id="selectByPageList" parameterType="String" resultType="Map">
-        SELECT system_userid,system_user_loginname FROM system WHERE system_user_type=2 AND system_user_del=0 AND system_user_loginname_pin like '%${_parameter}%'
+        SELECT system_userid,system_user_loginname FROM system WHERE system_user_type=2 AND system_user_del=0
+         AND system_user_loginname_pin
+        like '%${_parameter}%'
+
     </select>
 
 </mapper>
