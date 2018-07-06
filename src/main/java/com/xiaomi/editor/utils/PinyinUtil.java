@@ -21,6 +21,9 @@ public class PinyinUtil {
      * @throws PinyinException
      */
     public static String getPinyin(String str) throws PinyinException {
+        if (CheckStringEmptyUtils.IsEmpty(str)) {
+            return "";
+        }
         return PinyinHelper.convertToPinyinString(str, "", PinyinFormat.WITHOUT_TONE);// ni,hao,shi,jie
     }
 
