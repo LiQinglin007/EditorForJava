@@ -26,9 +26,11 @@ public class SystemService implements ISystemService {
     @Resource
     SystemBeanMapper systemBeanMapper;
 
+
     @Override
-    public int addUser(SystemBean mSystemBean) {
-        return systemBeanMapper.addSystemUser(mSystemBean);
+    public int addSystemUserReturnId(SystemBean mSystemBean) {
+        int i = systemBeanMapper.addSystemUserReturnId(mSystemBean);
+        return i > 0 ? mSystemBean.getSystemUserid() : 0;
     }
 
     @Override
@@ -59,4 +61,6 @@ public class SystemService implements ISystemService {
         PageInfo pageInfo = new PageInfo<>(systemBeanList);
         return pageInfo;
     }
+
+
 }

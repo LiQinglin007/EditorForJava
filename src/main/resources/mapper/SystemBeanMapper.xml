@@ -13,10 +13,11 @@
     </resultMap>
 
     <!--添加用户-->
-    <insert id="addSystemUser" parameterType="com.xiaomi.editor.bean.SystemBean">
-    INSERT INTO system(system_user_loginname,system_user_loginname_pin,system_user_password,system_user_type,system_user_del)
-    VALUE (#{systemUserLoginname},(#{systemUserLoginnamePin},#{systemUserPassword},#{systemUserType},#{systemUserDel})
-  </insert>
+    <insert id="addSystemUserReturnId" keyProperty="systemUserid" useGeneratedKeys="true"
+            parameterType="com.xiaomi.editor.bean.SystemBean">
+        INSERT INTO system(system_user_loginname,system_user_loginname_pin,system_user_password,system_user_type,system_user_del)
+        VALUE (#{systemUserLoginname},#{systemUserLoginnamePin},#{systemUserPassword},#{systemUserType},#{systemUserDel})
+    </insert>
 
     <!--修改用户删除状态-->
     <update id="updateDelState" parameterType="java.lang.Integer">
@@ -47,5 +48,6 @@
         like '%${_parameter}%'
 
     </select>
+
 
 </mapper>

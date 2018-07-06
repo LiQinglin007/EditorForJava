@@ -34,7 +34,8 @@ public class StudioService implements IStudioService {
      */
     @Override
     public int addStudio(StudioBean mStudioBean) {
-        return studioBeanMapper.addStudio(mStudioBean);
+        int i = studioBeanMapper.addStudio(mStudioBean);
+        return i > 0 ? mStudioBean.getStudioId() : 0;
     }
 
     /**

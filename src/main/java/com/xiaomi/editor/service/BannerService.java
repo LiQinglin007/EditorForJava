@@ -26,7 +26,8 @@ public class BannerService implements IBannerService {
 
     @Override
     public int addBanner(BannerBean mBannerBean) {
-        return beanMapper.addBanner(mBannerBean);
+        int i = beanMapper.addBanner(mBannerBean);
+        return i > 0 ?mBannerBean.getBannerId():0;
     }
 
     @Override

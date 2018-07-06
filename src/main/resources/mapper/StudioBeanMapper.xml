@@ -18,8 +18,10 @@
         </constructor>
     </resultMap>
 
+
+
     <!--添加工作室-->
-    <insert id="addStudio" parameterType="com.xiaomi.editor.bean.StudioBean">
+    <insert id="addStudio" keyProperty="studioId" useGeneratedKeys="true" parameterType="com.xiaomi.editor.bean.StudioBean">
     INSERT INTO studio(studio_name, studio_name_pin,studio_pic, studio_money, studio_phone, studio_monthly_sales, studio_QQ,
      studio_briefIntroduction, studio_collection_nmuber, studio_del, system_userid)
     VALUE (#{studioName},#{studioNamePin} ,#{studioPic},#{studioMoney},#{studioPhone},#{studioMonthlySales},#{studioQq},

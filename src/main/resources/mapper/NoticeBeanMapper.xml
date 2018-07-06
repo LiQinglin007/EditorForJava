@@ -12,7 +12,7 @@
     </resultMap>
 
     <!--发布日志-->
-    <insert id="addNotice" parameterType="com.xiaomi.editor.bean.NoticeBean">
+    <insert id="addNotice"  keyProperty="noticeId" useGeneratedKeys="true" parameterType="com.xiaomi.editor.bean.NoticeBean">
     INSERT INTO notice(notice_title, notice_content, notice_time,notice_del)
     VALUE (#{noticeTitle},#{noticeContent},#{noticeTime},#{noticeDel})
   </insert>

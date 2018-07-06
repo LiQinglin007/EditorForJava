@@ -1,6 +1,6 @@
 package com.xiaomi.editor.dao;
 
-import com.xiaomi.editor.bean.BannerBean;
+
 import com.xiaomi.editor.bean.SystemBean;
 
 import java.util.List;
@@ -12,7 +12,7 @@ public interface SystemBeanMapper {
      * @param mSystemBean
      * @return
      */
-    int addSystemUser(SystemBean mSystemBean);
+    int addSystemUserReturnId(SystemBean mSystemBean);
 
     /**
      * 修改是否停用状态

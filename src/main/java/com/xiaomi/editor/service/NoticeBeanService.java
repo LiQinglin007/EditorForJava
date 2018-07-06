@@ -27,7 +27,8 @@ public class NoticeBeanService implements INoticeBeanService {
 
     @Override
     public int addNotice(NoticeBean mNoticeBean) {
-        return noticeBeanMapper.addNotice(mNoticeBean);
+        int i = noticeBeanMapper.addNotice(mNoticeBean);
+        return i > 0 ? mNoticeBean.getNoticeId() : 0;
     }
 
     @Override

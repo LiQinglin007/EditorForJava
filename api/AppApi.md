@@ -44,6 +44,33 @@ API版本：1.0.0(初稿)<br>
 ```
 {
     "code":200,
+    "data":{
+        "UserJob":"",//职业
+        "UserBalance":0,//用户余额
+        "UserName":"用户484384",//用户昵称
+        "UserId":37,//用户id
+        "UserEducation":"",//职称
+        "UserPic":"",//头像地址
+        "UserSchool":"",//毕业院校
+        "token":"EGBPyEz5zuG49yUzACIO"
+    },
+    "msg":"登录成功"
+}
+```
+
+##### 2.1.3 找回密码
+函数调用地址：user/forgotPassword  <br>
+请求方式：POST<br>
+函数入参：<br>
+```
+"phone":"15284224245"，String  		(必传)(前端限制最多11位)
+"password":"123456789" String		(必传)(前端限制6-16位)
+"messageCode":"123456"   //短信验证码 (必传)
+```
+函数出参：
+```
+{
+    "code":200,
     "data":null,
     "msg":"注册成功"
 }

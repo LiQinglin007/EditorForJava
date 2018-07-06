@@ -179,7 +179,7 @@ public class AdminController {
             return responseJSON;
         }
         SystemBean systemBean = new SystemBean(systemUser.getUserLoginName(), loginUserNamePin, MD5Util.string2MD5(systemUser.getUserPassword()));
-        int i = mISystemService.addUser(systemBean);
+        int i = mISystemService.addSystemUserReturnId(systemBean);
         if (i > 0) {
             responseJSON = ResponseUtils.getSuccessResponseBean("添加成功", null);
         } else {
@@ -187,6 +187,7 @@ public class AdminController {
         }
         return responseJSON;
     }
+
 
     /**
      * 修改自己的密码
@@ -314,7 +315,7 @@ public class AdminController {
         if (i == 0) {
             return responseJSON;
         }
-        responseJSON = ResponseUtils.getSuccessResponseBean("添加成功", null);
+        responseJSON = ResponseUtils.getSuccessResponseBean("添加成功", i);
         return responseJSON;
     }
 
@@ -431,7 +432,7 @@ public class AdminController {
             responseJSON.setMsg("发布失败");
             return responseJSON;
         }
-        responseJSON = ResponseUtils.getSuccessResponseBean("发布成功", null);
+        responseJSON = ResponseUtils.getSuccessResponseBean("发布成功", i);
         return responseJSON;
     }
 
@@ -554,7 +555,7 @@ public class AdminController {
             responseJSON.setMsg("添加失败");
             return responseJSON;
         }
-        responseJSON = ResponseUtils.getSuccessResponseBean("添加成功", null);
+        responseJSON = ResponseUtils.getSuccessResponseBean("添加成功", i);
         return responseJSON;
     }
 

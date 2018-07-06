@@ -189,7 +189,7 @@ public class SystemController {
         if (i == 0) {
             return responseJSON;
         }
-        responseJSON = ResponseUtils.getSuccessResponseBean("添加成功");
+        responseJSON = ResponseUtils.getSuccessResponseBean("添加成功", i);
         return responseJSON;
     }
 

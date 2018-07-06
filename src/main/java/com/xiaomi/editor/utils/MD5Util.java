@@ -56,7 +56,7 @@ public class MD5Util {
     }
 
     public static void main(String[] args) {
-        String s = new String("admin,12345");
+        String s = new String("123456");
         System.out.println("原始：" + s);
         System.out.println("MD5后：" + string2MD5(s)+"结束");
         System.out.println("加密的：" + convertMD5(s)+"结束");

@@ -16,13 +16,7 @@ import com.xiaomi.editor.paramsbean.PageListBeanSearch;
  */
 public interface ISystemService {
 
-    /**
-     * 添加系统用户
-     *
-     * @param mSystemBean
-     * @return
-     */
-    int addUser(SystemBean mSystemBean);
+    int addSystemUserReturnId(SystemBean mSystemBean);
 
     /**
      * 修改是否停用状态

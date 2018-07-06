@@ -13,7 +13,7 @@
 
 
     <!--添加banner-->
-    <insert id="addBanner" parameterType="com.xiaomi.editor.bean.BannerBean">
+    <insert id="addBanner" keyProperty="bannerId" useGeneratedKeys="true" parameterType="com.xiaomi.editor.bean.BannerBean">
     INSERT INTO banner(banner_url, banner_web_url,banner_weight,banner_del) VALUE (#{bannerUrl},#{bannerWebUrl},#{bannerWeight},#{bannerDel})
   </insert>
 

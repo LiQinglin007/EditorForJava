@@ -120,6 +120,8 @@
                         <value>/api/user/login</value>
                         <!--获取短信验证码-->
                         <value>/api/message/getMessageCode</value>
+                        <!--忘记密码-->
+                        <value>/api/user/forgotPassword</value>
                     </list>
                 </property>
             </bean>

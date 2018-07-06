@@ -43,7 +43,8 @@ public class CommodityService implements ICommodityService {
 
     @Override
     public int addCommodity(CommodityBean commodityBean) {
-        return commodityBeanMapper.addCommodity(commodityBean);
+        int i = commodityBeanMapper.addCommodity(commodityBean);
+        return i > 0 ? commodityBean.getCommodityId() : 0;
     }
 
     @Override
