@@ -39,14 +39,14 @@
           <element id="library" level="project" name="Gradle: log4j:log4j:1.2.17" />
           <element id="library" level="project" name="Gradle: commons-fileupload:commons-fileupload:1.3.1" />
           <element id="library" level="project" name="Gradle: commons-io:commons-io:2.5" />
-          <element id="library" level="project" name="Gradle: javax.servlet:javax.servlet-api:3.1.0" />
           <element id="library" level="project" name="Gradle: redis.clients:jedis:2.9.0" />
           <element id="library" level="project" name="Gradle: commons-pool:commons-pool:1.6" />
           <element id="library" level="project" name="Gradle: com.github.pagehelper:pagehelper:5.1.4" />
+          <element id="library" level="project" name="Gradle: com.github.stuxuhai:jpinyin:1.1.8" />
           <element id="library" level="project" name="Gradle: commons-logging:commons-logging:1.2" />
           <element id="library" level="project" name="Gradle: org.apache.commons:commons-pool2:2.4.2" />
           <element id="library" level="project" name="Gradle: com.github.jsqlparser:jsqlparser:1.0" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.stuxuhai/jpinyin/1.1.8/8f590971e39ba1274c9bd091c6122c82957b6267/jpinyin-1.1.8.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.servlet/javax.servlet-api/4.0.1/a27082684a2ff0bf397666c3943496c44541d1ca/javax.servlet-api-4.0.1.jar" />
         </element>
       </element>
     </root>

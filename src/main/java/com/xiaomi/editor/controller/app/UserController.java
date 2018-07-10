@@ -1,4 +1,4 @@
-package com.xiaomi.editor.controller;
+package com.xiaomi.editor.controller.app;
 
 import com.xiaomi.editor.bean.UserBean;
 import com.xiaomi.editor.paramsbean.ForgotPasswordBean;

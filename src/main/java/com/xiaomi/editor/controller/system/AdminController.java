@@ -1,4 +1,4 @@
-package com.xiaomi.editor.controller;
+package com.xiaomi.editor.controller.system;
 
 
 import com.github.pagehelper.PageInfo;
@@ -181,7 +181,7 @@ public class AdminController {
         SystemBean systemBean = new SystemBean(systemUser.getUserLoginName(), loginUserNamePin, MD5Util.string2MD5(systemUser.getUserPassword()));
         int i = mISystemService.addSystemUserReturnId(systemBean);
         if (i > 0) {
-            responseJSON = ResponseUtils.getSuccessResponseBean("添加成功", null);
+            responseJSON = ResponseUtils.getSuccessResponseBean("添加成功", i);
         } else {
             responseJSON.setMsg("添加失败");
         }

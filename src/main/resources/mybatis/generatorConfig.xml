@@ -66,116 +66,124 @@
         <!--<generatedKey column="epa_id" sqlStatement="Mysql" identity="true" />-->
         <!--</table>-->
 
-        <table schema="editormi" tableName="banner"
-               domainObjectName="BannerBean"
-               enableCountByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               enableUpdateByExample="false">
-        </table>
+        <!--<table schema="editormi" tableName="banner"-->
+               <!--domainObjectName="BannerBean"-->
+               <!--enableCountByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--enableUpdateByExample="false">-->
+        <!--</table>-->
 
-        <table schema="editormi" tableName="collection"
-               domainObjectName="CollectionBean"
-               enableCountByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               enableUpdateByExample="false">
-        </table>
-
-
-        <table schema="editormi" tableName="evaluate"
-               domainObjectName="EvaluateBean"
-               enableCountByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               enableUpdateByExample="false">
-        </table>
+        <!--<table schema="editormi" tableName="collection"-->
+               <!--domainObjectName="CollectionBean"-->
+               <!--enableCountByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--enableUpdateByExample="false">-->
+        <!--</table>-->
 
 
-        <table schema="editormi" tableName="feedback"
-               domainObjectName="FeedbackBean"
-               enableCountByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               enableUpdateByExample="false">
-        </table>
-
-        <table schema="editormi" tableName="notice"
-               domainObjectName="NoticeBean"
-               enableCountByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               enableUpdateByExample="false">
-        </table>
-
-        <table schema="editormi" tableName="order"
-               domainObjectName="OrderBean"
-               enableCountByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               enableUpdateByExample="false">
-        </table>
+        <!--<table schema="editormi" tableName="evaluate"-->
+               <!--domainObjectName="EvaluateBean"-->
+               <!--enableCountByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--enableUpdateByExample="false">-->
+        <!--</table>-->
 
 
-        <table schema="editormi" tableName="resultfile"
-               domainObjectName="ResultfileBean"
-               enableCountByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               enableUpdateByExample="false">
-        </table>
+        <!--<table schema="editormi" tableName="feedback"-->
+               <!--domainObjectName="FeedbackBean"-->
+               <!--enableCountByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--enableUpdateByExample="false">-->
+        <!--</table>-->
 
-        <table schema="editormi" tableName="statistics"
-               domainObjectName="StatisticsBean"
-               enableCountByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               enableUpdateByExample="false">
-        </table>
+        <!--<table schema="editormi" tableName="notice"-->
+               <!--domainObjectName="NoticeBean"-->
+               <!--enableCountByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--enableUpdateByExample="false">-->
+        <!--</table>-->
 
-        <table schema="editormi" tableName="studio"
-               domainObjectName="StudioBean"
-               enableCountByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               enableUpdateByExample="false">
-        </table>
-
-
-        <table schema="editormi" tableName="user"
-               domainObjectName="UserBean"
-               enableCountByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               enableUpdateByExample="false">
-        </table>
-
-        <table schema="editormi" tableName="userfile"
-               domainObjectName="UserfileBean"
-               enableCountByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               enableUpdateByExample="false">
-        </table>
-
-        <table schema="editormi" tableName="commodity"
-               domainObjectName="CommodityBean"
-               enableCountByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               enableUpdateByExample="false">
-        </table>
+        <!--<table schema="editormi" tableName="order"-->
+               <!--domainObjectName="OrderBean"-->
+               <!--enableCountByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--enableUpdateByExample="false">-->
+        <!--</table>-->
 
 
-        <table schema="editormi" tableName="system"
-               domainObjectName="SystemBean"
-               enableCountByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               enableUpdateByExample="false">
-        </table>
-        <table schema="editormi" tableName="tokensys"
-               domainObjectName="TokensysBean"
+        <!--<table schema="editormi" tableName="resultfile"-->
+               <!--domainObjectName="ResultfileBean"-->
+               <!--enableCountByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--enableUpdateByExample="false">-->
+        <!--</table>-->
+
+        <!--<table schema="editormi" tableName="statistics"-->
+               <!--domainObjectName="StatisticsBean"-->
+               <!--enableCountByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--enableUpdateByExample="false">-->
+        <!--</table>-->
+
+        <!--<table schema="editormi" tableName="studio"-->
+               <!--domainObjectName="StudioBean"-->
+               <!--enableCountByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--enableUpdateByExample="false">-->
+        <!--</table>-->
+
+
+        <!--<table schema="editormi" tableName="user"-->
+               <!--domainObjectName="UserBean"-->
+               <!--enableCountByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--enableUpdateByExample="false">-->
+        <!--</table>-->
+
+        <!--<table schema="editormi" tableName="userfile"-->
+               <!--domainObjectName="UserfileBean"-->
+               <!--enableCountByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--enableUpdateByExample="false">-->
+        <!--</table>-->
+
+        <!--<table schema="editormi" tableName="commodity"-->
+               <!--domainObjectName="CommodityBean"-->
+               <!--enableCountByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--enableUpdateByExample="false">-->
+        <!--</table>-->
+
+
+        <!--<table schema="editormi" tableName="system"-->
+               <!--domainObjectName="SystemBean"-->
+               <!--enableCountByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--enableUpdateByExample="false">-->
+        <!--</table>-->
+        <!--<table schema="editormi" tableName="tokensys"-->
+               <!--domainObjectName="TokensysBean"-->
+               <!--enableCountByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--enableUpdateByExample="false">-->
+        <!--</table>-->
+
+        <table schema="editormi" tableName="test"
+               domainObjectName="TestBean"
                enableCountByExample="false"
                enableDeleteByExample="false"
                enableSelectByExample="false"

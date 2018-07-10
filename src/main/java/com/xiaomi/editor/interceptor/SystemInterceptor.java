@@ -1,7 +1,6 @@
 package com.xiaomi.editor.interceptor;
 
 import com.alibaba.fastjson.JSONObject;
-import com.xiaomi.editor.controller.AdminController;
 import com.xiaomi.editor.system.ResponseJSON;
 import com.xiaomi.editor.utils.*;
 import org.apache.log4j.Logger;

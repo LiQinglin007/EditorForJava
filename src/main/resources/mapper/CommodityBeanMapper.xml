@@ -31,7 +31,8 @@
     </select>
 
     <!--工作室添加服务-->
-    <insert id="addCommodity"  keyProperty="commodityId" useGeneratedKeys="true" parameterType="com.xiaomi.editor.bean.CommodityBean">
+    <insert id="addCommodity" keyProperty="commodityId" useGeneratedKeys="true"
+            parameterType="com.xiaomi.editor.bean.CommodityBean">
       INSERT INTO commodity(studio_id, commodity_name,commodity_name_pin,commodity_introduce, commodity_pic, commodity_pics, commodity_original_price,
       commodity_present_price, commodity_type,commodity_monthly_sales,commodity_collection_quantity,
       commodity_hot,commodity_del)
@@ -76,12 +77,12 @@
     </select>
 
 
-    <!--查询全部热门商品-->
+    <!--查询全部热门商品 按月销量排序-->
     <select id="selectHotCommodityByPageList" resultType="Map">
          SELECT commodity_id,studio_id,commodity_name,commodity_pic,commodity_introduce,commodity_hot,
         commodity_type,commodity_present_price,commodity_original_price,commodity_collection_quantity,
         commodity_pic,commodity_pics
-        from commodity where  commodity_del=0 AND commodity_hot=1
+        from commodity where  commodity_del=0 AND commodity_hot=1 ORDER BY commodity_monthly_sales DESC
     </select>
 
 

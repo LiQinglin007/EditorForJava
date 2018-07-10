@@ -1,4 +1,4 @@
-package com.xiaomi.editor.controller;
+package com.xiaomi.editor.controller.system;
 
 import com.github.stuxuhai.jpinyin.PinyinException;
 import com.xiaomi.editor.bean.CommodityBean;
