@@ -1,6 +1,5 @@
 package com.xiaomi.editor.utils;
 
-import java.util.Date;
 
 /**
  * Description:检查短信验证码 <br>
