@@ -35,16 +35,6 @@ public class Banner {
      */
     private Short bannerDel;
 
-    private MultipartFile file;
-
-    public MultipartFile getFile() {
-        return file;
-    }
-
-    public void setFile(MultipartFile file) {
-        this.file = file;
-    }
-
     public Integer getBannerId() {
         return bannerId;
     }

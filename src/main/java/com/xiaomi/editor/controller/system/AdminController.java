@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.*;
 
 
@@ -283,14 +281,12 @@ public class AdminController {
     /**
      * 添加轮播图
      *
-     * @param session
      * @param banner  外部连接,权重,图片(文件流)
      * @return
      */
     @RequestMapping(value = "/addBanner", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseJSON addBanner(HttpServletRequest request, HttpSession session,
-                                  @RequestBody Banner banner
+    public ResponseJSON addBanner(HttpServletRequest request, @RequestBody Banner banner
     ) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("添加失败", null);
         if (!checkUser(request)) {
@@ -298,21 +294,12 @@ public class AdminController {
             return responseJSON;
         }
 
-        if (banner.getFile() == null) {
+        if (CheckStringEmptyUtils.IsEmpty(banner.getBannerUrl())) {
             responseJSON.setMsg("图片不能为空");
             return responseJSON;
         }
-        String saveFile = "";
-        try {
-            saveFile = FileUtil.saveFile(session, banner.getFile());
-        } catch (IOException e) {
-            e.printStackTrace();
-            logger.error("addBanner文件保存失败：" + e.toString());
-            responseJSON.setMsg("添加失败");
-            return responseJSON;
-        }
 
-        int i = mIBannerService.addBanner(new BannerBean(saveFile, Short.parseShort(banner.getBannerWeight() + ""), banner.getBannerWebUrl()));
+        int i = mIBannerService.addBanner(new BannerBean(banner.getBannerUrl(), Short.parseShort(banner.getBannerWeight() + ""), banner.getBannerWebUrl()));
         if (i == 0) {
             return responseJSON;
         }
@@ -352,7 +339,7 @@ public class AdminController {
      */
     @RequestMapping(value = "/updateBanner", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseJSON updateBanner(HttpServletRequest request, HttpSession session,
+    public ResponseJSON updateBanner(HttpServletRequest request,
                                      @RequestBody Banner banner
     ) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("添加失败", null);
@@ -360,18 +347,8 @@ public class AdminController {
             responseJSON.setMsg("用户权限不足，请联系管理员");
             return responseJSON;
         }
-        String saveFile = "";
-        if (banner.getFile() != null) {
-            try {
-                saveFile = FileUtil.saveFile(session, banner.getFile());
-            } catch (IOException e) {
-                e.printStackTrace();
-                logger.error("updateBanner文件保存失败：" + e.toString());
-                responseJSON.setMsg("添加失败");
-                return responseJSON;
-            }
-        }
-        int i = mIBannerService.updateBanner(new BannerBean(banner.getBannerId(), saveFile, Short.parseShort(banner.getBannerWeight() + ""), banner.getBannerWebUrl()));
+
+        int i = mIBannerService.updateBanner(new BannerBean(banner.getBannerId(), banner.getBannerUrl(), Short.parseShort(banner.getBannerWeight() + ""), banner.getBannerWebUrl()));
         if (i == 0) {
             return responseJSON;
         }
@@ -585,13 +562,12 @@ public class AdminController {
      * 修改工作室信息
      *
      * @param request
-     * @param session
      * @param studio  工作室id,系统用户id,工作室名称,押金,联系电话,QQ,简介,图片(文件流)
      * @return
      */
     @RequestMapping(value = "/updateStudioData", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseJSON updateStudioData(HttpServletRequest request, HttpSession session,
+    public ResponseJSON updateStudioData(HttpServletRequest request,
                                          @RequestBody Studio studio
     ) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("获取失败");

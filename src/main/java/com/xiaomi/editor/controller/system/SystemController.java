@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,13 +63,12 @@ public class SystemController {
     /**
      * 修改自己工作室数据
      *
-     * @param session
      * @param studio  工作室id,工作室名称,联系电话,联系QQ,商铺简介,商铺头像
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/updateStudioData", method = RequestMethod.POST)
-    public ResponseJSON updateStudioData(HttpServletRequest request, HttpSession session,
+    public ResponseJSON updateStudioData(HttpServletRequest request,
                                          @RequestBody Studio studio
     ) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("修改失败", null);
