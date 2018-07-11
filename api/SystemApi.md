@@ -1,14 +1,18 @@
 ## 编审小米 后台系统API文档
 ### 1、接口说明
+
+版本号 | 说明    | 时间
+:-----:|:-------:|:----:
+1.0.0  | 初稿    | 2018/6/28
+1.0.1  | 添加2.3.1(文件上传接口)<br> 修改2.1.13(添加工作室)<br> 修改2.1.14(修改工作室资料)<br> 修改2.2.1(修改自己工作室数据)<br> 修改2.2.2(添加商品)<br> 修改2.2.4(修改商品)<br>| 2018/7/11
+
+
 **接口请求说明：除特殊接口统一添加请求头"Authorization"<br>
 特殊接口：<br>
 1、system/admin/systemLogin<br>
 code:200 成功   100失败<br>
 msg:接口说明<br>
-BaseUrl:http://home.hbhanzhi.com:7052/system/<br>
-API版本：1.0.0(初稿)<br>
-更新时间：2018/6/28<br>**
-
+BaseUrl:http://home.hbhanzhi.com:7052/system/<br>**
 
 **超级管理员：<br>**
 **轮播图模块<br>**
@@ -388,7 +392,7 @@ API版本：1.0.0(初稿)<br>
 "studioPhone":"15284224245"，int  (必传)联系电话(前端限制最多11位)
 "studioQq":"531195555"，int  (必传)工作QQ(前端限制最多15位)
 "studioBriefintroduction":"这是一家店铺"，int  (必传)简介(前端限制最多100位)
-"file" File (必传) 工作室头像，上传图片，使用文件流上传
+"studioPic" :"static/xxxx.jpg" (必传) 工作室头像，上传图片地址
 ```
 函数出参：
 ```
@@ -413,7 +417,7 @@ API版本：1.0.0(初稿)<br>
 "studioPhone":"15284224245"，int  联系电话(前端限制最多11位)
 "studioQq":"531195555"，int   工作QQ(前端限制最多15位)
 "studioBriefintroduction":"这是一家店铺"，int  简介(前端限制最多100位)
-"file" File   工作室头像，上传图片，使用文件流上传  
+"studioPic":"static/xxxx.jpg"    工作室头像，上传图片地址  
 ```
 
 函数出参：
@@ -776,7 +780,7 @@ API版本：1.0.0(初稿)<br>
 "phone":"15284224245"，String  工作室电话(前端限制最多11位)
 "qq":"531192555"，String  工作室QQ(前端限制最多15位)
 "studioBriefintroduction":"这里是工作室简介"，String   (前端限制最多100位)
-"file":，File  工作室图片
+"studioPic":"static/xxxx.jpg"  工作室图片
 ```
 
 函数出参：
@@ -801,8 +805,8 @@ API版本：1.0.0(初稿)<br>
 "commodityIntroduce":"大红袍大红茶" String (必传)    商品介绍 (前端限制最多300位)
 "commodityPresentPrice":110.00 Folat (必传)   商品价格
 "commodityType":1  int (必传) 商品类型  (1:查重、2:降重、3:速审)
-"file": File (必传)   商品头像
-"files": File[] (必传)    商品详情图片
+"commodityPic":"static/xxx.jpg"   商品头像
+"commodityPics": "static/xxx.jpg,static/xxx.jpg"(必传)    商品详情图片,逗号分隔
 ```
 
 函数出参：
@@ -836,8 +840,8 @@ API版本：1.0.0(初稿)<br>
         "commodity_id":1,
         "commodity_hot":0,
         "commodity_introduce":"大红袍茶叶",
-        "commodity_pic":"http://www.xxx.jpg",
-        "commodity_pics":"http://www.xxx.jpg,http://www.xxx.jpg,http://www.xxx.jpg",
+        "commodity_pic":"static/xxx.jpg",
+        "commodity_pics":"static/xxx.jpg,static/xxx.jpg,static/xxx.jpg",
         "commodity_type":1,
         "studio_id":1,
         "commodity_present_price":1,
@@ -859,8 +863,8 @@ API版本：1.0.0(初稿)<br>
 "commodityIntroduce":"大红袍大红茶" String      商品介绍 (前端限制最多300位)
 "commodityPresentPrice":110.00 Folat    商品价格
 "commodityType":1  int   商品类型  (1:查重、2:降重、3:速审)
-"file": File     商品头像
-"files": File[]     商品详情图片
+"commodityPic":"static/xxx.jpg"   商品头像
+"commodityPics": "static/xxx.jpg,static/xxx.jpg"(必传)    商品详情图片,逗号分隔
 ```
 
 函数出参：
@@ -893,4 +897,22 @@ API版本：1.0.0(初稿)<br>
 }
 ```
 
-##### 
+#### 2.3 文件上传模块
+##### 2.3.1 文件上传
+函数调用地址：upload/uploadFiles<br>
+请求方式：POST<br>
+函数入参：<br>
+
+```
+"files":File (必传) 文件流  支持批量上传
+```
+
+函数出参：
+
+```
+{
+    "code":200,
+    "data":"static/15312713925211531203471214.jpeg,static/1531271392523header_view.png",//多张图片用逗号分隔
+    "msg":"保存成功"
+}
+```

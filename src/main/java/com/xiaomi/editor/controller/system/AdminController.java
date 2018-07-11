@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -500,9 +501,7 @@ public class AdminController {
      */
     @RequestMapping(value = "/addStudio", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseJSON addStudio(HttpServletRequest request, HttpSession session,
-                                  @RequestBody Studio studio
-    ) {
+    public ResponseJSON addStudio(HttpServletRequest request, @RequestBody Studio studio) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("添加失败", null);
         if (!checkUser(request)) {
             responseJSON.setMsg("用户权限不足，请联系管理员");
@@ -513,6 +512,7 @@ public class AdminController {
                 new CheckStringEmptyUtils.CheckStringBean(studio.getStudioName(), "工作室名称不能为空"),
                 new CheckStringEmptyUtils.CheckStringBean(studio.getStudioPhone(), "工作室联系电话不能为空"),
                 new CheckStringEmptyUtils.CheckStringBean(studio.getStudioQq(), "工作QQ不能为空"),
+                new CheckStringEmptyUtils.CheckStringBean(studio.getStudioPic(), "工作室图片不能为空"),
                 new CheckStringEmptyUtils.CheckStringBean(studio.getStudioBriefintroduction(), "工作室简介不能为空"));
         if (!checkStringList.equals(CheckStringEmptyUtils.ListSuccess)) {
             responseJSON.setMsg(checkStringList);
@@ -523,21 +523,8 @@ public class AdminController {
             responseJSON.setMsg("押金不能小于0");
             return responseJSON;
         }
-        //检查图片
-        if (studio.getFile() == null) {
-            responseJSON.setMsg("工作室图片不能为空");
-            return responseJSON;
-        }
-        //保存图片
-        String studioPic = "";
-        try {
-            studioPic = FileUtil.saveFile(session, studio.getFile());
-        } catch (IOException e) {
-            e.printStackTrace();
-            logger.error("addStudio文件保存失败：" + e.toString());
-            responseJSON.setMsg("添加失败");
-            return responseJSON;
-        }
+
+
         String studioNamePin = "";
         try {
             studioNamePin = PinyinUtil.getPinyin(studio.getStudioName());
@@ -548,7 +535,7 @@ public class AdminController {
             return responseJSON;
         }
         //插入数据库
-        StudioBean mStudioBean = new StudioBean(studio.getStudioName(), studioNamePin, studioPic, studio.getStudioMoney(),
+        StudioBean mStudioBean = new StudioBean(studio.getStudioName(), studioNamePin, studio.getStudioPic(), studio.getStudioMoney(),
                 studio.getStudioPhone(), studio.getStudioQq(), studio.getStudioBriefintroduction(), studio.getSystemUserid());
         int i = mIStudioService.addStudio(mStudioBean);
         if (i < 0) {
@@ -617,18 +604,7 @@ public class AdminController {
             responseJSON.setMsg("暂无此工作室");
             return responseJSON;
         }
-        String saveUrl = "";
-        if (studio.getFile() != null) {
-            try {
-                saveUrl = FileUtil.saveFile(session, studio.getFile());
-                studioBean.setStudioPic(saveUrl);
-            } catch (IOException e) {
-                e.printStackTrace();
-                logger.error("updateStudioData文件保存失败：" + e.toString());
-                responseJSON.setMsg("修改失败");
-                return responseJSON;
-            }
-        }
+        studioBean.setStudioPic(studio.getStudioPic());//图片
         studioBean.setSystemUserid(studio.getSystemUserid());//用户id
         studioBean.setStudioName(studio.getStudioName());//店铺名称
         studioBean.setStudioMoney(studio.getStudioMoney());//押金

@@ -83,23 +83,13 @@ public class SystemController {
                 new CheckStringEmptyUtils.CheckStringBean(studio.getStudioName(), "工作室名称不能为空"),
                 new CheckStringEmptyUtils.CheckStringBean(studio.getStudioPhone(), "工作室联系电话不能为空"),
                 new CheckStringEmptyUtils.CheckStringBean(studio.getStudioQq(), "工作QQ不能为空"),
+                new CheckStringEmptyUtils.CheckStringBean(studio.getStudioPic(), "工作室图片不能为空"),
                 new CheckStringEmptyUtils.CheckStringBean(studio.getStudioBriefintroduction(), "工作室简介不能为空"));
         if (!checkStringList.equals(CheckStringEmptyUtils.ListSuccess)) {
             responseJSON.setMsg(checkStringList);
             return responseJSON;
         }
-        //保存图片
-        String studioPic = "";
-        if (studio.getFile() != null) {
-            try {
-                studioPic = FileUtil.saveFile(session, studio.getFile());
-            } catch (IOException e) {
-                e.printStackTrace();
-                logger.error("updateStudioData文件保存失败：" + e.toString());
-                responseJSON.setMsg("添加失败");
-                return responseJSON;
-            }
-        }
+
         String studioNamePin = "";
         try {
             studioNamePin = PinyinUtil.getPinyin(studio.getStudioName());
@@ -109,7 +99,7 @@ public class SystemController {
             responseJSON.setMsg("添加失败");
             return responseJSON;
         }
-        StudioBean mStudioBean = new StudioBean(studio.getStudioId(), studio.getStudioName(), studioNamePin, studioPic, studio.getStudioPhone(), studio.getStudioQq(),
+        StudioBean mStudioBean = new StudioBean(studio.getStudioId(), studio.getStudioName(), studioNamePin, studio.getStudioPic(), studio.getStudioPhone(), studio.getStudioQq(),
                 studio.getStudioBriefintroduction());
         int i = studioService.updateStudio(mStudioBean);
         if (i == 0) {
@@ -122,54 +112,26 @@ public class SystemController {
     /**
      * 添加商品
      *
-     * @param session
      * @param commodity 工作室id,商品名称,商品介绍,商品价格,商品类型   (1:查重、2:降重、3:速审),商品头像,商品详情图片
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/addCommodity", method = RequestMethod.POST)
-    public ResponseJSON addCommodity(HttpServletRequest request, HttpSession session, @RequestBody Commodity commodity) {
+    public ResponseJSON addCommodity(HttpServletRequest request, @RequestBody Commodity commodity) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("添加失败");
         if (!checkUser(request)) {
             responseJSON.setMsg("用户权限不足，请联系管理员");
             return responseJSON;
         }
-        if (CheckStringEmptyUtils.IsEmpty(commodity.getCommodityName())) {
-            responseJSON.setMsg("服务名称不能为空");
-            return responseJSON;
-        }
-        if (CheckStringEmptyUtils.IsEmpty(commodity.getCommodityIntroduce())) {
-            responseJSON.setMsg("服务简介不能为空");
-            return responseJSON;
-        }
+        String checkStringList = CheckStringEmptyUtils.CheckStringList(
+                new CheckStringEmptyUtils.CheckStringBean(commodity.getCommodityName(), "服务名称不能为空"),
+                new CheckStringEmptyUtils.CheckStringBean(commodity.getCommodityIntroduce(), "服务简介不能为空"),
+                new CheckStringEmptyUtils.CheckStringBean(commodity.getCommodityPic(), "服务图片不能为空"),
+                new CheckStringEmptyUtils.CheckStringBean(commodity.getCommodityPics(), "服务详情图片不能为空")
+        );
 
-        if (commodity.getFile() == null) {
-            responseJSON.setMsg("服务图片不能为空");
-            return responseJSON;
-        }
-
-        if (commodity.getFiles() == null || commodity.getFiles().length == 0) {
-            responseJSON.setMsg("服务详情图片不能为空");
-            return responseJSON;
-        }
-
-        String picUrl = "";
-        try {
-            picUrl = FileUtil.saveFile(session, commodity.getFile());
-        } catch (IOException e) {
-            e.printStackTrace();
-            logger.error("addCommodity文件保存失败：" + e.toString());
-            responseJSON.setMsg("添加失败");
-            return responseJSON;
-        }
-
-        String picsUrl = "";
-        try {
-            picsUrl = FileUtil.saveFile(session, commodity.getFiles());
-        } catch (IOException e) {
-            e.printStackTrace();
-            logger.error("addCommodity服务详情文件保存失败：" + e.toString());
-            responseJSON.setMsg("添加失败");
+        if (!checkStringList.equals(CheckStringEmptyUtils.ListSuccess)) {
+            responseJSON.setMsg(checkStringList);
             return responseJSON;
         }
         String commodityNamePin = "";
@@ -183,7 +145,8 @@ public class SystemController {
         }
 
         CommodityBean commodityBean = new CommodityBean(commodity.getCommodityId(), commodity.getCommodityName(), commodityNamePin,
-                commodity.getCommodityIntroduce(), picUrl, picsUrl, commodity.getCommodityPresentPrice(), commodity.getCommodityType()
+                commodity.getCommodityIntroduce(), commodity.getCommodityPic(), commodity.getCommodityPics(),
+                commodity.getCommodityPresentPrice(), commodity.getCommodityType()
         );
         int i = commodityService.addCommodity(commodityBean);
         if (i == 0) {
@@ -234,40 +197,16 @@ public class SystemController {
     /**
      * 修改商品
      *
-     * @param session
      * @param commodity 商品id,商品名称,商品价格,商品类型,图片,详情图片
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/updateCommodity", method = RequestMethod.POST)
-    public ResponseJSON updateCommodity(HttpServletRequest request, HttpSession session, @RequestBody Commodity commodity) {
+    public ResponseJSON updateCommodity(HttpServletRequest request, @RequestBody Commodity commodity) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("修改失败");
         if (!checkUser(request)) {
             responseJSON.setMsg("用户权限不足，请联系管理员");
             return responseJSON;
-        }
-        String picUrl = "";
-        if (commodity.getFile() != null) {
-            try {
-                picUrl = FileUtil.saveFile(session, commodity.getFile());
-            } catch (IOException e) {
-                e.printStackTrace();
-                logger.error("addCommodity文件保存失败：" + e.toString());
-                responseJSON.setMsg("修改失败");
-                return responseJSON;
-            }
-        }
-
-        String picsUrl = "";
-        if (commodity.getFiles() != null && commodity.getFiles().length != 0) {
-            try {
-                picsUrl = FileUtil.saveFile(session, commodity.getFiles());
-            } catch (IOException e) {
-                e.printStackTrace();
-                logger.error("addCommodity服务详情文件保存失败：" + e.toString());
-                responseJSON.setMsg("修改失败");
-                return responseJSON;
-            }
         }
 
         CommodityBean commodityBean = commodityService.queryById(commodity.getCommodityId());
@@ -303,11 +242,11 @@ public class SystemController {
             commodityBean.setCommodityType(commodity.getCommodityType());
         }
 
-        if (!CheckStringEmptyUtils.IsEmpty(picUrl)) {
-            commodityBean.setCommodityPic(picUrl);
+        if (!CheckStringEmptyUtils.IsEqual(commodity.getCommodityPic(), commodityBean.getCommodityPic())) {
+            commodityBean.setCommodityPic(commodity.getCommodityPic());
         }
-        if (!CheckStringEmptyUtils.IsEmpty(picsUrl)) {
-            commodityBean.setCommodityPics(picsUrl);
+        if (!CheckStringEmptyUtils.IsEqual(commodity.getCommodityPics(), commodityBean.getCommodityPics())) {
+            commodityBean.setCommodityPics(commodity.getCommodityPics());
         }
 
         int i = commodityService.updateCommodity(commodityBean);

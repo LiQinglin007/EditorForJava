@@ -80,10 +80,17 @@ public class SystemInterceptor implements HandlerInterceptor {
             return false;
         }
         String tokenvalue = "";
+        if (url.contains("upload")) {//文件上传的
+            tokenvalue = JedisClientUtil.getString(FinalData.SYSTEM_TOKEN + header);
+            if (CheckStringEmptyUtils.IsEmpty(tokenvalue)) {
+                tokenvalue = JedisClientUtil.getString(FinalData.APP_TOKEN + header);
+            }
+        }
+        
         if (url.contains(FinalData.SYSTEM_BASEURL)) {//验证token(系统用户的token)
             tokenvalue = JedisClientUtil.getString(FinalData.SYSTEM_TOKEN + header);
         } else if (url.contains(FinalData.APP_BASEURL)) {//App客户端用户
-            tokenvalue = JedisClientUtil.getString(FinalData.SYSTEM_TOKEN + header);
+            tokenvalue = JedisClientUtil.getString(FinalData.APP_TOKEN + header);
         }
 
         if (CheckStringEmptyUtils.IsEmpty(tokenvalue)) {

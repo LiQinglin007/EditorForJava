@@ -67,9 +67,6 @@ public class Commodity {
      */
     private Short commodityDel;
 
-    private MultipartFile file;
-
-    private MultipartFile[] files;
 
     public Integer getCommodityId() {
         return commodityId;
@@ -183,19 +180,4 @@ public class Commodity {
         this.commodityDel = commodityDel;
     }
 
-    public MultipartFile getFile() {
-        return file;
-    }
-
-    public void setFile(MultipartFile file) {
-        this.file = file;
-    }
-
-    public MultipartFile[] getFiles() {
-        return files;
-    }
-
-    public void setFiles(MultipartFile[] files) {
-        this.files = files;
-    }
 }

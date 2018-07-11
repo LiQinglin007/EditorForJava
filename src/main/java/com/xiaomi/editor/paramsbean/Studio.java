@@ -70,15 +70,6 @@ public class Studio {
     private Integer systemUserid;
 
 
-    private  MultipartFile file;
-
-    public MultipartFile getFile() {
-        return file;
-    }
-
-    public void setFile(MultipartFile file) {
-        this.file = file;
-    }
 
     public Integer getStudioId() {
         return studioId;

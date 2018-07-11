@@ -26,7 +26,7 @@ public class FileUtil {
      */
     public static String saveFile(HttpSession session, MultipartFile file) throws IOException {
         String RootPath = session.getServletContext().getRealPath("/");
-        String savePath = "static/" + System.currentTimeMillis() + ".jpg";
+        String savePath = "static/" + System.currentTimeMillis() +file.getOriginalFilename();
         FileUtils.copyInputStreamToFile(file.getInputStream(), new File(RootPath + savePath));
         return savePath;
     }
@@ -44,7 +44,7 @@ public class FileUtil {
         String RootPath = session.getServletContext().getRealPath("/");
         String realPath = "";
         for (MultipartFile file : files) {
-            String savePath = "static/" + System.currentTimeMillis() + ".jpg";
+            String savePath = "static/" + System.currentTimeMillis() + file.getOriginalFilename();
             FileUtils.copyInputStreamToFile(file.getInputStream(), new File(RootPath + savePath));
             realPath += savePath + ",";
         }
