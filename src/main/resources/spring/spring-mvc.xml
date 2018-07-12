@@ -55,7 +55,7 @@
                     <list>
                         <!--顺序保持这样,避免IE下载出错 -->
                         <value>text/html;charset=UTF-8</value>
-                        <value>application/json</value>
+                        <value>application/json;charset=UTF-8</value>
                     </list>
                 </property>
                 <property name="fastJsonConfig" ref="fastJsonConfig"/>

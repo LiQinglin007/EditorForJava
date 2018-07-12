@@ -48,7 +48,7 @@
     <!--管理员修改工作室信息-->
     <update id="updateStudioByAdmin" parameterType="com.xiaomi.editor.bean.StudioBean">
         UPDATE studio SET studio_name=#{studioName}  ,studio_name_pin=#{studioNamePin},studio_pic=#{studioPic},studio_phone=#{studioPhone},
-        studio_QQ=#{studioQq},studio_briefIntroduction=#{studioBriefintroduction},system_userid=#{systemUserid},
+        studio_QQ=#{studioQq},studio_briefIntroduction=#{studioBriefintroduction},
         studio_money=#{studioMoney}
         WHERE studio_id=#{studioId}
     </update>

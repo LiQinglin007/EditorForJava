@@ -26,12 +26,22 @@ public class SimpleCORSFilter implements Filter {
                          FilterChain chain) throws IOException, ServletException {
         HttpServletRequest hreq = (HttpServletRequest) req;
         HttpServletResponse hresp = (HttpServletResponse) res;
-        //跨域
-        hresp.setHeader("Access-Control-Allow-Origin", "*");
+
+
+
+
+
+
         //跨域 Header
+        hresp.setHeader("Access-Control-Allow-Credentials", "true");
+        hresp.setHeader("Access-Control-Allow-Origin", "*");
         hresp.setHeader("Access-Control-Allow-Methods", "*");
+        hresp.setHeader("Access-Control-Allow-Headers", "Authentication,Content-Type,Authorization");
+        hresp.setHeader("Access-Control-Expose-Headers", "*");
+
 //        hresp.setHeader("Access-Control-Allow-Headers", "Authentication,Origin, X-Requested-With,Content-Type,XFILENAME,XFILECATEGORY,XFILESIZE,Accept");
-        hresp.setHeader("Access-Control-Allow-Headers", "*");
+//        hresp.setHeader("Access-Control-Allow-Headers", "Authentication,Content-Type,Access-Token,Authorization");
+//        hresp.setHeader("Access-Control-Allow-Headers", "*");
 
         // 浏览器是会先发一次options请求，如果请求通过，则继续发送正式的post请求
         // 配置options的请求返回

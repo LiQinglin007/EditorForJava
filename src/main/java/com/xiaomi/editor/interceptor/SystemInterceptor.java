@@ -3,13 +3,16 @@ package com.xiaomi.editor.interceptor;
 import com.alibaba.fastjson.JSONObject;
 import com.xiaomi.editor.system.ResponseJSON;
 import com.xiaomi.editor.utils.*;
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Enumeration;
 
 /**
@@ -50,6 +53,18 @@ public class SystemInterceptor implements HandlerInterceptor {
         response.setContentType("text/html;charset=utf-8");
         String url = request.getServletPath();
         String header = request.getHeader(FinalData.TOKENHEAD);
+
+//        BufferedReader streamReader = new BufferedReader(new InputStreamReader(request.getInputStream(), "UTF-8"));
+//        StringBuilder responseStrBuilder = new StringBuilder();
+//        String inputStr;
+//        while ((inputStr = streamReader.readLine()) != null)
+//            responseStrBuilder.append(inputStr);
+//
+//        JSONObject jsonObject = JSONObject.parseObject(responseStrBuilder.toString());
+//        String param = jsonObject.toJSONString();
+//        System.out.println("aaaa:" + responseStrBuilder.toString());
+
+
         // 过滤静态文件
         if (url.indexOf("/static/") > -1) {
             return true;
@@ -58,6 +73,7 @@ public class SystemInterceptor implements HandlerInterceptor {
         if ("/".equals(url)) {
             return true;
         }
+
         String s = "";
         Enumeration<String> parameterNames = request.getParameterNames();
         while (parameterNames.hasMoreElements()) {
@@ -86,7 +102,7 @@ public class SystemInterceptor implements HandlerInterceptor {
                 tokenvalue = JedisClientUtil.getString(FinalData.APP_TOKEN + header);
             }
         }
-        
+
         if (url.contains(FinalData.SYSTEM_BASEURL)) {//验证token(系统用户的token)
             tokenvalue = JedisClientUtil.getString(FinalData.SYSTEM_TOKEN + header);
         } else if (url.contains(FinalData.APP_BASEURL)) {//App客户端用户

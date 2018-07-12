@@ -581,7 +581,7 @@ public class AdminController {
             return responseJSON;
         }
         studioBean.setStudioPic(studio.getStudioPic());//图片
-        studioBean.setSystemUserid(studio.getSystemUserid());//用户id
+//        studioBean.setSystemUserid(studio.getSystemUserid());//用户id
         studioBean.setStudioName(studio.getStudioName());//店铺名称
         studioBean.setStudioMoney(studio.getStudioMoney());//押金
         studioBean.setStudioPhone(studio.getStudioPhone());//电话
