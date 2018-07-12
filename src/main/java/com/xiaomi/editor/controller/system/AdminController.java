@@ -242,6 +242,19 @@ public class AdminController {
         return responseJSON;
     }
 
+    @RequestMapping(value = "/getNoHaveStudioSystemUserList", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseJSON getNoHaveStudioSystemUserList(HttpServletRequest request) {
+        ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("查询失败");
+        if (!checkUser(request)) {
+            responseJSON.setMsg("用户权限不足，请联系管理员");
+            return responseJSON;
+        }
+        List noHaveStudioList = mISystemService.selectNoHaveStudio();
+        responseJSON = ResponseUtils.getSuccessResponseBean("查询成功", noHaveStudioList);
+        return responseJSON;
+    }
+
 
     /**
      * 删除系统用户
@@ -281,7 +294,7 @@ public class AdminController {
     /**
      * 添加轮播图
      *
-     * @param banner  外部连接,权重,图片(文件流)
+     * @param banner 外部连接,权重,图片(文件流)
      * @return
      */
     @RequestMapping(value = "/addBanner", method = RequestMethod.POST)
@@ -758,5 +771,34 @@ public class AdminController {
 
 //=============================================================↑↑↑↑↑↑热门服务模块↑↑↑↑↑↑↑==========================================================
 
+    /**
+     * 添加轮播图 调用存储过程
+     *
+     * @param request
+     * @param banner
+     * @return
+     */
+    @RequestMapping(value = "/addBanner1", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseJSON addBanner1(HttpServletRequest request, @RequestBody Banner banner
+    ) {
+        ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("添加失败", null);
+        if (!checkUser(request)) {
+            responseJSON.setMsg("用户权限不足，请联系管理员");
+            return responseJSON;
+        }
+
+        if (CheckStringEmptyUtils.IsEmpty(banner.getBannerUrl())) {
+            responseJSON.setMsg("图片不能为空");
+            return responseJSON;
+        }
+
+        int i = mIBannerService.addBanner(new BannerBean(banner.getBannerUrl(), Short.parseShort(banner.getBannerWeight() + ""), banner.getBannerWebUrl()));
+        if (i == 0) {
+            return responseJSON;
+        }
+        responseJSON = ResponseUtils.getSuccessResponseBean("添加成功", i);
+        return responseJSON;
+    }
 
 }

@@ -31,6 +31,12 @@ public class BannerService implements IBannerService {
     }
 
     @Override
+    public int addBanner1(BannerBean mBannerBean) {
+        int i = beanMapper.addBanner1(mBannerBean);
+        return i > 0 ?mBannerBean.getBannerId():0;
+    }
+
+    @Override
     public int updateDelState(int mBannerId) {
         return beanMapper.updateDelState(mBannerId);
     }

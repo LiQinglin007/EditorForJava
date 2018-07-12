@@ -18,6 +18,8 @@ public interface IBannerService {
 
     int addBanner(BannerBean mBannerBean);
 
+    int addBanner1(BannerBean mBannerBean);
+
     int updateDelState(int mBannerId);
 
     int updateBanner(BannerBean mBannerBean);

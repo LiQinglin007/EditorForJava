@@ -7,6 +7,8 @@ import com.xiaomi.editor.bean.SystemBean;
 import com.xiaomi.editor.paramsbean.PageListBean;
 import com.xiaomi.editor.paramsbean.PageListBeanSearch;
 
+import java.util.List;
+
 /**
  * Description: 系统用户<br>
  * User: dell - XiaomiLi<br>
@@ -57,4 +59,11 @@ public interface ISystemService {
      * @return
      */
     PageInfo selectByPageList(PageListBeanSearch pageBean) throws PinyinException;
+
+    /**
+     * 查询没有开店的用户
+     *
+     * @return
+     */
+    List selectNoHaveStudio();
 }

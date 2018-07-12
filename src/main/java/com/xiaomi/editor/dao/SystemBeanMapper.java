@@ -53,4 +53,11 @@ public interface SystemBeanMapper {
      * @return
      */
     List selectByPageList(String searchContent);
+
+    /**
+     * 查询没有开店的用户
+     *
+     * @return
+     */
+    List selectNoHaveStudio();
 }

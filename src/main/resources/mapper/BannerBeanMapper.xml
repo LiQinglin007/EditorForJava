@@ -13,9 +13,20 @@
 
 
     <!--添加banner-->
-    <insert id="addBanner" keyProperty="bannerId" useGeneratedKeys="true" parameterType="com.xiaomi.editor.bean.BannerBean">
+    <insert id="addBanner" keyProperty="bannerId" useGeneratedKeys="true"
+            parameterType="com.xiaomi.editor.bean.BannerBean">
     INSERT INTO banner(banner_url, banner_web_url,banner_weight,banner_del) VALUE (#{bannerUrl},#{bannerWebUrl},#{bannerWeight},#{bannerDel})
   </insert>
+
+    <insert id="addBanner1" parameterType="com.xiaomi.editor.bean.BannerBean" statementType="CALLABLE">
+    addBanner(
+    #{bannerUrl,mode=IN,jdbcType=VARCHAR},
+    #{bannerWebUrl,mode=IN,jdbcType=VARCHAR},
+    #{bannerWeight,mode=IN,jdbcType=SMALLINT},
+    #{bannerDel,mode=IN,jdbcType=SMALLINT},
+    #{bannerId,mode=OUT,jdbcType=INTEGER})
+
+   </insert>
 
     <!--删除banner-->
     <update id="updateDelState" parameterType="java.lang.Integer">

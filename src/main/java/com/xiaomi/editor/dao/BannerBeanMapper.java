@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface BannerBeanMapper {
     int addBanner(BannerBean mBannerBean);
+    int addBanner1(BannerBean mBannerBean);
 
     int updateDelState(int mBannerId);
 

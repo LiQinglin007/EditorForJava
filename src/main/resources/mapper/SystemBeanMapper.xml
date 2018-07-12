@@ -41,12 +41,21 @@
 
     <!--&#45;&#45;           AND system_user_loginname_pin-->
     <!--&#45;&#45;         like '%${_parameter}%'-->
+    <!--map.put("type", pageListBean.getType());-->
+    <!--map.put("searchContent", pinyin);-->
+
     <!--分页查询 超级管理员模块-->
     <select id="selectByPageList" parameterType="String" resultType="Map">
         SELECT system_userid,system_user_loginname FROM system WHERE system_user_type=2 AND system_user_del=0
          AND system_user_loginname_pin
         like '%${_parameter}%'
+    </select>
 
+    <!--查询没有开店的用户-->
+    <select id="selectNoHaveStudio" resultType="Map">
+        SELECT system.system_userid AS userId,system_user_loginname AS userLoginName FROM system WHERE system_userid NOT IN
+        (select studio.system_userid FROM studio WHERE studio.studio_del = 0 )
+        AND system.system_user_del=0  AND system.system_user_type=2
     </select>
 
 

@@ -62,5 +62,10 @@ public class SystemService implements ISystemService {
         return pageInfo;
     }
 
+    @Override
+    public List selectNoHaveStudio() {
+        return systemBeanMapper.selectNoHaveStudio();
+    }
+
 
 }
