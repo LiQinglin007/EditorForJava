@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Description: <br>
@@ -58,6 +59,11 @@ public class StudioService implements IStudioService {
     @Override
     public StudioBean queryById(int mStudioBeanId) {
         return studioBeanMapper.queryById(mStudioBeanId);
+    }
+
+    @Override
+    public Map<String, Object> queryStudioDeById(int mStudioBeanId) {
+        return studioBeanMapper.queryStudioDeById(mStudioBeanId);
     }
 
     /**

@@ -1,4 +1,4 @@
-## 编审小米 后台系统API文档v1.0.3
+## 编审小米 后台系统API文档v1.0.4
 ### 1、接口说明
 
 版本号 | 说明    | 时间
@@ -7,6 +7,7 @@
 1.0.1  | 添加2.3.1(文件上传接口)<br> 修改2.1.13(添加工作室)<br> 修改2.1.14(修改工作室资料)<br> 修改2.1.16(添加轮播图)<br> 修改2.1.9(修改轮播图信息)<br>修改2.2.1(修改自己工作室数据)<br> 修改2.2.2(添加商品)<br> 修改2.2.4(修改商品)<br>| 2018/7/11
 1.0.2  | 修改2.1.14(修改工作室)<br>| 2018/7/12
 1.0.3  | 添加2.1.23(获取没有开通工作室的用户)<br>| 2018/7/12
+1.0.4  | 修改2.1.15 获取工作室详情<br>| 2018/7/13
 
 
 **接口请求说明：除特殊接口统一添加请求头"Authorization"<br>
@@ -413,6 +414,7 @@ BaseUrl:http://home.hbhanzhi.com:7052/system/<br>**
 
 ```
 "studioId":1,int (必传) 工作室id
+"systemUserid":1，int  (必传)系统用户id(谁开的这家店)
 "studioName":"小米工作室"，String   工作室名称(前端限制最多6字)
 "studioMoney":1000，folat   工作室押金(前端限制上限十万)
 "studioPhone":"15284224245"，int  联系电话(前端限制最多11位)
@@ -452,6 +454,7 @@ BaseUrl:http://home.hbhanzhi.com:7052/system/<br>**
         "studioMoney":10000,//押金
         "studioBriefintroduction":"这是一家小米店铺",//店铺简介
         "studioQq":"531192555",//联系QQ
+        "systemUserName":"xiaomi8",//系统用户名称
         "systemUserid":2,//系统用户id(法人id)
         "studioName":"xiaomiStudio",店铺名称
         "studioPhone":"15284224244",//联系电话

@@ -5,6 +5,7 @@ import com.xiaomi.editor.bean.StudioBean;
 import com.xiaomi.editor.bean.SystemBean;
 
 import java.util.List;
+import java.util.Map;
 
 public interface StudioBeanMapper {
     /**
@@ -33,6 +34,12 @@ public interface StudioBeanMapper {
      */
     StudioBean queryById(int mStudioBeanId);
 
+    /**
+     * 查询工作室详情
+     *
+     * @param mStudioBeanId
+     */
+    Map<String, Object> queryStudioDeById(int mStudioBeanId);
 
     /**
      * 工作室修改自己工作室的数据

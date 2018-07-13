@@ -8,6 +8,7 @@ import com.xiaomi.editor.paramsbean.PageListBean;
 import com.xiaomi.editor.paramsbean.PageListBeanSearch;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Description: <br>
@@ -43,6 +44,13 @@ public interface IStudioService {
      */
     StudioBean queryById(int mStudioBeanId);
 
+    /**
+     * 查询工作室详情
+     *
+     * @param mStudioBeanId
+     */
+    Map<String, Object> queryStudioDeById(int mStudioBeanId);
+
 
     /**
      * 工作室修改自己工作室的数据
@@ -51,6 +59,7 @@ public interface IStudioService {
      * @return
      */
     int updateStudio(StudioBean mStudioBean);
+
     /**
      * 超级管理员修改工作室数据
      *

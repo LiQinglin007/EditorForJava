@@ -551,21 +551,11 @@ public class AdminController {
             responseJSON.setMsg("用户权限不足，请联系管理员");
             return responseJSON;
         }
-        StudioBean studioBean = mIStudioService.queryById(studio.getStudioId());
-        if (studioBean == null) {
+        Map<String, Object> map = mIStudioService.queryStudioDeById(studio.getStudioId());
+        if (map == null) {
             responseJSON.setMsg("暂无此工作室");
             return responseJSON;
         }
-        Map<String, Object> map = new HashMap<>();
-        map.put("studioName", studioBean.getStudioName());
-        map.put("systemUserid", studioBean.getSystemUserid());
-        map.put("studioCollectionNmuber", studioBean.getStudioCollectionNmuber());
-        map.put("studioBriefintroduction", studioBean.getStudioBriefintroduction());
-        map.put("studioMonthlySales", studioBean.getStudioMonthlySales());
-        map.put("studioQq", studioBean.getStudioQq());
-        map.put("studioPhone", studioBean.getStudioPhone());
-        map.put("studioMoney", studioBean.getStudioMoney());
-        map.put("studioPic", studioBean.getStudioPic());
         responseJSON = ResponseUtils.getSuccessResponseBean("获取成功", map);
         return responseJSON;
     }
@@ -594,7 +584,7 @@ public class AdminController {
             return responseJSON;
         }
         studioBean.setStudioPic(studio.getStudioPic());//图片
-//        studioBean.setSystemUserid(studio.getSystemUserid());//用户id
+        studioBean.setSystemUserid(studio.getSystemUserid());//用户id
         studioBean.setStudioName(studio.getStudioName());//店铺名称
         studioBean.setStudioMoney(studio.getStudioMoney());//押金
         studioBean.setStudioPhone(studio.getStudioPhone());//电话

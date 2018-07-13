@@ -19,9 +19,9 @@
     </resultMap>
 
 
-
     <!--添加工作室-->
-    <insert id="addStudio" keyProperty="studioId" useGeneratedKeys="true" parameterType="com.xiaomi.editor.bean.StudioBean">
+    <insert id="addStudio" keyProperty="studioId" useGeneratedKeys="true"
+            parameterType="com.xiaomi.editor.bean.StudioBean">
     INSERT INTO studio(studio_name, studio_name_pin,studio_pic, studio_money, studio_phone, studio_monthly_sales, studio_QQ,
      studio_briefIntroduction, studio_collection_nmuber, studio_del, system_userid)
     VALUE (#{studioName},#{studioNamePin} ,#{studioPic},#{studioMoney},#{studioPhone},#{studioMonthlySales},#{studioQq},
@@ -38,6 +38,15 @@
         SELECT * FROM studio WHERE studio_id=#{_parameter} AND studio_del=0;
     </select>
 
+
+    <select id="queryStudioDeById" parameterType="java.lang.Integer" resultType="Map">
+        SELECT studio.studio_collection_nmuber AS studioCollectionNmuber ,
+        studio_monthly_sales AS studioMonthlySales,studio_money AS studioMoney,studio_briefIntroduction AS studioBriefintroduction,
+        studio_QQ AS studioQq,studio.system_userid AS systemUserid,system.system_user_loginname AS systemUserName,
+        studio.studio_name AS studioName,studio.studio_phone AS studioPhone,studio.studio_pic AS studioPic
+        FROM studio LEFT JOIN system ON studio.system_userid=system.system_userid WHERE studio_id= #{_parameter} AND studio_del=0;
+    </select>
+
     <!--工作室修改自己工作室的信息-->
     <update id="updateStudio" parameterType="com.xiaomi.editor.bean.StudioBean">
         UPDATE studio SET studio_name=#{studioName} ,studio_name_pin=#{studioNamePin} ,studio_pic=#{studioPic},studio_phone=#{studioPhone},
@@ -48,7 +57,7 @@
     <!--管理员修改工作室信息-->
     <update id="updateStudioByAdmin" parameterType="com.xiaomi.editor.bean.StudioBean">
         UPDATE studio SET studio_name=#{studioName}  ,studio_name_pin=#{studioNamePin},studio_pic=#{studioPic},studio_phone=#{studioPhone},
-        studio_QQ=#{studioQq},studio_briefIntroduction=#{studioBriefintroduction},
+        studio_QQ=#{studioQq},studio_briefIntroduction=#{studioBriefintroduction},system_userid=#{systemUserid}
         studio_money=#{studioMoney}
         WHERE studio_id=#{studioId}
     </update>
