@@ -7,7 +7,7 @@
 1.0.1  | 添加2.3.1(文件上传接口)<br> 修改2.1.13(添加工作室)<br> 修改2.1.14(修改工作室资料)<br> 修改2.1.16(添加轮播图)<br> 修改2.1.9(修改轮播图信息)<br>修改2.2.1(修改自己工作室数据)<br> 修改2.2.2(添加商品)<br> 修改2.2.4(修改商品)<br>| 2018/7/11
 1.0.2  | 修改2.1.14(修改工作室)<br>| 2018/7/12
 1.0.3  | 添加2.1.23(获取没有开通工作室的用户)<br>| 2018/7/12
-1.0.4  | 修改2.1.15 获取工作室详情<br>| 2018/7/13
+1.0.4  | 修改2.1.15 获取工作室详情<br>修改2.1.16 获取工作室列表<br>| 2018/7/13
 
 
 **接口请求说明：除特殊接口统一添加请求头"Authorization"<br>
@@ -488,16 +488,17 @@ BaseUrl:http://home.hbhanzhi.com:7052/system/<br>**
         "lastPage":1,
         "list":[
             {
-                "studio_name":"xiaomiStudio",//工作室名称
-                "studio_phone":"15284224244",//联系电话
-                "studio_briefIntroduction":"这是一家小米店铺1",//简介
-                "studio_QQ":"531192555",//QQ
-                "system_userid":2,//系统用户id
-                "studio_id":1,//工作室id
-                "studio_monthly_sales":0,//月销量
-                "studio_collection_nmuber":0,//收藏数量
-                "studio_money":10000,//押金
-                "studio_pic":"https://gss1.bdstatic.com/9vo3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=e9449e382d9759ee4a5067cd8ac0242b/94cad1c8a786c9179e80a80cc23d70cf3bc75700.jpg"//图片
+             "studioCollectionNmuber":0,//收藏数量
+             "studioMonthlySales":0,//月销售量
+             "studioMoney":10000,//押金
+             "studioBriefintroduction":"这是一家小米店铺",//店铺简介
+             "studioQq":"531192555",//联系QQ
+             "systemUserName":"xiaomi8",//系统用户名称
+             "systemUserid":2,//系统用户id(法人id)
+             "studioName":"xiaomiStudio",店铺名称
+             "studioPhone":"15284224244",//联系电话
+             "studioPic":"https://gss1.bdstatic.com/9vo3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=e9449e382d9759ee4a5067cd8ac0242b/94cad1c8a786c9179e80a80cc23d70cf3bc75700.jpg"//头像图片
+             "studioId":1,//工作室id
             }
         ],
         "navigateFirstPage":1,

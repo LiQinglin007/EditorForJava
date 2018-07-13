@@ -90,9 +90,7 @@ public class StudioService implements IStudioService {
     @Override
     public PageInfo selectByPageList(PageListBeanSearch pageBean) throws PinyinException {
         PageHelper.startPage(pageBean.getPage(), pageBean.getSize());
-        System.out.println("pageBean.getSearchContent():" + pageBean.getSearchContent());
         String searchContentPin = PinyinUtil.getPinyin(pageBean.getSearchContent());
-        System.out.println("searchContentPin:" + searchContentPin);
         List studioBeanList = studioBeanMapper.selectStudioByPageList(searchContentPin);
         PageInfo pageInfo = new PageInfo<>(studioBeanList);
         return pageInfo;
