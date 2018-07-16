@@ -5,6 +5,7 @@
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:task="http://www.springframework.org/schema/task"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/tx
@@ -12,7 +13,8 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-4.1.xsd
         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
-        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!-- 01.配置数据源 -->
     <!-- 自动扫描 -->
@@ -83,22 +85,32 @@
         <property name="basePackage" value="com.xiaomi.editor.dao"/>
     </bean>
 
-    <!-- 配置事务管理器 -->
+    <!-- 配置事务管理器 使用JDBC或者MyBatis都可以用这个DataSourceTransactionManager -->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <!-- 注入数据库连接池 -->
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <!-- 配置基于注解的声明式事务 -->
-    <!-- 自定义事务管理 -->
-    <tx:advice id="txAdvice" transaction-manager="transactionManager">
-        <tx:attributes>
-            <tx:method name="save*" propagation="REQUIRED"/>
-            <tx:method name="delete*" propagation="REQUIRED"/>
-            <tx:method name="update*" propagation="REQUIRED"/>
-            <tx:method name="find*" propagation="REQUIRED"/>
-        </tx:attributes>
-    </tx:advice>
+    <!--开启注解事务 配置事务管理器-->
+    <tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>
+
+    <!--&lt;!&ndash; 配置基于注解的声明式事务 &ndash;&gt;-->
+    <!--&lt;!&ndash; 自定义事务管理 &ndash;&gt;-->
+    <!--<tx:advice id="txAdvice" transaction-manager="transactionManager">-->
+        <!--<tx:attributes>-->
+            <!--<tx:method name="add*" propagation="REQUIRED"></tx:method>-->
+            <!--<tx:method name="save*" propagation="REQUIRED" isolation="REPEATABLE_READ" read-only="false" rollback-for="*"/>-->
+            <!--<tx:method name="delete*" propagation="REQUIRED"/>-->
+            <!--<tx:method name="update*" propagation="REQUIRED"/>-->
+            <!--<tx:method name="find*" propagation="REQUIRED"/>-->
+        <!--</tx:attributes>-->
+    <!--</tx:advice>-->
+
+    <!--&lt;!&ndash;配置切面&ndash;&gt;-->
+    <!--<aop:config    >-->
+        <!--<aop:pointcut id="point1" expression="execution(* com.xiaomi.editor.service.SystemService+.*(..))"></aop:pointcut>-->
+        <!--<aop:advisor advice-ref="txAdvice" pointcut-ref="point1"></aop:advisor>-->
+    <!--</aop:config>-->
 
 
     <!-- 定义静态页面访问 -->

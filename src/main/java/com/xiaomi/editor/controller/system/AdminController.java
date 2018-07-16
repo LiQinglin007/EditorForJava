@@ -10,6 +10,8 @@ import com.xiaomi.editor.system.ResponseJSON;
 import com.xiaomi.editor.utils.*;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -146,45 +148,51 @@ public class AdminController {
      * @param systemUser 登录名,登录密码
      * @return
      */
+
     @RequestMapping(value = "/addSysteamUser", method = RequestMethod.POST)
     @ResponseBody
     public ResponseJSON addSystemUser(HttpServletRequest request, @RequestBody SystemUser systemUser) {
         ResponseJSON responseJSON = ResponseUtils.getFiledResponseBean("添加失败", null);
-        if (!checkUser(request)) {
-            responseJSON.setMsg("用户权限不足，请联系管理员");
-            return responseJSON;
-        }
-        //检查参数
-        String checkStringList = CheckStringEmptyUtils.CheckStringList(
-                new CheckStringEmptyUtils.CheckStringBean(systemUser.getUserLoginName(), "用户名不能为空"),
-                new CheckStringEmptyUtils.CheckStringBean(systemUser.getUserPassword(), "用户密码不能为空"));
-        if (!checkStringList.equals(CheckStringEmptyUtils.ListSuccess)) {
-            responseJSON.setMsg(checkStringList);
-            return responseJSON;
-        }
-
-        SystemBean systemBean1 = mISystemService.queryByLoginName(systemUser.getUserLoginName());
-        if (systemBean1 != null) {
-            responseJSON.setMsg("已有当前用户名");
-            return responseJSON;
-        }
-        String loginUserNamePin = "";
         try {
-            loginUserNamePin = PinyinUtil.getPinyin(systemUser.getUserLoginName());
-        } catch (PinyinException e) {
-            e.printStackTrace();
-            logger.error("addSysteamUser汉字转换拼音失败：" + e.toString());
-            responseJSON.setMsg("添加失败");
+            if (!checkUser(request)) {
+                responseJSON.setMsg("用户权限不足，请联系管理员");
+                return responseJSON;
+            }
+            //检查参数
+            String checkStringList = CheckStringEmptyUtils.CheckStringList(
+                    new CheckStringEmptyUtils.CheckStringBean(systemUser.getUserLoginName(), "用户名不能为空"),
+                    new CheckStringEmptyUtils.CheckStringBean(systemUser.getUserPassword(), "用户密码不能为空"));
+            if (!checkStringList.equals(CheckStringEmptyUtils.ListSuccess)) {
+                responseJSON.setMsg(checkStringList);
+                return responseJSON;
+            }
+
+            SystemBean systemBean1 = mISystemService.queryByLoginName(systemUser.getUserLoginName());
+            if (systemBean1 != null) {
+                responseJSON.setMsg("已有当前用户名");
+                return responseJSON;
+            }
+            String loginUserNamePin = "";
+            try {
+                loginUserNamePin = PinyinUtil.getPinyin(systemUser.getUserLoginName());
+            } catch (PinyinException e) {
+                e.printStackTrace();
+                logger.error("addSysteamUser汉字转换拼音失败：" + e.toString());
+                responseJSON.setMsg("添加失败");
+                return responseJSON;
+            }
+            SystemBean systemBean = new SystemBean(systemUser.getUserLoginName(), loginUserNamePin, MD5Util.string2MD5(systemUser.getUserPassword()));
+            int i = mISystemService.addSystemUserReturnId(systemBean);
+            if (i > 0) {
+                responseJSON = ResponseUtils.getSuccessResponseBean("添加成功", i);
+            } else {
+                responseJSON.setMsg("添加失败");
+            }
+        } catch (RuntimeException e) {
+
+        } finally {
             return responseJSON;
         }
-        SystemBean systemBean = new SystemBean(systemUser.getUserLoginName(), loginUserNamePin, MD5Util.string2MD5(systemUser.getUserPassword()));
-        int i = mISystemService.addSystemUserReturnId(systemBean);
-        if (i > 0) {
-            responseJSON = ResponseUtils.getSuccessResponseBean("添加成功", i);
-        } else {
-            responseJSON.setMsg("添加失败");
-        }
-        return responseJSON;
     }
 
 

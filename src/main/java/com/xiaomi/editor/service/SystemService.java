@@ -9,6 +9,8 @@ import com.xiaomi.editor.paramsbean.PageListBean;
 import com.xiaomi.editor.paramsbean.PageListBeanSearch;
 import com.xiaomi.editor.utils.PinyinUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -20,6 +22,8 @@ import java.util.List;
  * Time: 10:49<br>
  * UpdateDescription：<br>
  */
+//这里开启事务
+@Transactional(propagation = Propagation.REQUIRED)
 @Service
 public class SystemService implements ISystemService {
 
@@ -30,6 +34,8 @@ public class SystemService implements ISystemService {
     @Override
     public int addSystemUserReturnId(SystemBean mSystemBean) {
         int i = systemBeanMapper.addSystemUserReturnId(mSystemBean);
+        //这里去制造一个异常  然后回滚
+//        int a = 1 / 0;
         return i > 0 ? mSystemBean.getSystemUserid() : 0;
     }
 
