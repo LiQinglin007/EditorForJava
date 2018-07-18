@@ -1,4 +1,4 @@
-## 编审小米 后台系统API文档v1.0.4
+## 编审小米 后台系统API文档v1.0.5
 ### 1、接口说明
 
 版本号 | 说明    | 时间
@@ -8,6 +8,7 @@
 1.0.2  | 修改2.1.14(修改工作室)<br>| 2018/7/12
 1.0.3  | 添加2.1.23(获取没有开通工作室的用户)<br>| 2018/7/12
 1.0.4  | 修改2.1.15 获取工作室详情<br>修改2.1.16 获取工作室列表<br>| 2018/7/13
+1.0.5  | 修改2.1.19、2.1.20、2.1.21、2.2.3添加月销量字段<br>| 2018/7/18
 
 
 **接口请求说明：除特殊接口统一添加请求头"Authorization"<br>
@@ -564,6 +565,7 @@ BaseUrl:http://home.hbhanzhi.com:7052/system/<br>**
         "lastPage":1,
         "list":[
             {
+                "commodity_monthly_sales":1,//月销量
                 "commodity_original_price":1,//商品原价
                 "commodity_collection_quantity":0,//收藏数量
                 "commodity_id":1,//商品id
@@ -577,6 +579,7 @@ BaseUrl:http://home.hbhanzhi.com:7052/system/<br>**
                 "commodity_name":"大红袍"//名称
             },
             {
+                "commodity_monthly_sales":1,//月销量
                 "commodity_original_price":1,
                 "commodity_collection_quantity":0,
                 "commodity_id":2,
@@ -636,6 +639,7 @@ BaseUrl:http://home.hbhanzhi.com:7052/system/<br>**
         "lastPage":1,
         "list":[
             {
+                "commodity_monthly_sales":1,//月销量
                 "commodity_original_price":1,//商品原价
                 "commodity_collection_quantity":0,//收藏数量
                 "commodity_id":1,//商品id
@@ -649,6 +653,7 @@ BaseUrl:http://home.hbhanzhi.com:7052/system/<br>**
                 "commodity_name":"大红袍"//名称
             },
             {
+                "commodity_monthly_sales":1,//月销量
                 "commodity_original_price":1,
                 "commodity_collection_quantity":0,
                 "commodity_id":2,
@@ -709,6 +714,7 @@ BaseUrl:http://home.hbhanzhi.com:7052/system/<br>**
         "lastPage":1,
         "list":[
             {
+                "commodity_monthly_sales":1,//月销量
                 "commodity_original_price":1,//商品原价
                 "commodity_collection_quantity":0,//收藏数量
                 "commodity_id":1,//商品id
@@ -722,6 +728,7 @@ BaseUrl:http://home.hbhanzhi.com:7052/system/<br>**
                 "commodity_name":"大红袍"//名称
             },
             {
+                "commodity_monthly_sales":1,//月销量
                 "commodity_original_price":1,
                 "commodity_collection_quantity":0,
                 "commodity_id":2,
@@ -866,6 +873,7 @@ BaseUrl:http://home.hbhanzhi.com:7052/system/<br>**
 {
     "code":200,
     "data":{
+        "commodity_monthly_sales":1,//月销量
         "commodity_original_price":1,
         "commodity_collection_quantity":0,
         "commodity_id":1,

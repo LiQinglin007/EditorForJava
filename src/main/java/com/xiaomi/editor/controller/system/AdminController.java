@@ -10,8 +10,6 @@ import com.xiaomi.editor.system.ResponseJSON;
 import com.xiaomi.editor.utils.*;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -586,18 +584,32 @@ public class AdminController {
             responseJSON.setMsg("用户权限不足，请联系管理员");
             return responseJSON;
         }
-        StudioBean studioBean = mIStudioService.queryById(studio.getStudioId());
+        StudioBean studioBean = null;
+        try {
+            studioBean = mIStudioService.queryById(studio.getStudioId());
+        } catch (NullPointerException e) {
+            responseJSON.setMsg("工作室Id不能为空");
+        }
+
         if (studioBean == null) {
             responseJSON.setMsg("暂无此工作室");
             return responseJSON;
         }
-        studioBean.setStudioPic(studio.getStudioPic());//图片
-        studioBean.setSystemUserid(studio.getSystemUserid());//用户id
-        studioBean.setStudioName(studio.getStudioName());//店铺名称
-        studioBean.setStudioMoney(studio.getStudioMoney());//押金
-        studioBean.setStudioPhone(studio.getStudioPhone());//电话
-        studioBean.setStudioQq(studio.getStudioQq());//QQ
-        studioBean.setStudioBriefintroduction(studio.getStudioBriefintroduction());//简介
+        //图片
+        studioBean.setStudioPic(studio.getStudioPic());
+        //用户id
+        studioBean.setSystemUserid(studio.getSystemUserid());
+        //店铺名称
+        studioBean.setStudioName(studio.getStudioName());
+        //押金
+        studioBean.setStudioMoney(studio.getStudioMoney());
+        //电话
+        studioBean.setStudioPhone(studio.getStudioPhone());
+        //QQ
+        studioBean.setStudioQq(studio.getStudioQq());
+        //简介
+        studioBean.setStudioBriefintroduction(studio.getStudioBriefintroduction());
+
         int i = mIStudioService.updateStudioByAdmin(studioBean);
         if (i == 0) {
             return responseJSON;

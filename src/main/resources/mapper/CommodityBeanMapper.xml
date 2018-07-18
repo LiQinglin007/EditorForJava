@@ -64,7 +64,7 @@
     <select id="selectByStudioIdList" parameterType="java.lang.Integer" resultType="Map">
         SELECT commodity_id,studio_id,commodity_name,commodity_pic,commodity_introduce,commodity_hot,
         commodity_type,commodity_present_price,commodity_original_price,commodity_collection_quantity,
-        commodity_pic,commodity_pics
+        commodity_pic,commodity_pics,commodity_monthly_sales
         from commodity where  commodity_del=0 AND studio_id=#{_parameter}
     </select>
 
@@ -72,7 +72,7 @@
     <select id="selectNotHotCommodityByPageList" parameterType="java.lang.Integer" resultType="Map">
         SELECT commodity_id,studio_id,commodity_name,commodity_pic,commodity_introduce,commodity_hot,
         commodity_type,commodity_present_price,commodity_original_price,commodity_collection_quantity,
-        commodity_pic,commodity_pics
+        commodity_pic,commodity_pics,commodity_monthly_sales
         from commodity where  commodity_del=0 AND commodity_hot=0 AND studio_id=#{_parameter}
     </select>
 
@@ -81,7 +81,7 @@
     <select id="selectHotCommodityByPageList" resultType="Map">
          SELECT commodity_id,studio_id,commodity_name,commodity_pic,commodity_introduce,commodity_hot,
         commodity_type,commodity_present_price,commodity_original_price,commodity_collection_quantity,
-        commodity_pic,commodity_pics
+        commodity_pic,commodity_pics,commodity_monthly_sales
         from commodity where  commodity_del=0 AND commodity_hot=1 ORDER BY commodity_monthly_sales DESC
     </select>
 

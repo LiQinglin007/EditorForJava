@@ -38,11 +38,12 @@ public class MessageController {
         }
         //根据手机号去获取验证码,看看存在不存在
         String registerCode = JedisUtil.getRegisterCode(messageBean.getPhoneNumber());
-        if (!CheckStringEmptyUtils.IsEmpty(registerCode)) {//存在,去看时间
+        if (!CheckStringEmptyUtils.IsEmpty(registerCode)) {
+            //存在,去看时间
             String[] split = registerCode.split(",");
             if (split.length == 2) {
                 //现在的时间>那个时间之前不能重复获取
-                long time = new Date().getTime();
+                long time = System.currentTimeMillis();
                 if (time - Long.parseLong(split[1]) < 0) {
                     responseJSON.setMsg(FinalData.MESSAGE_CODE_REPEAT_TIME + "s内不能重复发送");
                     return responseJSON;

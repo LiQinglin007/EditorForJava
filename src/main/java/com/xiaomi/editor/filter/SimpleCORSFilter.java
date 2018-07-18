@@ -26,12 +26,6 @@ public class SimpleCORSFilter implements Filter {
                          FilterChain chain) throws IOException, ServletException {
         HttpServletRequest hreq = (HttpServletRequest) req;
         HttpServletResponse hresp = (HttpServletResponse) res;
-
-
-
-
-
-
         //跨域 Header
         hresp.setHeader("Access-Control-Allow-Credentials", "true");
         hresp.setHeader("Access-Control-Allow-Origin", "*");
@@ -47,6 +41,7 @@ public class SimpleCORSFilter implements Filter {
         // 配置options的请求返回
         if (hreq.getMethod().equals("OPTIONS")) {
             hresp.setStatus(HttpStatus.OK.value());
+            //下边这一行应该是没啥用
             hresp.getWriter().write("OPTIONS returns OK");
             return;
         }

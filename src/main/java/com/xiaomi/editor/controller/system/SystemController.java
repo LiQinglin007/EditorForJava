@@ -141,9 +141,11 @@ public class SystemController {
             return responseJSON;
         }
 
-        CommodityBean commodityBean = new CommodityBean(commodity.getCommodityId(), commodity.getCommodityName(), commodityNamePin,
-                commodity.getCommodityIntroduce(), commodity.getCommodityPic(), commodity.getCommodityPics(),
-                commodity.getCommodityPresentPrice(), commodity.getCommodityType()
+        CommodityBean commodityBean = new CommodityBean(commodity.getCommodityId(),
+                commodity.getCommodityName(), commodityNamePin,
+                commodity.getCommodityIntroduce(), commodity.getCommodityPic(),
+                commodity.getCommodityPics(), commodity.getCommodityPresentPrice(),
+                commodity.getCommodityType()
         );
         int i = commodityService.addCommodity(commodityBean);
         if (i == 0) {
@@ -176,6 +178,7 @@ public class SystemController {
         }
         Map<String, Object> map = new HashMap<>();
         map.put("commodity_name", commodityBean.getCommodityName());
+        map.put("commodity_monthly_sales", commodityBean.getCommodityMonthlySales());
         map.put("commodity_present_price", commodityBean.getCommodityPresentPrice());
         map.put("studio_id", commodityBean.getStudioId());
         map.put("commodity_type", commodityBean.getCommodityType());
