@@ -140,6 +140,4 @@ dependencies {
     compile 'com.github.pagehelper:pagehelper:5.1.4'
     //汉字转拼音的Java开源类库
     compile 'com.github.stuxuhai:jpinyin:1.1.8'
-
-//    test
 }
